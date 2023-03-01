@@ -1,42 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/01 10:59:44 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/01 10:58:59 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
 
-void	free_tab(char **tab)
-{
-	int	i;
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		tab[i] = NULL;
-		i++;
-	}
-	free(tab);
-	tab = NULL;
-}
+# include "../libft/libft.h"
+# include <pthread.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <errno.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
-void	echo(char *str)
-{
-	char	**tab;
+/* -------------- BUILTINS -------------- */
 
-	tab = ft_split(str, ' ');
-	free_tab(tab);
-}
+#endif
 
-int main(int argc, char **argv, char **envp)
-{
-	echo(argv[1]);
-	return (0);
-}
