@@ -6,7 +6,7 @@
 /*   By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/01 11:47:25 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/01 14:26:12 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,108 @@ void	echo(char *str)
 	// probleme avec la concatenation des espaces dans une string
 }
 
+int		quotes_nbr(char *str)
+{
+	int	i;
+	int	count1;
+	int	count2;
+
+	i = 0;
+	count1 = 0;
+	count2 = 0;
+	while (str[i])
+	{
+		if (str[i] == '"')
+			count1++;
+		else if (str[i] == '\'')
+			count2++;
+		i++;
+	}
+	if (count1 % 2 == 0 && count2 % 2 == 0)
+		return (1);
+	else
+		return (0);
+}
+
+
+int	command_len(char *str)
+{
+	int	i;
+	int	cmd_len;
+
+	i = 0;
+	cmd_len = 0;
+	while (str[i] && str[i] == ' ')
+		i++;
+	while (str[i] && str[i] != ' ' && str[i] != '"' && str[i] != '\'')
+	{
+		i++;
+		cmd_len++;
+	}
+	return (cmd_len);
+}
+
+char	*find_command(char *str)
+{
+	int			i;
+	char		*cmd;
+
+	if (!quotes_nbr(str))
+	{
+		printf("Erreur de quotes");
+		return (NULL);
+	}
+	i = 0;
+	while (str[i] && str[i] == ' ')
+		i++;
+	cmd = malloc(sizeof(char) * (command_len(str) + 1));
+	if (cmd == NULL)
+		return (NULL);
+	ft_strlcpy(cmd, &str[i], command_len(str) + 1);
+	printf("cmd_len: %d\n", command_len(str));
+	return (cmd);
+}
+
+int	find_arg_number(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str[i] != ' ')
+		return (0);
+	while(str[i])
+	{
+		if (str[i] == ' ')
+			i++;
+		else if (str[i] == '"')
+		{
+			while (str[i] != '"')
+				i++;
+			count++;
+		}
+		
+	}
+}
+
+char	**find_args(char *str)
+{
+	int		i;
+	int		num;
+	char	**tab;
+	
+	i = 0;
+	while (str[i] && str[i] == ' ' || )
+		i++;
+	while (str[i] && str[i] != ' ' && str[i] != '"' && str[i] != '\'')
+		i++;
+	num = find_arg_number(&str[i]);
+	return (tab);	
+}
+
 int main(int argc, char **argv, char **envp)
 {
 	char	*line;
+	char	*cmd;
 	
 	(void)argc;
 	(void)argv;
@@ -72,9 +171,9 @@ int main(int argc, char **argv, char **envp)
 	{
 		line = readline("Minishell > ");
 		add_history(line);
-		
-		if (!ft_strncmp(line, "echo", 4))
-			echo(line + 5);
+		cmd = find_command(line);
+		printf("cmd: %s\n", cmd);
+		free(cmd);
 	}
 	return (0);
 }
