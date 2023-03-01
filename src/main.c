@@ -6,11 +6,37 @@
 /*   By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:26:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/01 10:27:10 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/01 10:52:51 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../include/minishell.h"
+
+void	free_tab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		tab[i] = NULL;
+		i++;
+	}
+	free(tab);
+	tab = NULL;
+}
+
+void	echo(char *str)
+{
+	char	**tab;
+
+	tab = ft_split(str, ' ');
+	free_tab(tab);
+}
+
 int main(int argc, char **argv, char **envp)
 {
+	echo(argv[1]);
 	return (0);
 }

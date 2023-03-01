@@ -1,17 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/28 13:05:38 by llion             #+#    #+#             */
-/*   Updated: 2023/02/28 13:22:45 by amouly           ###   ########.fr       */
+/*   Created: 2023/03/01 10:28:37 by llion             #+#    #+#             */
+/*   Updated: 2023/03/01 10:52:52 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-yoyoyoyo
-coucou
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
-je suis sur la branche de Lucas
-ca va ?
+# include "../libft/libft.h"
+# include <pthread.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <errno.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+
+/* -------------- BUILTINS -------------- */
+
+#endif
+
+
