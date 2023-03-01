@@ -6,7 +6,7 @@
 /*   By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/01 10:59:44 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/01 11:09:44 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	echo(char *str)
 
 int main(int argc, char **argv, char **envp)
 {
+	(void)argc;
+	(void)envp;
 	echo(argv[1]);
 	return (0);
 }
