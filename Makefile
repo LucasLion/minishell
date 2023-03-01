@@ -13,8 +13,8 @@ SRCBONUS =
 
 		
 
-OBJS = ${addprefix sources/,${SOURCES:.c=.o}}
-OBJBONUS = ${addprefix sources/,${SRCBONUS:.c=.o}}
+OBJS = ${addprefix src/,${SOURCES:.c=.o}}
+OBJBONUS = ${addprefix src/,${SRCBONUS:.c=.o}}
 
 all :  ${NAME}
 
