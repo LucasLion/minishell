@@ -6,7 +6,7 @@
 /*   By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/01 14:26:12 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/01 14:44:57 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,39 +123,17 @@ char	*find_command(char *str)
 	return (cmd);
 }
 
-int	find_arg_number(char *str)
-{
-	int	i;
-
-	i = 0;
-	if (str[i] != ' ')
-		return (0);
-	while(str[i])
-	{
-		if (str[i] == ' ')
-			i++;
-		else if (str[i] == '"')
-		{
-			while (str[i] != '"')
-				i++;
-			count++;
-		}
-		
-	}
-}
-
 char	**find_args(char *str)
 {
 	int		i;
-	int		num;
 	char	**tab;
 	
 	i = 0;
-	while (str[i] && str[i] == ' ' || )
+	tab = NULL;
+	while (str[i] && str[i] == ' ')
 		i++;
 	while (str[i] && str[i] != ' ' && str[i] != '"' && str[i] != '\'')
 		i++;
-	num = find_arg_number(&str[i]);
 	return (tab);	
 }
 
