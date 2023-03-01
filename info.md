@@ -1,14 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    info.md                                            :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/03/01 11:50:04 by llion             #+#    #+#              #
-#    Updated: 2023/03/01 13:12:08 by llion            ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
 
 /* ------------- TODO ---------------- */
 
@@ -20,3 +9,10 @@
 	
 
 /* ------------ LINKS --------------- */
+
+	- https://blog.ehoneahobed.com/building-a-simple-shell-in-c-part-3
+	- https://jameshfisher.com/2017/02/05/how-do-i-use-execve-in-c/
+	- https://web.mit.edu/gnu/doc/html/rlman_2.html
+	- https://www.pierre-giraud.com/shell-bash/commande/
+
+
