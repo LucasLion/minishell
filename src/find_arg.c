@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/04 12:32:47 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/04 13:15:57 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,27 +39,6 @@ void	print_tab(char **tab, int i)
 	while (i < counter - 1)
 		printf("%s " , tab[i++]);
 	printf("%s", tab[i]);
-}
-
-void	echo(char *str)
-{
-	char	**tab;
-	int		i;
-
-	i = 0;
-	tab = ft_split(str, ' ');
-	if (ft_strncmp(tab[0], "-n", 2))
-	{
-		print_tab(tab, 0);
-		printf("\n");
-	}
-	else
-	{
-		print_tab(tab, 1);
-	}
-	free_tab_ms(tab);
-	// TODO 
-	// probleme avec la concatenation des espaces dans une string
 }
 
 int		quotes_nbr(char *str)

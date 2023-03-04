@@ -1,29 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
+/*   By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/04 13:17:26 by llion            ###   ########.fr       */
+/*   Created: 2023/03/04 13:12:55 by llion             #+#    #+#             */
+/*   Updated: 2023/03/04 13:17:23 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int main(int argc, char **argv, char **envp)
-{	
-	char *line;
-	(void)argc;
-	(void)argv;
-	(void)envp;
-	while (1)
+void	echo(char *str)
+{
+	char	**tab;
+	int		i;
+
+	i = 0;
+	tab = ft_split(str, ' ');
+	if (ft_strncmp(tab[0], "-n", 2))
 	{
-		line = readline("Minishell > ");
-		add_history(line);
-		// test ta fonction
-		echo(line);
+		print_tab(tab, 0);
+		printf("\n");
 	}
-	return (0);
+	else
+	{
+		print_tab(tab, 1);
+	}
+	free_tab_ms(tab);
+	// TODO 
+	// probleme avec la concatenation des espaces dans une string
 }
+
