@@ -6,7 +6,8 @@ LIBFT = ./libft/libft.a
 HEADERS = -I headers -I libft 
 
 
-SOURCES = 	main.c 
+SOURCES = 	main.c \
+			find_arg.c
 			
 SRCBONUS = 
 		
