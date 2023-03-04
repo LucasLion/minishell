@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/04 12:32:47 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/04 13:46:15 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,21 +65,25 @@ void	echo(char *str)
 int		quotes_nbr(char *str)
 {
 	int	i;
-	int	count1;
-	int	count2;
+	int	flag1;
+	int	flag2;
 
 	i = 0;
-	count1 = 0;
-	count2 = 0;
+	flag1 = 0;
+	flag2 = 0;
 	while (str[i])
 	{
-		if (str[i] == '"')
-			count1++;
-		else if (str[i] == '\'')
-			count2++;
+		if (str[i] == '"' && flag1 == 0 && flag2 == 0)
+			flag1 = 1;
+		else if (str[i] == '\'' && flag1 == 0 && flag2 == 0)
+			flag2 = 1;
+		else if (str[i] == '"' && flag1 == 1 && flag2 == 0)
+			flag1 = 0;
+		else if (str[i] == '\'' && flag1 == 0 && flag2 == 1)
+			flag2 = 0;
 		i++;
 	}
-	if (count1 % 2 == 0 && count2 % 2 == 0)
+	if (flag1 == 1 || flag2 == 1)
 		return (1);
 	else
 		return (0);

@@ -7,7 +7,9 @@ HEADERS = -I headers -I libft
 
 
 SOURCES = 	main.c \
-			find_arg.c
+			find_arg.c \
+			verif_line.c \
+			parse.c
 			
 SRCBONUS = 
 		

@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/04 12:30:48 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/04 15:48:07 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,16 @@ int main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	(void)envp;
+	
 	while (1)
 	{
 		line = readline("Minishell > ");
 		add_history(line);
-		// test ta fonction
+		if (!(verif_line(line)))
+		{
+			printf("nombre de mots : %d\n", count_word_ms(line));
+			split_and_print(line);
+		}
 	}
 	return (0);
 }
