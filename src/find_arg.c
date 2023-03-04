@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/04 13:15:57 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/04 14:01:36 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,6 @@ void	free_tab_ms(char **tab)
 	tab = NULL;
 }
 
-
-void	print_tab(char **tab, int i)
-{
-	int	counter;
-
-	counter = 0;
-	while (tab[counter])
-		counter++;
-
-	while (i < counter - 1)
-		printf("%s " , tab[i++]);
-	printf("%s", tab[i]);
-}
 
 int		quotes_nbr(char *str)
 {

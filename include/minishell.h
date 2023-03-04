@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/04 13:16:53 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/04 15:24:01 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,14 @@
 
 /* -------------- BUILTINS -------------- */
 
-void	echo(char *str);
+void	echo(char **args);
+void	pwd();
+int		ms_export(char **args, char **envp);
 
 /* -------------- PARSING -------------- */
 
 void	free_tab_ms(char **tab);
-void	print_tab(char **tab, int i);
+void	print_args(char **tab, int i);
 int		quotes_nbr(char *str);
 int		command_len(char *str);
 char	**find_args(char *str);
