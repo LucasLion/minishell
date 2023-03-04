@@ -6,12 +6,13 @@
 /*   By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/01 17:28:07 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/04 10:41:46 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+/*
 void	free_tab(char **tab)
 {
 	int	i;
@@ -26,6 +27,7 @@ void	free_tab(char **tab)
 	free(tab);
 	tab = NULL;
 }
+
 
 void	print_tab(char **tab, int i)
 {
@@ -136,11 +138,13 @@ char	**find_args(char *str)
 		i++;
 	return (tab);	
 }
+*/
 
 int main(int argc, char **argv, char **envp)
 {
 	char	*line;
-	char	*cmd;
+	//char	*cmd;
+	char	**tab;
 	
 	(void)argc;
 	(void)argv;
@@ -149,9 +153,17 @@ int main(int argc, char **argv, char **envp)
 	{
 		line = readline("Minishell > ");
 		add_history(line);
-		cmd = find_command(line);
-		printf("cmd: %s\n", cmd);
-		free(cmd);
+		//cmd = find_command(line);
+		//printf("cmd: %s\n", cmd);
+		tab = ft_split(line, ' ');
+		int i = 0;
+		while (tab[i])
+		{
+			printf("tab[%d]: %s\n", i, tab[i]);
+			i++;
+		}
+
+		//free(cmd);
 	}
 	return (0);
 }
