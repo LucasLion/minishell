@@ -6,11 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/03/06 11:26:16 by amouly           ###   ########.fr       */
-=======
-/*   Updated: 2023/03/04 15:24:01 by llion            ###   ########.fr       */
->>>>>>> master
+/*   Updated: 2023/03/06 14:37:27 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +32,13 @@ typedef struct s_char
     struct s_char	*previous;
 }					t_char;
 
+typedef struct s_env
+{
+   char           *name;
+   char           *value;
+   struct s_env   *next;
+}              t_env;
+
 /* -------------- BUILTINS -------------- */
 
 /* -------------- VERIF_LINE -------------- */
@@ -53,9 +56,14 @@ char    **ft_split_ms(char const *s);
 void    split_and_print(char *line);
 
 /* -------------- ADD_SPACE.c -------------- */
+
 void	echo(char **args);
 void	pwd();
-int		ms_export(char **args, char **envp);
+
+/* -------------- EXPORT -------------- */
+
+int		ms_export(char **envp, t_env *env);
+t_env   *create_var_list(char **envp);
 
 /* -------------- PARSING -------------- */
 
