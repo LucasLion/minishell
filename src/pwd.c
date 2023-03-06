@@ -1,33 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/06 11:21:59 by amouly           ###   ########.fr       */
+/*   Created: 2023/03/04 14:21:07 by llion             #+#    #+#             */
+/*   Updated: 2023/03/06 12:04:58 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int main(int argc, char **argv, char **envp)
-{	
-	char *line;
-	(void)argc;
-	(void)argv;
-	(void)envp;
-	
-	while (1)
+void	pwd()
+{
+	char buffer[1024];
+
+	if (getcwd(buffer, sizeof(buffer)) == NULL)
 	{
-		line = readline("Minishell > ");
-		add_history(line);
-		if (!(verif_line(line)))
-		{
-			printf("nombre de mots : %d\n", count_word_ms(line));
-			split_and_print(line);
-		}
+		printf("Error");
+		exit(EXIT_FAILURE);
 	}
-	return (0);
+	printf("%s\n", buffer);
 }

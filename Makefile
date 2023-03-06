@@ -6,11 +6,15 @@ LIBFT = ./libft/libft.a
 HEADERS = -I headers -I libft 
 
 
+<<<<<<< HEAD
 SOURCES = 	main.c \
 			find_arg.c \
 			verif_line.c \
 			split_ms.c \
-			
+			echo.c			\
+			pwd.c			\
+			export.c		
+
 			
 SRCBONUS = 
 		
