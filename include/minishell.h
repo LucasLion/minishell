@@ -6,11 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/03/06 11:26:16 by amouly           ###   ########.fr       */
-=======
-/*   Updated: 2023/03/04 15:24:01 by llion            ###   ########.fr       */
->>>>>>> master
+/*   Updated: 2023/03/06 17:36:11 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +34,16 @@ typedef struct s_char
 
 /* -------------- BUILTINS -------------- */
 
+void	echo(char **args);
+void	pwd();
+int		ms_export(char **args, char **envp);
+
 /* -------------- VERIF_LINE -------------- */
 
-int verif_line(char *line);
+int		quotes_verif(char *str);
+int     verif_line(char *line);
 
-/* -------------- SPLIT_MS.c -------------- */
+/* -------------- SPLIT_MS -------------- */
 
 int     put_flag(char c, int flag);
 int	    count_word_ms(char const *str);
@@ -52,10 +53,6 @@ int	    fill_tab_split_ms(char **tab, char const *s);
 char    **ft_split_ms(char const *s);
 void    split_and_print(char *line);
 
-/* -------------- ADD_SPACE.c -------------- */
-void	echo(char **args);
-void	pwd();
-int		ms_export(char **args, char **envp);
 
 /* -------------- PARSING -------------- */
 
@@ -65,7 +62,22 @@ int		quotes_nbr(char *str);
 int		command_len(char *str);
 char	**find_args(char *str);
 
-int add_space(char *line, t_char **list);
+/* -------------- ADD_SPACE.c -------------- */
+
+int	    lstadd_back_ms(t_char **list, t_char *new);
+int     fill_list(char *line, t_char **list);
+void    print_list_from_head(t_char *list);
+void    print_list_from_bottom(t_char *list);
+int     create_insert_node(t_char *previous, t_char *next);
+int     insert_space(t_char *node);
+void    insert_space_everywhere(t_char **list);
+
+/* -------------- FORMAT_LINE.c -------------- */
+
+void        format_list(t_char *list);
+int         length_list(t_char *list);
+char        *list_to_string(t_char *list);
+void        format_line(char *line_input);
 
 #endif
 
