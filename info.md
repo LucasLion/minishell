@@ -11,5 +11,6 @@
 	- https://jameshfisher.com/2017/02/05/how-do-i-use-execve-in-c/
 	- https://web.mit.edu/gnu/doc/html/rlman_2.html
 	- https://www.pierre-giraud.com/shell-bash/commande/
+	- https://phoenixnap.com/kb/bash-heredoc
 
 

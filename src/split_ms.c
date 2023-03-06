@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
+/*   split_ms.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 08:04:32 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/05 13:17:44 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/06 11:42:21 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ int	free_tab_ms_split(char **tab, int i)
 	return (0);
 }
 
-int	fill_tab_parse(char **tab, char const *s)
+int	fill_tab_split_ms(char **tab, char const *s)
 {
 	int		i;
 	int		pos;
@@ -160,7 +160,7 @@ char	**ft_split_ms(char const *s)
 	tab = malloc(sizeof( int*) * (count_word_ms(s) + 1));
 	if (tab == NULL)
 		return (NULL);
-	if (fill_tab_parse(tab, s) == 0)
+	if (fill_tab_split_ms(tab, s) == 0)
 		return (NULL);
 	else
 		return (tab);
