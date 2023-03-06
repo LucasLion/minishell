@@ -6,7 +6,7 @@
 /*   By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 14:21:07 by llion             #+#    #+#             */
-/*   Updated: 2023/03/06 14:45:26 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/06 17:31:36 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,35 +55,71 @@ t_env	*create_var_list(char **envp)
    t_env *cur;
    char  *var;
    char  *val;
-   char  **duet;
 
    i = 0;
    env = malloc(sizeof(t_env));
    while (envp[i])
    {
-      duet = ft_split(envp[i], '=');
-      var = duet[0];
-      val = duet[1];
+      var = ft_split(envp[i], '=')[0];
+      val = ft_split(envp[i], '=')[1];
       cur = varnew(var, val);
       var_addback(&env, cur);
       i++;
    }
    i = 0;
-   while (env)
-   {
-      printf("NAME: %s\tVALUE: %s\n", env->name, env->value);
-      env = env->next;
-   }
    return (env);
 }
 
-int   ms_export(char **envp, t_env *env)
+int   tab_len(char **tab)
+{
+   int i;
+
+   i = 0;
+   while (tab[i])
+   {
+      i++;
+   }
+   printf("%d\n", i);
+   return (i);
+}
+
+char  	***create_args_list(char *args)
+{
+   int   i;
+   char  **tab;
+   int   len;
+   char  ***ret;
+
+   i = 0;
+   tab =  ft_split(args, ' ');
+   len = tab_len(tab);
+   ret = malloc(sizeof(char *) * len);
+   while (i < len)
+   {
+      ret[i] = malloc(sizeof(char) * 2);
+      ret[i][0] = ft_split(tab[i], '=')[0];
+      ret[i][1] = ft_split(tab[i], '=')[1];
+
+      i++;
+   }
+   ret[i] = 0;
+   return (ret);
+}
+
+int   ms_export(char **envp, char *args, t_env *var)
 {
    (void)envp;
-   while (env)
+   (void)args;
+   t_env *env;
+
+   env = var;
+   if (env)
    {
-      printf("ENV_VAR: %s\n ENV_VAL: %s\n", env->name, env->value);
-      env = env->next;
+      while (env)
+      {
+         printf("ENV_VAR: %s\n ENV_VAL: %s\n", env->name, env->value);
+         env = env->next;
+      }
    }
    return (0);
 }
