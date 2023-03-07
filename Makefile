@@ -5,19 +5,14 @@ READLINE = -lreadline
 LIBFT = ./libft/libft.a
 HEADERS = -I headers -I libft 
 
-SOURCES = 	main.c \
-			find_arg.c \
-			verif_line.c \
-			split_ms.c \
+SOURCES = 	main-lucas.c 			\
+			find_arg.c 		\
+			verif_line.c	\
+			split_ms.c		\
 			echo.c			\
 			pwd.c			\
+			memory_utils.c	\
 			export.c		
-
-			
-SRCBONUS = 
-		
-
-		
 
 OBJS = ${addprefix src/,${SOURCES:.c=.o}}
 OBJBONUS = ${addprefix src/,${SRCBONUS:.c=.o}}

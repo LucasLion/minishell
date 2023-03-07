@@ -6,11 +6,66 @@
 /*   By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 14:21:07 by llion             #+#    #+#             */
-/*   Updated: 2023/03/07 16:17:29 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/07 14:41:49 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+t_env	*varnew(char *var, char *val)
+{
+	t_env	*duet;
+
+	duet = (malloc(sizeof(t_env)));
+	if (duet == NULL)
+		return NULL;
+	duet->name = var;
+	duet->value = val;
+    duet->next = NULL;
+	return (duet);
+}
+
+t_env	*envlast(t_env *lst) 
+{ 
+   if (lst)
+		while (lst->next)
+			lst = lst->next;
+	return (lst);
+}
+
+void  var_addback(t_env **env, t_env *new)
+{
+   t_env *cur;
+
+   if (*env == NULL)
+      *env = new;
+   else
+   {
+      cur = envlast(*env);
+      cur->next = new;
+   }
+}
+
+t_env	*create_var_list(char **envp)
+{
+   int   i;
+   t_env *env;
+   t_env *cur;
+   char  *var;
+   char  *val;
+
+   i = 0;
+   env = malloc(sizeof(t_env));
+   while (envp[i])
+   {
+      var = ft_split(envp[i], '=')[0];
+      val = ft_split(envp[i], '=')[1];
+      cur = varnew(var, val);
+      var_addback(&env, cur);
+      i++;
+   }
+   return (env);
+}
 
 int   tab_len(char **tab)
 {
@@ -51,69 +106,50 @@ char  	***create_args_list(char *args)
       split = ft_split(tab[i], '=');
       ret[i][0] = split[0];
       ret[i][1] = split[1];
-      free_tab2(split);
-      printf("1: %s\n2: %s\n", ret[i][0], ret[i][1]);
       i++;
    }
    ret[i] = NULL;
    return (ret);
 }
 
-char  ***create_env_list(char **envp)
+int   ms_export(char ***args, t_env *var, char **envp)
 {
-   int   i;
-   int   len;
-   char  **split;
-   char  ***ret;
-
-
-   len = tab_len(envp);
-   printf("len: %d\n", len);
-   if (len > 0)
-   {
-      ret = malloc(sizeof(char **) * (len + 1));
-      if (ret == NULL)
-         return (NULL);
-   }
-   i = 0;
-   while (i < len)
-   {
-      ret[i] = malloc(sizeof(char *) * 2);
-      split = ft_split(envp[i], '=');
-      //TODO copier la string du split d'une facon plus juste, ici on ne copie que le pointeur
-      ret[i][0] = split[0];
-      ret[i][1] = split[1];
-      free_tab2(split);
-      //printf("1: %s\n2: %s\n", ret[i][0], ret[i][1]);
-      i++;
-   }
-   // TODO results in undefined value;
-   ret[i] = NULL;
-   return (ret);
-
-}
-
-int   ms_export(char ***args, char ***env, char **envp)
-{
-   (void)envp;
    int   i;
    int   j;
+   t_env *env;
 
    i = 0;
-   while (args[i])
+   j = 0;
+   env = var;
+   if (args == NULL)
    {
-      j = 0;
-      while (env[j])
+      while (envp[j])
       {
-         //printf("-%s-  -%s-\n", env[j][0], args[i][0]);
-         // TODO ne marche que quand ca marche pas
-         if (env[j][0] == args[i][0])
-            printf("coucou\n");
+         printf("%s\n", envp[j]);
          j++;
       }
-      i++;
+      return (0);
    }
-
+   if (args && env)
+   {
+      while (args[i])
+      {
+         while (env)
+         {
+            //printf("BEFORE: -%s- -%s-\n", env->name, args[i][0]);
+            // TODO comprendre pourquoi l'egalite ne fonctionne pas
+            if (env->name == args[i][0])
+            {
+               printf("Ca a marche");
+               env->value = args[i][1];
+               printf("AFTER: %s - %s\n", env->value, args[i][1]);
+            }
+            env = env->next;
+         }
+         env = var;
+         i++;
+      }
+   }
    return (0);
 }
 

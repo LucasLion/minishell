@@ -6,7 +6,7 @@
 /*   By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 14:59:28 by llion             #+#    #+#             */
-/*   Updated: 2023/03/04 15:21:49 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/07 09:21:25 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,6 @@ void	print_tab(char **tab, int i)
 
 void	echo(char **args)
 {
-	int		i;
-
-	i = 0;
 	if (ft_strncmp(args[1], "-n", 2) == 0)
 		print_tab(args, 2);
 	else

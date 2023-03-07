@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/06 17:19:55 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/07 15:57:54 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,12 @@ typedef struct s_env
    struct s_env   *next;
 }              t_env;
 
+
+/* -------------- FREE -------------- */
+
+void  free_tab2(char **tab);
+void  free_tab3(char ***tab);
+
 /* -------------- BUILTINS -------------- */
 
 /* -------------- VERIF_LINE -------------- */
@@ -62,9 +68,10 @@ void	pwd();
 
 /* -------------- EXPORT -------------- */
 
-int		ms_export(char **envp, char *args, t_env *env);
+int		ms_export(char ***args, char ***envi, char **envp);
 t_env   *create_var_list(char **envp);
 char  	***create_args_list(char *args);
+char  	***create_env_list(char **envp);
 
 /* -------------- PARSING -------------- */
 
