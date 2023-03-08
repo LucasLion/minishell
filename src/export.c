@@ -6,7 +6,7 @@
 /*   By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 14:21:07 by llion             #+#    #+#             */
-/*   Updated: 2023/03/07 16:17:29 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/08 19:00:05 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,10 @@ char  	***create_args_list(char *args)
    {
       ret[i] = malloc(sizeof(char *) * 2);
       split = ft_split(tab[i], '=');
-      ret[i][0] = split[0];
-      ret[i][1] = split[1];
-      free_tab2(split);
-      printf("1: %s\n2: %s\n", ret[i][0], ret[i][1]);
+      ret[i][0] = malloc(sizeof(char) * (ft_strlen(split[0])));
+      ret[i][1] = malloc(sizeof(char) * (ft_strlen(split[1])));
+      ft_strlcpy(ret[i][0], split[0], (ft_strlen(split[0]) + 1));
+      ft_strlcpy(ret[i][1], split[1], (ft_strlen(split[1]) + 1));
       i++;
    }
    ret[i] = NULL;
@@ -68,7 +68,6 @@ char  ***create_env_list(char **envp)
 
 
    len = tab_len(envp);
-   printf("len: %d\n", len);
    if (len > 0)
    {
       ret = malloc(sizeof(char **) * (len + 1));
@@ -80,11 +79,11 @@ char  ***create_env_list(char **envp)
    {
       ret[i] = malloc(sizeof(char *) * 2);
       split = ft_split(envp[i], '=');
-      //TODO copier la string du split d'une facon plus juste, ici on ne copie que le pointeur
-      ret[i][0] = split[0];
-      ret[i][1] = split[1];
-      free_tab2(split);
-      //printf("1: %s\n2: %s\n", ret[i][0], ret[i][1]);
+
+      ret[i][0] = malloc(sizeof(char) * (ft_strlen(split[0])));
+      ret[i][1] = malloc(sizeof(char) * (ft_strlen(split[1])));
+      ft_strlcpy(ret[i][0], split[0], (ft_strlen(split[0]) + 1));
+      ft_strlcpy(ret[i][1], split[1], (ft_strlen(split[1]) + 1));
       i++;
    }
    // TODO results in undefined value;
@@ -93,23 +92,55 @@ char  ***create_env_list(char **envp)
 
 }
 
-int   ms_export(char ***args, char ***env, char **envp)
+int   add_new_variable(char **arg, char **envp)
 {
-   (void)envp;
    int   i;
-   int   j;
+   int   env_size;
+   int   line_size;
+   char **new_envp;
 
    i = 0;
+   env_size = tab_len(envp);
+   new_envp = malloc(sizeof(char *) * (env_size + 1));
+   line_size = ft_strlen(arg[0]) + ft_strlen(arg[1]) + 2;
+   while (i < env_size)
+   {
+      new_envp[i] = ft_strdup(envp[i]);
+      i++;
+   }
+   new_envp[i] = malloc(sizeof(char) * (line_size));
+   ft_strlcpy(new_envp[i], arg[0], ft_strlen(new_envp[i])); 
+   ft_strlcpy(new_envp[i], "=", ft_strlen(new_envp[i])); 
+   ft_strlcpy(new_envp[i], arg[1], ft_strlen(new_envp[i])); 
+   // TODO bien copier la nouvelle variable a la fin
+   // pas sur de comment ajouter le =
+   return (0);
+}
+
+int   ms_export(char ***args, char ***env, char **envp)
+{
+   int   i;
+   int   j;
+   int   flag;
+
+   i = 0;
+   flag = 0;
    while (args[i])
    {
       j = 0;
       while (env[j])
       {
-         //printf("-%s-  -%s-\n", env[j][0], args[i][0]);
-         // TODO ne marche que quand ca marche pas
-         if (env[j][0] == args[i][0])
-            printf("coucou\n");
+         if (ft_strncmp(env[j][0], args[i][0], (ft_strlen(args[i][0] + 1))) == 0)
+         {
+            ft_strlcpy(env[j][1], args[i][1], (ft_strlen(args[i][1]) + 1));
+            flag = 1;
+         }
          j++;
+      }
+      if (flag == 1)
+      {
+         add_new_variable(args[i], envp);
+         flag = 0;
       }
       i++;
    }
