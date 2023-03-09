@@ -6,13 +6,25 @@
 /*   By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 14:21:07 by llion             #+#    #+#             */
-/*   Updated: 2023/03/09 16:28:52 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/09 17:58:28 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 int   tab_len(char **tab)
+{
+   int i;
+
+   i = 0;
+   while (tab[i])
+   {
+      i++;
+   }
+   return (i);
+}
+
+int   tab_len2(char ***tab)
 {
    int i;
 
@@ -80,12 +92,9 @@ char  ***create_env_list(char **envp, int env_len)
    while (i < env_len)
    {
       ret[i] = malloc(sizeof(char *) * 2);
-      //printf("%s", ret[i][1]);
       split = ft_split(envp[i], '=');
-      ret[i][0] = ft_strdup(split[0]);//malloc(sizeof(char) * (ft_strlen(split[0]) + 1));
-      ret[i][1] = ft_strdup(split[1]);//malloc(sizeof(char) * (ft_strlen(split[1]) + 1));
-      //ft_strlcpy(ret[i][0], split[0], (ft_strlen(split[0]) + 1));
-      //ft_strlcpy(ret[i][1], split[1], (ft_strlen(split[1]) + 1));
+      ret[i][0] = ft_strdup(split[0]);
+      ret[i][1] = ft_strdup(split[1]);
       i++;
    }
    ret[i] = NULL;
@@ -102,7 +111,7 @@ char  **add_new_variable(char **arg, char **envp)
 
    i = 0;
    env_size = tab_len(envp);
-   new_envp = malloc(sizeof(char *) * (env_size + 2));
+   new_envp = ft_calloc((env_size + 2), sizeof(char *));
    line_size = ft_strlen(arg[0]) + ft_strlen(arg[1]) + 1;
    while (i < env_size)
    {
@@ -116,6 +125,23 @@ char  **add_new_variable(char **arg, char **envp)
    new_envp[env_size + 1] = 0;
    envp = new_envp;
    return (envp);
+}
+
+void  edit_variable(char ***env, char ***args, int i, int j)
+{
+   //TODO fonction non valide
+   
+   int   env_size;
+   char  **new_envp;
+
+   env_size = tab_len2(env);
+   new_envp = ft_calloc(env_size + 2, sizeof(char *));
+   while (i < env_size)
+   {
+      new_envp[i] = ft_strdup(envp[i]);
+      i++;
+   }
+   ft_strlcpy(env[j][1], args[i][1], (ft_strlen(args[i][1]) + 1));
 }
 
 char   **ms_export(char **envp, int env_len)
@@ -140,7 +166,7 @@ char   **ms_export(char **envp, int env_len)
       {
          if (ft_strncmp(env[j][0], args[i][0], (ft_strlen(env[i][0] + 1))) == 0)
          {
-            ft_strlcpy(env[j][1], args[i][1], (ft_strlen(args[i][1]) + 1));
+            edit_variable(env, args, i, j);
             flag = 1;
          }
          j++;
