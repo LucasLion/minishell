@@ -1,39 +1,32 @@
-/* ************************************************************************** */ /*                                                                            */ /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main-lucas.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llion <llion@student.42mulhouse.fr>        +#+  +:+       +#+        */
+/*   By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/07 09:06:00 by llion             #+#    #+#             */
-/*   Updated: 2023/03/07 13:34:50 by llion            ###   ########.fr       */
+/*   Created: 2023/03/09 14:55:57 by llion             #+#    #+#             */
+/*   Updated: 2023/03/09 17:07:09 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../include/minishell.h"
 
-void	ft_exit()
-{
-	exit(0);
-}
-
 int main(int argc, char **argv, char **envp) 
 {
 	(void)argc;
 	(void)argv;
 	char	*line;
-	char	***args;
-	char	***envi;
-	char	*test;
+	int		env_len;
 
+	env_len = tab_len(envp);
 	while (1)
 	{
-		test = "LANG=YEAHSHIT USER=YOUSUCK LUCAS=gentil ANTOINE=mechant";
 		line = readline("Minishell $ ");
 		add_history(line);
-		args = create_args_list(test);
-		envi = create_env_list(envp);
-		ms_export(args, envi, envp);
-		free_tab3(envi);
-		free_tab3(args);
+		envp = ms_export(envp, env_len);
+		for (int i = 0; envp[i]; i++)
+			printf("envp[i]: %s\n", envp[i]);
 	}
 }

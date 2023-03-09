@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/03/09 15:27:43 by llion             #+#    #+#              #
+#    Updated: 2023/03/09 15:27:47 by llion            ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = minishell 
 CC = gcc
 FLAGS = -Wall -Werror -Wextra -g3 
@@ -5,7 +17,7 @@ READLINE = -lreadline
 LIBFT = ./libft/libft.a
 HEADERS = -I headers -I libft 
 
-SOURCES = 	main-lucas.c 			\
+SOURCES = 	main-lucas.c 	\
 			find_arg.c 		\
 			verif_line.c	\
 			split_ms.c		\
@@ -32,7 +44,7 @@ bonus : ${OBJBONUS}
 
 debug : ${OBJS} ${OBJBONUS} 
 	make -C libft
-	gcc ${FLAGS} ${OBJS} ${LIBFT} ${LIB_MLX} ${HEADERS} -fsanitize=address -o ${NAME} 
+	gcc ${FLAGS} ${OBJS} ${LIBFT} ${HEADERS} -fsanitize=address -o ${NAME}  ${READLINE}
 
 clean :
 	rm -f ${OBJS} ${OBJBONUS} 
