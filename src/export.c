@@ -6,7 +6,7 @@
 /*   By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 14:21:07 by llion             #+#    #+#             */
-/*   Updated: 2023/03/08 19:00:05 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/09 12:13:57 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,12 @@ char  ***create_env_list(char **envp)
       ft_strlcpy(ret[i][1], split[1], (ft_strlen(split[1]) + 1));
       i++;
    }
-   // TODO results in undefined value;
    ret[i] = NULL;
    return (ret);
 
 }
 
-int   add_new_variable(char **arg, char **envp)
+void   add_new_variable(char **arg, char **envp)
 {
    int   i;
    int   env_size;
@@ -112,9 +111,7 @@ int   add_new_variable(char **arg, char **envp)
    ft_strlcpy(new_envp[i], arg[0], ft_strlen(new_envp[i])); 
    ft_strlcpy(new_envp[i], "=", ft_strlen(new_envp[i])); 
    ft_strlcpy(new_envp[i], arg[1], ft_strlen(new_envp[i])); 
-   // TODO bien copier la nouvelle variable a la fin
-   // pas sur de comment ajouter le =
-   return (0);
+   envp = new_envp;
 }
 
 int   ms_export(char ***args, char ***env, char **envp)
@@ -123,6 +120,7 @@ int   ms_export(char ***args, char ***env, char **envp)
    int   j;
    int   flag;
 
+   (void)envp;
    i = 0;
    flag = 0;
    while (args[i])
@@ -130,21 +128,20 @@ int   ms_export(char ***args, char ***env, char **envp)
       j = 0;
       while (env[j])
       {
-         if (ft_strncmp(env[j][0], args[i][0], (ft_strlen(args[i][0] + 1))) == 0)
+         if (ft_strncmp(env[j][0], args[i][0], (ft_strlen(env[i][0] + 1))) == 0)
          {
             ft_strlcpy(env[j][1], args[i][1], (ft_strlen(args[i][1]) + 1));
             flag = 1;
          }
          j++;
       }
-      if (flag == 1)
-      {
-         add_new_variable(args[i], envp);
-         flag = 0;
-      }
+      if (flag == 0)
+        add_new_variable(args[i], envp);
+      flag = 0;
       i++;
    }
-
+   for (int i = 0; envp[i]; i++)
+      printf("%s\n", envp[i]);
    return (0);
 }
 

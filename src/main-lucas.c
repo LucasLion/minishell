@@ -8,6 +8,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "../include/minishell.h"
 
 void	ft_exit()
@@ -26,7 +27,7 @@ int main(int argc, char **argv, char **envp)
 
 	while (1)
 	{
-		test = "LANG=YEAHSHIT USER=value LUCAS=gentil ANTOINE=mechant";
+		test = "LANG=YEAHSHIT USER=YOUSUCK LUCAS=gentil ANTOINE=mechant";
 		line = readline("Minishell $ ");
 		add_history(line);
 		args = create_args_list(test);
