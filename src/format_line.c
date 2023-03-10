@@ -12,53 +12,6 @@
 
 #include "../include/minishell.h"
 
-// TO DO : le pre formatage fonctionne. Probleme avec les << et >>
-// Avec || cela met des espaces partout et separe donc les doubles chevrons.
-// avec && ca garde bien les double chevrons maais aussi les triples et ca garde le texte apres et avant
-
-void format_list(t_char *list)
-{
-    t_char  *temp;
-    t_char  *head;
-    int     flag;
-
-    temp = list;
-    head = list;
-    flag = 0;
-    while(temp)
-    {  
-        flag = put_flag(temp->character, flag);
-        if (flag  == 0 && temp->previous != NULL && temp->next != NULL) 
-        { 
-            if (temp->character == '|' && 
-                (temp->previous->character != ' ' || temp->next->character != ' '))
-            {
-                insert_space(temp);
-                temp = head;
-            }      
-            else if (temp->character == '<' &&
-                (temp->previous->character != ' ' || temp->next->character != ' ') &&
-                (temp->previous->character != '<' && temp->next->character != '<')) 
-            //  (temp->previous->character != '<' || temp->next->character != '<')) 
-            {
-                insert_space(temp);
-                temp = head;
-            }     
-            else if  (temp->character == '>' && 
-                (temp->previous->character != ' ' || temp->next->character != ' ') &&
-                (temp->previous->character != '>' && temp->next->character != '>')) 
-            //  (temp->previous->character != '>' || temp->next->character != '>'))       
-            {
-                insert_space(temp);
-                temp = head;
-            }
-            else 
-                temp = temp->next;
-        }
-        else
-            temp = temp->next; 
-    }
-}
 
 int length_list(t_char *list)
 {
@@ -78,9 +31,6 @@ int length_list(t_char *list)
 	else
 		return (0);
 }
-
-
-
 
 char    *list_to_string(t_char *list)
 {
@@ -105,17 +55,30 @@ char    *list_to_string(t_char *list)
     return (ret);
 }
 
-void format_line(char *line_input)
+char    *format_line(char *line)
 {
     t_char *list;
     char *line_formated;
     
-    if (verif_line(line_input))
-        return ;
+    if (verif_line(line))
+        return (NULL);
     list = NULL;
-    fill_list(line_input, &list);
-    format_list(list);
+    fill_list(line, &list);
+    if (!format_list(list))
+        return (NULL);
+    //free la list
     line_formated = list_to_string(list);
+    //free la list
+    return (line_formated);
+}
+
+
+
+void print_input_after_formating(char *line_input)
+{
+    char *line_formated;
+    
+    line_formated = format_line(line_input);
     printf("%s\n", line_formated);
     printf("------------------------------\n");
     split_and_print(line_formated);

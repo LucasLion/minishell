@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 08:04:32 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/06 11:42:21 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/10 16:22:39 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include <stdio.h>
 
 // TOUT FONCTIONNE A TESTER //
+// A TESTER AVEC input suivant
+// "dasdas"Da dsad sad as"DSAdas" dasdasddsa"DAS  "DSA"" "<<" <<dsadasdas
 
 int put_flag(char c, int flag)
 {
@@ -72,17 +74,23 @@ int	len_word(char const *str, int *pos)
 	flag1 = 0;
 	while ((str[*pos] == '\0' || str[*pos] == ' '))
 		(*pos)++;
+		
+	flag = put_flag(str[*pos], flag);
+	
 	while ((str[*pos] != '\0' && str[*pos] != ' ') || flag == 1 || flag == 2)
 	{
-		flag1 = put_flag(str[*pos], flag);
-		if ((flag1 == 1 && flag != 1)|| (flag1 == 2 && flag !=2) || (flag1 == 0 && flag!= 0))
-			(*pos)++;
-		else
-			{
+	//	flag1 = put_flag(str[*pos], flag);
+	//	if ((flag1 == 1 && flag != 1)|| (flag1 == 2 && flag !=2) || (flag1 == 0 && flag!= 0))
+	//		(*pos)++;
+	//	else
+	//		{
 				count++;
 				(*pos)++;
-			}
-		flag = flag1;
+	//		}
+	//	flag = flag1;
+	
+	flag = put_flag(str[*pos], flag);
+	
 	}
 	return (count);
 }
@@ -98,18 +106,25 @@ void	put_word(char const *str, int *pos, char *line_tab)
 	flag1 = 0;
 	while ((str[*pos] == '\0' || str[*pos] == ' '))
 		(*pos)++;
+
+	flag = put_flag(str[*pos], flag);
+	
 	while ((str[*pos] != '\0' && str[*pos] != ' ') || flag == 1 || flag == 2)
 	{
-		flag1 = put_flag(str[*pos], flag);
-		if ((flag1 == 1 && flag != 1)|| (flag1 == 2 && flag !=2) || (flag1 == 0 && flag!= 0))
-			(*pos)++;
-		else
-			{
+	//	flag1 = put_flag(str[*pos], flag);
+	//	if ((flag1 == 1 && flag != 1)|| (flag1 == 2 && flag !=2) || (flag1 == 0 && flag!= 0))
+	//		(*pos)++;
+	//	else
+	//		{
 				line_tab[i] = str[*pos]; 
 				(*pos)++;
 				i++;
-			}
-		flag = flag1;
+	//		}
+	//	flag = flag1;
+
+	flag = put_flag(str[*pos], flag);
+
+	
 	}
 	line_tab[i] = '\0';
 }
@@ -135,9 +150,10 @@ int	fill_tab_split_ms(char **tab, char const *s)
 	int		pos_word;
 	int		len;
 	
+	int count_word = count_word_ms(s);
 	i = 0;
 	pos = 0;
-	while (i < count_word_ms(s))
+	while (i < count_word)
 	{
 		pos_word = pos;
 		len = len_word(s, &pos);
