@@ -6,7 +6,7 @@
 /*   By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 14:55:57 by llion             #+#    #+#             */
-/*   Updated: 2023/03/09 17:52:59 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/10 18:53:18 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,12 @@ int main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	char	*line;
-	int		env_len;
 
-	env_len = tab_len(envp);
 	while (1)
 	{
 		line = readline("Minishell$ ");
 		add_history(line);
-		envp = ms_export(envp, env_len);
-	}
+		envp = unset(line);
+		for (int i = 0; envp[i]; i++)
+			printf("%s\n", envp[i]);
 }

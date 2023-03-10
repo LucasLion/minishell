@@ -6,7 +6,7 @@
 /*   By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 14:21:07 by llion             #+#    #+#             */
-/*   Updated: 2023/03/10 18:53:31 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/10 18:17:37 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,22 +101,22 @@ char  **add_new_variable(char **arg, char **envp)
    env_size = tab_len(envp);
    new_envp = ft_calloc((env_size + 2), sizeof(char *));
    line_size = ft_strlen(arg[0]) + ft_strlen(arg[1]) + 1;
+   new_envp[i] = ft_calloc(line_size + 2, sizeof(char));
    new_envp[env_size + 1] = 0;
    while (i < env_size && ft_strncmp(envp[i], arg[0], ft_strlen(arg[0])) < 0)
    {
       new_envp[i] = ft_strdup(envp[i]);
       i++;
    }
-   new_envp[i] = ft_calloc(line_size + 2, sizeof(char)); 
+   //new_envp[i] = ft_strdup(arg[0]);
    ft_strlcpy(new_envp[i], arg[0], ft_strlen(arg[0]) + 1); 
-   ft_strlcat(new_envp[i], "=", ft_strlen(new_envp[i]) + 2); 
-   ft_strlcat(new_envp[i], arg[1], ft_strlen(new_envp[i]) + ft_strlen(arg[1]) + 1); 
-   i++;
    while (i < env_size)
    {
       new_envp[i] = ft_strdup(envp[i]);
       i++;
    }
+   //ft_strlcat(new_envp[i], "=", ft_strlen(new_envp[env_size]) + 2); 
+   //ft_strlcat(new_envp[i], arg[1], ft_strlen(new_envp[env_size]) + ft_strlen(arg[1]) + 1); 
    return (new_envp);
 }
 
@@ -128,46 +128,63 @@ void  edit_variable(char **envp, char *var, char *val, int j)
    ft_strlcat(envp[j], val, ft_strlen(envp[j]) + ft_strlen(val) + 1); 
 }
 
+//char  **sort_envp(char **envp)
+//{
+//   char  tmp[1000];
+//   int   i;
+//   int   j;
+//   int   env_len;
+//
+//   env_len = tab_len(envp);
+//   i = 0;
+//   while (i < env_len)
+//   {
+//      j = 0;
+//      while (j < env_len - i - 1)
+//      {
+//         if (ft_strncmp(envp[i], envp[j], ft_strlen(envp[i]) == 0))
+//         {
+//             ft_strlcpy(tmp, envp[i], 1000);
+//             ft_strlcpy(envp[i], envp[j], 1000);
+//             ft_strlcpy(envp[j], tmp, 1000);
+//         }
+//         j++;
+//      }
+//      i++;
+//   }
+//}
+
 char   **ms_export(char **envp, int env_len)
 {
    int   i;
    int   j;
-   int   k;
    int   flag;
-   char *string;
+   char *test;
    char ***args;
    char ***env;
 
    i = 0;
-   k = 0;
    flag = 0;
    env_len = tab_len(envp);
-   string = "LANG=YEAHSHIT USER=YOUSUCK LUCAS=gentil ANTOINE=mechant";
-   //string = "";
-   args = create_args_list(string);
+   test = "LANG=YEAHSHIT USER=YOUSUCK LUCAS=gentil"; //ANTOINE=mechant";
+   args = create_args_list(test);
    env = create_env_list(envp, env_len);
-   if (ft_strlen(string) == 0)
-      while (envp[k])
-         printf("declare -x %s\n", envp[k++]);
-   else if (args)
+   while (args[i])
    {
-      while (args[i])
+      j = 0;
+      while (env[j])
       {
-         j = 0;
-         while (env[j])
+         if (ft_strncmp(env[j][0], args[i][0], (ft_strlen(args[i][0] + 1))) == 0)
          {
-            if (ft_strncmp(env[j][0], args[i][0], (ft_strlen(args[i][0] + 1))) == 0)
-            {
-               edit_variable(envp, args[i][0], args[i][1], j);
-               flag = 1;
-            }
-            j++;
+            edit_variable(envp, args[i][0], args[i][1], j);
+            flag = 1;
          }
-         if (flag == 0)
-            envp = add_new_variable(args[i], envp);
-         flag = 0;
-         i++;
+         j++;
       }
+      if (flag == 0)
+         envp = add_new_variable(args[i], envp);
+      flag = 0;
+      i++;
    }
    return (envp);
 }

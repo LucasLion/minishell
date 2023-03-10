@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/09 15:27:28 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/10 11:34:35 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ t_env    *create_var_list(char **envp);
 char     ***create_args_list(char *args);
 char     ***create_env_list(char **envp, int env_len);
 int      tab_len(char **envp);
+char     **sort_envp(char **envp);
 
 /* -------------- PARSING -------------- */
 
