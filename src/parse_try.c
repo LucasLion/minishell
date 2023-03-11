@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 15:03:31 by event             #+#    #+#             */
-/*   Updated: 2023/03/11 12:07:20 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/11 12:26:34 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void try_handle_chevrons(char **tab, int index, t_command *new)
 }
 
 
-void try_find_command_until_pipe(char **tab, int *i, int *cmd,t_command *new)
+void try_find_command_until_pipe(char **tab, int *i,t_command *new)
 {
     int j;
     
@@ -102,8 +102,9 @@ void try_find_command_until_pipe(char **tab, int *i, int *cmd,t_command *new)
     }
     else 
     {
-        if (*cmd == 0)
+        /*if (*cmd == 0)
         // la commande
+            fill_list_string(tab[*i], &(new->command)); 
         {
             new->command = malloc(sizeof(char) * (ft_strlen(tab[*i]) + 1));
             //clean si null
@@ -121,55 +122,27 @@ void try_find_command_until_pipe(char **tab, int *i, int *cmd,t_command *new)
         else 
         // arg ou option
         {
-            fill_list_string(tab[*i], &(new->options_and_args)); 
+            fill_list_string(tab[*i], &(new->command)); 
             new->option_arg = 1;
-        }
+        }*/
+        fill_list_string(tab[*i], &(new->command));
     }
 }
 
 
-/*void    parse_input(char *input)
-{
-    char    **tab;
-    int     i;
-    int     pipe;
-    int     cmd;
-    int     arg;
-    
-    i = 0;
-    pipe = 0;
-    tab = ft_split_ms(format_line(input));
-
-    
-    while(tab[i])
-    {
-        cmd = 0;
-        arg = 1;
-        while(tab[i] && (tab[i][0] != '|' || tab[i][1] != '\0'))
-        {
-            find_command_until_pipe(tab, &i, &cmd, &arg);
-            i++;
-        }
-        if (tab[i] && (tab[i][0] == '|' && tab[i][1] == '\0'))
-        {    
-            printf("Pipe num %d\n", ++pipe);
-            i++;
-        }
-    }
-}*/
 int fill_list_command(char **tab, int *i, t_command **list, int *count)
 {
-    int         cmd;
+    //int         cmd;
     t_command   *new;
 
-    cmd = 0;
+    //cmd = 0;
     new = malloc(sizeof(t_command));
     if (new == NULL)
         return (0);
     init_struct_command(new);
     while(tab[*i] && (tab[*i][0] != '|' || tab[*i][1] != '\0'))
         {
-            try_find_command_until_pipe(tab, i, &cmd, new);
+            try_find_command_until_pipe(tab, i, new);
             (*i)++;
         }
         if (tab[*i] && (tab[*i][0] == '|' && tab[*i][1] == '\0'))

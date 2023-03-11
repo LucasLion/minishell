@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/11 10:23:41 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/11 12:30:41 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,13 @@ typedef struct s_string
 
 typedef struct s_command
 {
-	char				*command;
+	t_string			*command;
 	t_string			*input;
 	int					redir_input;
 	t_string			*output;
 	int					redir_output;
 	t_string			*delimiters;
 	int					delimiter;
-	t_string			*options_and_args;
-	int					option_arg;
 	int					order;
 	int					pipe_after;
     struct s_command	*next;
@@ -119,6 +117,7 @@ int		lstadd_back_list_string(t_string **list, t_string *new);
 int 	fill_list_string(char *str, t_string **list);
 int 	fill_list_string_append(char *str, t_string **list);
 void 	print_list_string_from_head(t_string *list);
+void 	print_list_string_from_head_command(t_string *list);
 
 /* -------------- LIST_COMMAND.c -------------- */
 

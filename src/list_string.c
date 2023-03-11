@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 11:19:41 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/11 10:31:15 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/11 12:30:04 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,33 @@ int fill_list_string_append(char *str, t_string **list)
 
 void print_list_string_from_head(t_string *list)
 {
-    t_string *head;
+    t_string    *head;
+    int         command;
     
     head = list;
+    command = 0;
+    if (head == NULL)
+    {
+        printf("NULL\n");
+        return ;
+    }
+    while (head)
+    {
+        if (head->append == 1)
+            printf("mode append : %s\n", head->string);
+        else 
+            printf("%s\n", head->string);
+        head = head->next;
+    }
+}
+
+void print_list_string_from_head_command(t_string *list)
+{
+    t_string    *head;
+    int         command;
+    
+    head = list;
+    command = 0;
     if (head == NULL)
     {
         printf("NULL\n");
@@ -107,10 +131,18 @@ void print_list_string_from_head(t_string *list)
         if (head->append == 1)
             printf("mode append : %s\n", head->string);
         else
+        {
+            if (command == 0)
+            {
+                printf("la commande est : ");
+                command = 1;
+            }
             printf("%s\n", head->string);
+        }
         head = head->next;
     }
 }
+
 
 /*void print_list_int_from_bottom(t_number *list)
 {

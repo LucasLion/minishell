@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 11:19:41 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/11 12:05:48 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/11 12:30:20 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,9 @@ void    init_struct_command(t_command *list_of_command)
 	list_of_command->redir_output = 0;
     list_of_command->order = 0;
     list_of_command->delimiter = 0;
-    list_of_command->option_arg = 0;
     list_of_command->pipe_after = 0;
 	list_of_command->delimiters = NULL;
 	list_of_command->command = NULL;
-	list_of_command->options_and_args = NULL;
     list_of_command->input = NULL;
     list_of_command->output = NULL;
     
@@ -63,8 +61,9 @@ void print_list_command_from_head(t_command *list)
     }
     while (head)
     {
-         printf("Commande num %d\n", head->order);
-         printf("Commande : %s\n", head->command);
+        printf("Commande num %d\n", head->order);
+        printf("COMMANDE OPTIONS ET ARGUMENTS : \n");
+        print_list_string_from_head_command(head->command);
         if (head->redir_input == 1)
         {
             printf("LIST DES INPUT : \n");    
@@ -80,11 +79,6 @@ void print_list_command_from_head(t_command *list)
         {
             printf("LIST DES DELIMITEURS :\n");
             print_list_string_from_head(head->delimiters);
-        }
-        if (head->option_arg == 1)
-        {
-             printf("LIST DES OPTIONS ET ARGUMENTS : \n");
-            print_list_string_from_head(head->options_and_args);
         }
         if (head->pipe_after == 1)
             printf("---PIPE NUM %d----\n", head->order);
