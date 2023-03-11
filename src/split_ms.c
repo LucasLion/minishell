@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 08:04:32 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/11 13:44:12 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/11 14:25:25 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,9 +127,9 @@ int	fill_tab_split_ms(char **tab, char const *s)
 	int		pos_word;
 	int		len;
 	
-	int count_word = count_word_ms(s);
 	i = 0;
 	pos = 0;
+	int count_word = count_word_ms(s);
 	while (i < count_word)
 	{
 		pos_word = pos;
