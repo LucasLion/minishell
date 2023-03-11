@@ -46,7 +46,7 @@ bonus : ${OBJBONUS}
 
 debug : ${OBJS} ${OBJBONUS} 
 	make -C libft
-	gcc ${FLAGS} ${OBJS} ${LIBFT} ${LIB_MLX} ${HEADERS} -fsanitize=address -o ${NAME} 
+	gcc ${FLAGS} ${OBJS} ${LIBFT} ${LIB_MLX} ${HEADERS} -fsanitize=address -o ${NAME} ${READLINE}
 
 clean :
 	rm -f ${OBJS} ${OBJBONUS} 

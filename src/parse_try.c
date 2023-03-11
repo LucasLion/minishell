@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 15:03:31 by event             #+#    #+#             */
-/*   Updated: 2023/03/10 16:16:28 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/11 12:07:20 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int count_nb_of_pipes(char **tab)
 }*/
 
 
-void try_handle_chevrons(char **tab, int index, t_command *list)
+void try_handle_chevrons(char **tab, int index, t_command *new)
 {
     int fd;
 
@@ -59,13 +59,13 @@ void try_handle_chevrons(char **tab, int index, t_command *list)
     {
         if (tab[index][1] == '<')
         {
-            fill_list_string(tab[index + 1], &(list->delimiters));  
-            list->delimiter = 1;
+            fill_list_string(tab[index + 1], &(new->delimiters));  
+            new->delimiter = 1;
         } 
         else
             { //input redirige
-                fd = open(tab[index + 1], O_RDONLY);
-                list->fd_input = fd;
+                fill_list_string(tab[index + 1], &(new->input));
+                new->redir_input = 1;
             }   
             // printf("Input redirected from file : %s\n", tab[index + 1]);
     }
@@ -75,29 +75,29 @@ void try_handle_chevrons(char **tab, int index, t_command *list)
         //printf("Output redirected and APPENDED to file : %s\n", tab[index + 1]);
         //output redirige avec append
         {
-            fd = open(tab[index + 1], O_WRONLY, O_APPEND);
-            list->fd_output = fd;
+            fill_list_string_append(tab[index + 1], &(new->output));
+            new->redir_output = 1;
         }
             
         else
         //printf("Output redirected to file : %s\n", tab[index + 1]);
         //output redirige
         {
-            fd = open(tab[index + 1], O_WRONLY, O_TRUNC);
-            list->fd_output = fd;
+            fill_list_string(tab[index + 1], &(new->output));
+            new->redir_output = 1;
         }
     }
 }
 
 
-void try_find_command_until_pipe(char **tab, int *i, int *cmd,t_command *list)
+void try_find_command_until_pipe(char **tab, int *i, int *cmd,t_command *new)
 {
     int j;
     
     j = 0;
     if (tab[*i][0] == '<' || tab[*i][0] == '>')
     {
-        try_handle_chevrons(tab, *i, list);
+        try_handle_chevrons(tab, *i, new);
         (*i)++;
     }
     else 
@@ -105,19 +105,25 @@ void try_find_command_until_pipe(char **tab, int *i, int *cmd,t_command *list)
         if (*cmd == 0)
         // la commande
         {
-            list->command = malloc(sizeof(char) * (ft_strlen(tab[*i]) + 1));
+            new->command = malloc(sizeof(char) * (ft_strlen(tab[*i]) + 1));
             //clean si null
+            printf("Voici la commande : %s\n", tab[*i]);
+            printf("et le nombre de lettre de la cmd : %zu\n", ft_strlen(tab[*i]));
             while (tab[*i][j])
             {
-                tab[*i][j] = list->command[j];
+                tab[*i][j] = new->command[j];
                 j++;
             }
-            list->command[j] = '\0';
+            new->command[j] = '\0';
+            printf("commande dans le node : %s", new->command);
             *cmd = 1;
         }
         else 
         // arg ou option
-            fill_list_string(tab[*i], &(list->options_and_args)); 
+        {
+            fill_list_string(tab[*i], &(new->options_and_args)); 
+            new->option_arg = 1;
+        }
     }
 }
 
@@ -151,44 +157,60 @@ void try_find_command_until_pipe(char **tab, int *i, int *cmd,t_command *list)
         }
     }
 }*/
+int fill_list_command(char **tab, int *i, t_command **list, int *count)
+{
+    int         cmd;
+    t_command   *new;
+
+    cmd = 0;
+    new = malloc(sizeof(t_command));
+    if (new == NULL)
+        return (0);
+    init_struct_command(new);
+    while(tab[*i] && (tab[*i][0] != '|' || tab[*i][1] != '\0'))
+        {
+            try_find_command_until_pipe(tab, i, &cmd, new);
+            (*i)++;
+        }
+        if (tab[*i] && (tab[*i][0] == '|' && tab[*i][1] == '\0'))
+        {    
+            new->pipe_after = 1;
+            (*i)++;
+        }
+    new->order = *count;
+    new->next = NULL;
+    if (!lstadd_back_list_command(list, new ))
+        return (0);
+    return (1);
+}
+
+
+
+
 
 
 void    parse_try_input(char *input)
 {
     char    **tab;
     int     i;
-    int     cmd;
     int     count;
     t_command   *list_of_command;
+    //t_string *list_of_srting;
     
     
     i = 0;
     tab = ft_split_ms(format_line(input));
     count = 0;
     list_of_command = NULL;
-    
+    //list_of_srting = NULL;
+    //init_struct_command(list_of_command);
     while(tab[i])
     {
-        
-        cmd = 0;
-        count ++;
-        t_command   *new;
-        new = malloc(sizeof(t_command));
-            // faire si c'est nul
-        while(tab[i] && (tab[i][0] != '|' || tab[i][1] != '\0'))
-        {
-            try_find_command_until_pipe(tab, &i, &cmd, new);
-            i++;
-        }
-        if (tab[i] && (tab[i][0] == '|' && tab[i][1] == '\0'))
-        {    
-            list_of_command->pipe_after = 1;
-            i++;
-        }
-        list_of_command->order = count;
-        list_of_command->next = NULL;
-        if (!lstadd_back_list_command(&list_of_command, new ))
-            return ;
-    // cleaan la liste si il y a un souci
+        count++;
+        fill_list_command(tab, &i, &list_of_command, &count);
+        //fill_list_string_append(tab[i], &list_of_srting);
+        //i++;
     }
+    print_list_command_from_head(list_of_command);
+   // print_list_string_from_head(list_of_srting);
 }

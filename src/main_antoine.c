@@ -15,6 +15,6 @@ int main()
         //print_input_after_formating(input);
         //print_input_after_formating(input);
         //printf ("-------------------\n");
-        parse_input(input);
+        parse_try_input(input);
     }
 }
