@@ -3,7 +3,7 @@ CC = gcc
 FLAGS = -Wall -Werror -Wextra -g3 
 READLINE = -lreadline
 LIBFT = ./libft/libft.a
-HEADERS = -I headers -I libft 
+HEADERS = -I include -I libft 
 
 
 SOURCES = 	main_antoine.c \
@@ -17,10 +17,10 @@ SOURCES = 	main_antoine.c \
 			format_line.c \
 			format_list.c \
 			parse.c \
+			parse_v1.c \
 			list_int.c \
 			list_string.c \
-			list_command.c \
-			parse_try.c
+			list_command.c 
 
 			
 SRCBONUS = 

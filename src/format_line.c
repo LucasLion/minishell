@@ -6,11 +6,11 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 15:50:37 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/06 18:13:47 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/11 13:34:40 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 
 int length_list(t_char *list)
@@ -71,7 +71,6 @@ char    *format_line(char *line)
     //free la list
     return (line_formated);
 }
-
 
 
 void print_input_after_formating(char *line_input)

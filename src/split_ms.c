@@ -6,16 +6,11 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 08:04:32 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/10 16:22:39 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/11 13:44:12 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
-
-// TOUT FONCTIONNE A TESTER //
-// A TESTER AVEC input suivant
-// "dasdas"Da dsad sad as"DSAdas" dasdasddsa"DAS  "DSA"" "<<" <<dsadasdas
+#include "minishell.h"
 
 int put_flag(char c, int flag)
 {
@@ -63,6 +58,7 @@ int	count_word_ms(char const *str)
 	return (count);
 }
 
+
 int	len_word(char const *str, int *pos)
 {
 	int count;
@@ -79,18 +75,9 @@ int	len_word(char const *str, int *pos)
 	
 	while ((str[*pos] != '\0' && str[*pos] != ' ') || flag == 1 || flag == 2)
 	{
-	//	flag1 = put_flag(str[*pos], flag);
-	//	if ((flag1 == 1 && flag != 1)|| (flag1 == 2 && flag !=2) || (flag1 == 0 && flag!= 0))
-	//		(*pos)++;
-	//	else
-	//		{
-				count++;
-				(*pos)++;
-	//		}
-	//	flag = flag1;
-	
-	flag = put_flag(str[*pos], flag);
-	
+		count++;
+		(*pos)++;
+		flag = put_flag(str[*pos], flag);
 	}
 	return (count);
 }
@@ -111,20 +98,10 @@ void	put_word(char const *str, int *pos, char *line_tab)
 	
 	while ((str[*pos] != '\0' && str[*pos] != ' ') || flag == 1 || flag == 2)
 	{
-	//	flag1 = put_flag(str[*pos], flag);
-	//	if ((flag1 == 1 && flag != 1)|| (flag1 == 2 && flag !=2) || (flag1 == 0 && flag!= 0))
-	//		(*pos)++;
-	//	else
-	//		{
-				line_tab[i] = str[*pos]; 
-				(*pos)++;
-				i++;
-	//		}
-	//	flag = flag1;
-
-	flag = put_flag(str[*pos], flag);
-
-	
+		line_tab[i] = str[*pos]; 
+		(*pos)++;
+		i++;
+		flag = put_flag(str[*pos], flag);
 	}
 	line_tab[i] = '\0';
 }

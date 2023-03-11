@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   list_char.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 11:19:41 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/08 15:22:25 by event            ###   ########.fr       */
+/*   Updated: 2023/03/11 13:37:34 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 int	lstadd_back_ms(t_char **list, t_char *new)
 {

@@ -6,116 +6,92 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 15:03:31 by event             #+#    #+#             */
-/*   Updated: 2023/03/10 14:46:21 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/11 13:27:49 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
-/*int count_nb_of_pipes(char **tab, t_number **list)
-{
-    int i;
-    int nb_of_pipes;
-    t_number **temp;
-    
-    temp = list;
-    i = 0;
-    nb_of_pipes = 0;
-    while(tab[i])
-    {
-        if (tab[i][0] == '|' && tab[i][1] == '\0')
-        {
-            nb_of_pipes++;
-            fill_list_int(i, temp);   
-        }   
-        i++;
-    }
-    return (nb_of_pipes);
-}*/
-
-int count_nb_of_pipes(char **tab)
-{
-    int i;
-    int nb_of_pipes;
-    
-    i = 0;
-    nb_of_pipes = 0;
-    while(tab[i])
-    {
-        if (tab[i][0] == '|' && tab[i][1] == '\0')
-            nb_of_pipes++;    
-        i++;
-    }
-    return (nb_of_pipes);
-}
-
-
-void handle_chevrons(char **tab, int index)
+void handle_chevrons(char **tab, int index, t_command *new)
 {
     if (tab[index][0] == '<')
     {
         if (tab[index][1] == '<')
-            printf("Il y a un delimiteur qui est : %s\n", tab[index + 1]);
+        {
+            fill_list_string(tab[index + 1], &(new->delimiters));  
+            new->delimiter = 1;
+        } 
         else
-            printf("Input redirected from file : %s\n", tab[index + 1]);
+        {
+            fill_list_string(tab[index + 1], &(new->input));
+            new->redir_input = 1;
+        }   
     }
     else
     {
         if (tab[index][1] == '>')
-            printf("Output redirected and APPENDED to file : %s\n", tab[index + 1]);
+            fill_list_string_append(tab[index + 1], &(new->output));
         else
-            printf("Output redirected to file : %s\n", tab[index + 1]);
+            fill_list_string(tab[index + 1], &(new->output));
+        new->redir_output = 1;
     }
 }
 
-
-void find_command_until_pipe(char **tab, int *i, int *cmd, int *arg)
+void find_command_until_pipe(char **tab, int *i,t_command *new)
 {
+    int j;
+    
+    j = 0;
     if (tab[*i][0] == '<' || tab[*i][0] == '>')
     {
-        handle_chevrons(tab, *i);
+        handle_chevrons(tab, *i, new);
         (*i)++;
     }
-    else 
-    {
-        if (*cmd == 0)
-        {
-            printf("la commande est : %s\n", tab[*i]);
-            *cmd = 1;
-        }
-        else 
-            printf("arg ou option num %d : %s\n", (*arg)++, tab[*i]); 
-    }
+    else
+        fill_list_string(tab[*i], &(new->command));
 }
 
+
+int fill_list_command(char **tab, int *i, t_command **list, int *count)
+{
+    t_command   *new;
+
+    new = malloc(sizeof(t_command));
+    if (new == NULL)
+        return (0);
+    init_struct_command(new);
+    while(tab[*i] && (tab[*i][0] != '|' || tab[*i][1] != '\0'))
+        {
+            find_command_until_pipe(tab, i, new);
+            (*i)++;
+        }
+        if (tab[*i] && (tab[*i][0] == '|' && tab[*i][1] == '\0'))
+        {    
+            new->pipe_after = 1;
+            (*i)++;
+        }
+    new->order = *count;
+    new->next = NULL;
+    if (!lstadd_back_list_command(list, new ))
+        return (0);
+    return (1);
+}
 
 void    parse_input(char *input)
 {
     char    **tab;
     int     i;
-    int     pipe;
-    int     cmd;
-    int     arg;
+    int     count;
+    t_command   *list_of_command;
     
     i = 0;
-    pipe = 0;
     tab = ft_split_ms(format_line(input));
-
-    
+    count = 0;
+    list_of_command = NULL;
     while(tab[i])
     {
-        cmd = 0;
-        arg = 1;
-        while(tab[i] && (tab[i][0] != '|' || tab[i][1] != '\0'))
-        {
-            find_command_until_pipe(tab, &i, &cmd, &arg);
-            i++;
-        }
-        if (tab[i] && (tab[i][0] == '|' && tab[i][1] == '\0'))
-        {    
-            printf("Pipe num %d\n", ++pipe);
-            i++;
-        }
+        count++;
+        fill_list_command(tab, &i, &list_of_command, &count);
     }
+    print_list_command_from_head(list_of_command);
 }
-

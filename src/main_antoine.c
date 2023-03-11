@@ -1,4 +1,4 @@
-#include "../include/minishell.h"
+#include "minishell.h"
 
 int main()
 {
@@ -15,6 +15,6 @@ int main()
         //print_input_after_formating(input);
         //print_input_after_formating(input);
         //printf ("-------------------\n");
-        parse_try_input(input);
+        parse_input(input);
     }
 }

@@ -6,11 +6,11 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 15:50:37 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/10 12:29:45 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/11 13:35:05 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 
 int add_space_before (t_char *node)
