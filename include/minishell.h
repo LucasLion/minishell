@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/10 11:34:35 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/13 15:08:05 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,10 @@ void  free_tab3(char ***tab);
 
 /* -------------- BUILTINS -------------- */
 
+void	echo(char **args);
+void	pwd();
+char     **unset(char **envp, char *line);
+
 /* -------------- VERIF_LINE -------------- */
 
 int verif_line(char *line);
@@ -62,9 +66,6 @@ char    **ft_split_ms(char const *s);
 void    split_and_print(char *line);
 
 /* -------------- ADD_SPACE.c -------------- */
-
-void	echo(char **args);
-void	pwd();
 
 /* -------------- EXPORT -------------- */
 

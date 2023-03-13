@@ -6,7 +6,7 @@
 #    By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 15:27:43 by llion             #+#    #+#              #
-#    Updated: 2023/03/09 15:27:47 by llion            ###   ########.fr        #
+#    Updated: 2023/03/13 12:06:26 by llion            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SOURCES = 	main-lucas.c 	\
 			echo.c			\
 			pwd.c			\
 			memory_utils.c	\
+			unset.c			\
 			export.c		
 
 OBJS = ${addprefix src/,${SOURCES:.c=.o}}
