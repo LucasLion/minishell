@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 11:19:41 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/11 13:37:34 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/14 12:15:30 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,10 @@ int fill_list(char *line, t_char **list)
         new = malloc(sizeof(t_char));
         if (new == NULL)
             return (0);
-        // cleaan la liste si il y a un souci
         new->character = line[i];
         new->next = NULL;
         if (!lstadd_back_ms(list, new ))
-               return (0);
-        // cleaan la liste si il y a un souci
+            return (0);
         i++;
     }
     return (1);

@@ -3,21 +3,22 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+         #
+#    By: amouly <amouly@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 15:27:43 by llion             #+#    #+#              #
-#    Updated: 2023/03/14 12:50:45 by llion            ###   ########.fr        #
+#    Updated: 2023/03/14 13:04:46 by amouly           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell 
 CC = gcc
-FLAGS = -Wall -Werror -Wextra -ggdb3 
+FLAGS = -Wall -Werror -Wextra -ggdb3
 READLINE = -lreadline
 LIBFT = ./libft/libft.a
 HEADERS = -I include -I libft 
 
 SOURCES = 	main-lucas.c	\
+			main_antoine.c
 			memory_utils.c	\
 			unset.c			\
 			find_arg.c \
@@ -33,7 +34,8 @@ SOURCES = 	main-lucas.c	\
 			parse_v1.c \
 			list_int.c \
 			list_string.c \
-			list_command.c 
+			list_command.c \
+			clean_list.c
 
 OBJS = ${addprefix src/,${SOURCES:.c=.o}}
 OBJBONUS = ${addprefix src/,${SRCBONUS:.c=.o}}

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main-lucas.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+        */
+/*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 14:55:57 by llion             #+#    #+#             */
-/*   Updated: 2023/03/14 10:53:30 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/14 13:04:55 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int main(int argc, char **argv, char **envp) 
+/*int main(int argc, char **argv, char **envp) 
 {
 	(void)argc;
 	(void)argv;
@@ -28,4 +28,4 @@ int main(int argc, char **argv, char **envp)
 	for (int i = 0; new[i]; i++)
 		printf("%d: %s\n", i, new[i]);
 	}
-}
+}*/
