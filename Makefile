@@ -6,7 +6,7 @@
 #    By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 15:27:43 by llion             #+#    #+#              #
-#    Updated: 2023/03/13 12:06:26 by llion            ###   ########.fr        #
+#    Updated: 2023/03/14 10:53:31 by llion            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CC = gcc
 FLAGS = -Wall -Werror -Wextra -g3 
 READLINE = -lreadline
 LIBFT = ./libft/libft.a
-HEADERS = -I headers -I libft 
+HEADERS = -I include -I libft 
 
 SOURCES = 	main-lucas.c 	\
 			find_arg.c 		\

@@ -6,7 +6,7 @@
 /*   By: llion <llion@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+ #+#+   +#+          */
 /*   Created: 2023/03/10 18:39:28 by llion             #+#    #+#             */
-/*   Updated: 2023/03/13 17:59:24 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/14 10:53:32 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ char	**args_list(char **envp, char *line)
 		i++;
 	}
 	args[k] = 0;
-	free_tab2(vars);
 	return (args);
 }
 
@@ -109,12 +108,14 @@ char	**unset(char **envp, char *line)
 	while(i < tab_len(envp) - tab_len(args))
 	{
 		if (compare_args(envp[i], args))
+		{
 			new_envp[i] = ft_strdup(envp[i]);	
+			// il faudra tout free
+			//printf("%d: %s\n", i, new_envp[i]);
+		}
 		i++;
 	}
 	new_envp[i] = 0;
-	for (int i = 0; new_envp[i]; i++)
-		printf("%d: %s\n", i, new_envp[i]);
 	return (new_envp);
 }
 
