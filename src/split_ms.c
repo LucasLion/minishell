@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 08:04:32 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/14 12:51:30 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/14 13:18:46 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ char	**ft_split_ms(char const *s)
 		return (NULL);
 	else
 	{
-		free (s);
+		free ((void *)s);
 		return (tab);
 	}
 }

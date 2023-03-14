@@ -6,7 +6,7 @@
 #    By: amouly <amouly@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 15:27:43 by llion             #+#    #+#              #
-#    Updated: 2023/03/14 13:04:46 by amouly           ###   ########.fr        #
+#    Updated: 2023/03/14 13:17:05 by amouly           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ LIBFT = ./libft/libft.a
 HEADERS = -I include -I libft 
 
 SOURCES = 	main-lucas.c	\
-			main_antoine.c
+			main_antoine.c \
 			memory_utils.c	\
 			unset.c			\
 			find_arg.c \

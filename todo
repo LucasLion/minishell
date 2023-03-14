@@ -1,7 +1,6 @@
 >> faire la diff entre " et ' ==> $
->> finir le parsing : pour les chevrons (double et simple)
+>> PARSING : remplacer les variables d'env
 >> faire toutes les sorties cleans (free tout ce qui a free)
-    --- close quote please
-    ---
+    --- REvoir la clean_list_command 
 
 

@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 15:03:31 by event             #+#    #+#             */
-/*   Updated: 2023/03/14 12:54:08 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/14 16:14:55 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void    parse_input(char *input)
 }
 
 
-void    parse_input_loc(char *input, t_command *list)
+void parse_input_loc(char *input, t_command *list)
 {
     char    **tab;
     int     i;
@@ -105,12 +105,16 @@ void    parse_input_loc(char *input, t_command *list)
     
     i = 0;
     tab = ft_split_ms(format_line(input));
+    if (tab == NULL)
+        return ;
     count = 0;
     while(tab[i])
     {
         count++;
-        fill_list_command(tab, &i, &list, &count);
+        if (!fill_list_command(tab, &i, &list, &count))
+          return ;
     }
-    
+    free_tab2(tab);
     print_list_command_from_head(list);
+    return ;
 }
