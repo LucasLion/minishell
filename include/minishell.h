@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/11 13:44:59 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/14 12:46:23 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "libft.h"
+# include "../libft/libft.h"
 # include <pthread.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -40,6 +40,14 @@ typedef struct s_char
     struct s_char	*previous;
 }					t_char;
 
+typedef struct s_env
+{
+   char           *name;
+   char           *value;
+   struct s_env   *next;
+}              t_env;
+
+
 typedef struct s_string
 {
 	char				*string;
@@ -63,12 +71,16 @@ typedef struct s_command
 	struct s_command	*previous;
 }					t_command;
 
+/* -------------- FREE -------------- */
+
+void  free_tab2(char **tab);
+void  free_tab3(char ***tab);
 
 /* -------------- BUILTINS -------------- */
 
 void	echo(char **args);
 void	pwd();
-int		ms_export(char **args, char **envp);
+char     **unset(char **envp, char *line);
 
 /* -------------- VERIF_LINE -------------- */
 
@@ -86,6 +98,14 @@ int	    fill_tab_split_ms(char **tab, char const *s);
 char    **ft_split_ms(char const *s);
 void    split_and_print(char *line);
 
+/* -------------- EXPORT -------------- */
+
+char     **ms_export(char **envp, int env_len);
+t_env    *create_var_list(char **envp);
+char     ***create_args_list(char *args);
+char     ***create_env_list(char **envp, int env_len);
+int      tab_len(char **envp);
+char     **sort_envp(char **envp);
 
 /* -------------- PARSING -------------- */
 
