@@ -6,26 +6,35 @@
 #    By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 15:27:43 by llion             #+#    #+#              #
-#    Updated: 2023/03/14 10:53:31 by llion            ###   ########.fr        #
+#    Updated: 2023/03/14 12:40:24 by llion            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell 
 CC = gcc
-FLAGS = -Wall -Werror -Wextra -g3 
+FLAGS = -Wall -Werror -Wextra -ggdb3 
 READLINE = -lreadline
 LIBFT = ./libft/libft.a
 HEADERS = -I include -I libft 
 
-SOURCES = 	main-lucas.c 	\
-			find_arg.c 		\
-			verif_line.c	\
-			split_ms.c		\
-			echo.c			\
-			pwd.c			\
+SOURCES = 	main_antoine.c \
+			main-lucas.c	\
 			memory_utils.c	\
 			unset.c			\
-			export.c		
+			find_arg.c \
+			verif_line.c \
+			split_ms.c \
+			echo.c			\
+			pwd.c			\
+			export.c		\
+			list_char.c \
+			format_line.c \
+			format_list.c \
+			parse.c \
+			parse_v1.c \
+			list_int.c \
+			list_string.c \
+			list_command.c 
 
 OBJS = ${addprefix src/,${SOURCES:.c=.o}}
 OBJBONUS = ${addprefix src/,${SRCBONUS:.c=.o}}
