@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 14:59:28 by llion             #+#    #+#             */
-/*   Updated: 2023/03/14 12:35:26 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/14 13:15:04 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,4 @@ void	echo(char **args)
 		print_tab(args, 1);
 		printf("\n");
     }
-    // verifier le resultat de strncmp
 }
