@@ -1,6 +1,6 @@
 NAME = minishell 
 CC = gcc
-FLAGS = -Wall -Werror -Wextra -g3 
+FLAGS = -Wall -Werror -Wextra -ggdb3
 READLINE = -lreadline
 LIBFT = ./libft/libft.a
 HEADERS = -I include -I libft 
@@ -20,7 +20,8 @@ SOURCES = 	main_antoine.c \
 			parse_v1.c \
 			list_int.c \
 			list_string.c \
-			list_command.c 
+			list_command.c \
+			clean_list.c
 
 			
 SRCBONUS = 

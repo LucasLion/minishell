@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/11 13:44:59 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/14 12:20:19 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,7 @@ void    print_input_after_formating(char *line_input);
 void 	handle_chevrons(char **tab, int index, t_command *new);
 void 	find_command_until_pipe(char **tab, int *i,t_command *new);
 int 	fill_list_command(char **tab, int *i, t_command **list, int *count);
+void    parse_input_loc(char *input, t_command *list);
 void    parse_input(char *input);
 
 /* -------------- PARSE_V1.c -------------- */
@@ -154,6 +155,14 @@ int 	count_nb_of_pipes(char **tab);
 void 	handle_chevrons_v1(char **tab, int index);
 void 	find_command_until_pipe_v1(char **tab, int *i, int *cmd, int *arg);
 void    parse_input_v1(char *input);
+
+/* -------------- CLEAN_LIST.c -------------- */
+
+void	clean_list_char(t_char **list);
+void	clean_list_string(t_string **list);
+void	clean_list_command(t_command **list);
+
+
 
 #endif
 
