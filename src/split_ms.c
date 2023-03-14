@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 08:04:32 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/11 14:25:25 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/14 12:51:30 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,10 @@ char	**ft_split_ms(char const *s)
 	if (fill_tab_split_ms(tab, s) == 0)
 		return (NULL);
 	else
+	{
+		free (s);
 		return (tab);
+	}
 }
 
 void split_and_print(char *line)

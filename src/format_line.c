@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 15:50:37 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/11 13:34:40 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/14 12:15:15 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,18 @@ char    *format_line(char *line)
     if (verif_line(line))
         return (NULL);
     list = NULL;
-    fill_list(line, &list);
-    if (!format_list(list))
+    if (!fill_list(line, &list))
+    {
+        clean_list_char(&list);
         return (NULL);
-    //free la list
+    }
+    if (!format_list(list))
+    {
+        clean_list_char(&list);
+        return (NULL);
+    }
     line_formated = list_to_string(list);
-    //free la list
+    clean_list_char(&list);
     return (line_formated);
 }
 
