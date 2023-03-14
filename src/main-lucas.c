@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   main-lucas.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/03 16:13:48 by llion             #+#    #+#             */
-/*   Updated: 2022/11/03 16:15:46 by llion            ###   ########.fr       */
+/*   Created: 2023/03/09 14:55:57 by llion             #+#    #+#             */
+/*   Updated: 2023/03/14 10:53:30 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/minishell.h"
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+int main(int argc, char **argv, char **envp) 
 {
-	size_t	i;
+	(void)argc;
+	(void)argv;
+	char	*line;
+	char **new;
 
-	i = 0;
-	if (dstsize == 0)
-		return (ft_strlen(src));
-	while (i < dstsize - 1 && src[i] != '\0')
+	while (1)
 	{
-		dst[i] = src[i];
-		i++;
+		line = readline("Minishell$ ");
+		add_history(line);
+		char *string = "LANG token";
+		new = unset(envp, string);
+	for (int i = 0; new[i]; i++)
+		printf("%d: %s\n", i, new[i]);
 	}
-	dst[i] = '\0';
-	return (ft_strlen(src));
 }

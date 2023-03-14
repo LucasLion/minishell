@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: amouly <amouly@student.42.fr>              +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/03/09 15:27:43 by llion             #+#    #+#              #
+#    Updated: 2023/03/14 13:02:43 by amouly           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = minishell 
 CC = gcc
 FLAGS = -Wall -Werror -Wextra -ggdb3
@@ -5,8 +17,9 @@ READLINE = -lreadline
 LIBFT = ./libft/libft.a
 HEADERS = -I include -I libft 
 
-
-SOURCES = 	main_antoine.c \
+SOURCES = 	main-lucas.c	\
+			memory_utils.c	\
+			unset.c			\
 			find_arg.c \
 			verif_line.c \
 			split_ms.c \
@@ -22,12 +35,6 @@ SOURCES = 	main_antoine.c \
 			list_string.c \
 			list_command.c \
 			clean_list.c
-
-			
-SRCBONUS = 
-		
-
-		
 
 OBJS = ${addprefix src/,${SOURCES:.c=.o}}
 OBJBONUS = ${addprefix src/,${SRCBONUS:.c=.o}}
@@ -47,7 +54,7 @@ bonus : ${OBJBONUS}
 
 debug : ${OBJS} ${OBJBONUS} 
 	make -C libft
-	gcc ${FLAGS} ${OBJS} ${LIBFT} ${LIB_MLX} ${HEADERS} -fsanitize=address -o ${NAME} ${READLINE}
+	gcc ${FLAGS} ${OBJS} ${LIBFT} ${HEADERS} -fsanitize=address -o ${NAME}  ${READLINE}
 
 clean :
 	rm -f ${OBJS} ${OBJBONUS} 
