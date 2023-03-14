@@ -13,4 +13,8 @@
 	- https://www.pierre-giraud.com/shell-bash/commande/
 	- https://phoenixnap.com/kb/bash-heredoc
 
+	MAN DE BASH : BIEN FAIT
+	- https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Shell-Syntax
+
+
 
