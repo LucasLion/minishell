@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/14 12:38:03 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/14 12:46:23 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "libft.h"
+# include "../libft/libft.h"
 # include <pthread.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -81,7 +81,6 @@ void  free_tab3(char ***tab);
 void	echo(char **args);
 void	pwd();
 char     **unset(char **envp, char *line);
-int		ms_export(char **args, char **envp);
 
 /* -------------- VERIF_LINE -------------- */
 
