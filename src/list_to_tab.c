@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 09:45:36 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/16 16:19:57 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/16 18:17:38 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,16 @@ int count_char(char *string_list, char **envp)
     while(string_list[i])
     {    
         flag1 = put_flag(string_list[i], flag);
-        if ( string_list[i] == '$' && flag1 != 2)
-            count += count_size_env(string_list, &i, envp);
+        if (string_list[i] == '$' && flag1 != 2)
+        { 
+            if (string_list[i+1] == '\0' || string_list[i+1] == ' ' || string_list[i+1] == '$')
+            {
+                count++;
+                i++;
+            } 
+            else
+                count += count_size_env(string_list, &i, envp);
+        }
         else if (string_list[i] == '"' && (flag1 == 1 || (flag1 == 0 && flag == 1) ))
             i++;
         else if (string_list[i] == '\'' && (flag1 == 2 || (flag1 == 0 && flag == 2) ))
@@ -127,7 +135,7 @@ int count_char(char *string_list, char **envp)
     return (count);
 }
 
-char *copy_string_to_tab(char *string_list, char **envp)
+char *copy_string(char *string_list, char **envp)
 {
     int flag;
     int flag1;
@@ -142,8 +150,9 @@ char *copy_string_to_tab(char *string_list, char **envp)
     while(string_list[i])
     {    
         flag1 = put_flag(string_list[i], flag);
-        if (string_list[i] == '$' && flag1 != 2)
-            copy_env_var(string_list, &i, envp, ret, &j);
+        if (string_list[i] == '$' && flag1 != 2 && string_list[i+1] != '\0' 
+            && string_list[i+1] != ' ' && string_list[i+1] != '$' )
+                copy_env_var(string_list, &i, envp, ret, &j);
         else if (string_list[i] == '"' && (flag1 == 1 || (flag1 == 0 && flag == 1)))
             i++;
         else if (string_list[i] == '\'' && (flag1 == 2 || (flag1 == 0 && flag == 2)))
@@ -178,7 +187,7 @@ char **list_to_tab_argv(t_string *list, char **envp)
         return (NULL); 
     while (i < len - 1)
     {
-        ret[i] = copy_string_to_tab(temp->string, envp);
+        ret[i] = copy_string(temp->string, envp);
         i++;
         temp = temp->next;
     }
@@ -192,6 +201,8 @@ void print_tab(char **tab)
 {
     int i = 0;
       
+    if (tab == NULL)
+        return ;
     while (tab[i])
 	{
 		printf("tab[%d] : %s\n", i, tab[i]);
