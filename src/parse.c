@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 15:03:31 by event             #+#    #+#             */
-/*   Updated: 2023/03/16 11:10:00 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/16 11:18:41 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,42 +77,54 @@ int fill_list_command(char **tab, int *i, t_command **list, int *count)
     return (1);
 }
 
-void    parse_input(char *input)
+t_command    *parse_input(char *input)
 {
     char    **tab;
     int     i;
     int     count;
-    t_command   *list_of_command;
+    t_command   *ret;
     
     i = 0;
     tab = ft_split_ms(format_line(input));
     count = 0;
-    list_of_command = NULL;
+    ret = NULL;
     while(tab[i])
     {
         count++;
-        fill_list_command(tab, &i, &list_of_command, &count);
+        fill_list_command(tab, &i, &ret, &count);
     }
-    print_list_command_from_head(list_of_command);
+    //print_list_command_from_head(list_of_command);
+    return (ret);
 }
 
 
-void    parse_input_loc(char *input, t_command *list)
+void parse_input_loc(char *input, t_command *list)
 {
     char    **tab;
     int     i;
     int     count;
-    t_command   *head;
+   // t_command *head;
     
     i = 0;
-    head = list;
+  //  head = list;
     tab = ft_split_ms(format_line(input));
+    if (tab == NULL)
+        return ;
     count = 0;
     while(tab[i])
     {
         count++;
-        fill_list_command(tab, &i, &list, &count);
+        if (!fill_list_command(tab, &i, &list, &count))
+          return ;
     }
-    
+    free_tab2(tab);
     print_list_command_from_head(list);
+    /*print_list_command_from_head(list);
+    printf("Deuxieme list \n");
+    print_list_command_from_head(list);
+    printf("avec head\n");
+    print_list_command_from_head(head);*/
+   // list = head;
+    print_list_command_from_head(list);
+    return ;
 }
