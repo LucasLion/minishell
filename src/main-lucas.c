@@ -6,26 +6,27 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 14:55:57 by llion             #+#    #+#             */
-/*   Updated: 2023/03/14 13:04:55 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/16 11:10:01 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-/*int main(int argc, char **argv, char **envp) 
+int main(int argc, char **argv, char **envp) 
 {
 	(void)argc;
 	(void)argv;
+	(void)envp;
+	//char	**new_envp;
 	char	*line;
-	char **new;
+	t_command	*list;
 
+	list = NULL;
 	while (1)
 	{
 		line = readline("Minishell$ ");
 		add_history(line);
-		char *string = "LANG token";
-		new = unset(envp, string);
-	for (int i = 0; new[i]; i++)
-		printf("%d: %s\n", i, new[i]);
+		//new_envp = unset(envp, line);
+		parse_input_loc(line, list);
 	}
-}*/
+}

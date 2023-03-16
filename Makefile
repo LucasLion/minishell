@@ -6,7 +6,7 @@
 #    By: amouly <amouly@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 15:27:43 by llion             #+#    #+#              #
-#    Updated: 2023/03/16 10:33:30 by amouly           ###   ########.fr        #
+#    Updated: 2023/03/16 11:19:31 by amouly           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,7 +62,7 @@ clean :
 	make clean -C libft
 
 fclean : clean
-	rm -f ${NAME} 
+	rm -f ${NAME} *.dSYM
 	make fclean -C libft
 
 re : fclean all
