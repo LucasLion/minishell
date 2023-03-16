@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 15:03:31 by event             #+#    #+#             */
-/*   Updated: 2023/03/14 12:54:08 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/16 11:10:00 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,10 @@ void    parse_input_loc(char *input, t_command *list)
     char    **tab;
     int     i;
     int     count;
+    t_command   *head;
     
     i = 0;
+    head = list;
     tab = ft_split_ms(format_line(input));
     count = 0;
     while(tab[i])
