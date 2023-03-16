@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/16 11:53:56 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/16 12:41:54 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,12 @@ void    parse_input(char *input, t_command **list);
 void	clean_list_char(t_char **list);
 void	clean_list_string(t_string **list);
 void	clean_list_command(t_command **list);
+
+/* -------------- LIST_TO_TAB.c -------------- */
+
+char 	*copy_string_to_tab(char *string_list, char **envp);
+char 	**list_to_tab_argv(t_string *list, char **envp);
+void 	print_tab(char **tab);
 
 
 
