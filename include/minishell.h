@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/16 11:19:49 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/16 11:53:56 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,14 +107,6 @@ char     ***create_env_list(char **envp, int env_len);
 int      tab_len(char **envp);
 char     **sort_envp(char **envp);
 
-/* -------------- PARSING -------------- */
-
-void	free_tab_ms(char **tab);
-void	print_args(char **tab, int i);
-int		quotes_nbr(char *str);
-int		command_len(char *str);
-char	**find_args(char *str);
-
 /* -------------- LIST_CHAR.c -------------- */
 
 int	    lstadd_back_ms(t_char **list, t_char *new);
@@ -124,13 +116,6 @@ void    print_list_from_bottom(t_char *list);
 int     insert_space_node(t_char *previous, t_char *next);
 int     insert_two_space(t_char *node);
 void    insert_space_everywhere(t_char **list);
-
-/* -------------- LIST_INT.c -------------- */
-
-int	    lstadd_back_list_int(t_number **list, t_number *new);
-int     fill_list_int(int nbr, t_number **list);
-void    print_list_int_from_head(t_number *list);
-void    print_list_int_from_bottom(t_number *list);
 
 /* -------------- LIST_STRING.c -------------- */
 
@@ -166,15 +151,7 @@ void    print_input_after_formating(char *line_input);
 void 	handle_chevrons(char **tab, int index, t_command *new);
 void 	find_command_until_pipe(char **tab, int *i,t_command *new);
 int 	fill_list_command(char **tab, int *i, t_command **list, int *count);
-void    parse_input_loc(char *input, t_command *list);
-t_command    *parse_input(char *input);
-
-/* -------------- PARSE_V1.c -------------- */
-
-int 	count_nb_of_pipes(char **tab);
-void 	handle_chevrons_v1(char **tab, int index);
-void 	find_command_until_pipe_v1(char **tab, int *i, int *cmd, int *arg);
-void    parse_input_v1(char *input);
+void    parse_input(char *input, t_command **list);
 
 /* -------------- CLEAN_LIST.c -------------- */
 

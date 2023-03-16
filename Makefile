@@ -6,7 +6,7 @@
 #    By: amouly <amouly@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 15:27:43 by llion             #+#    #+#              #
-#    Updated: 2023/03/16 11:19:31 by amouly           ###   ########.fr        #
+#    Updated: 2023/03/16 11:57:06 by amouly           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,11 +17,9 @@ READLINE = -lreadline
 LIBFT = ./libft/libft.a
 HEADERS = -I include -I libft 
 
-SOURCES = 	main-lucas.c	\
-			main_antoine.c \
+SOURCES = 	main_antoine.c \
 			memory_utils.c	\
 			unset.c			\
-			find_arg.c \
 			verif_line.c \
 			split_ms.c \
 			echo.c			\
@@ -31,8 +29,6 @@ SOURCES = 	main-lucas.c	\
 			format_line.c \
 			format_list.c \
 			parse.c \
-			parse_v1.c \
-			list_int.c \
 			list_string.c \
 			list_command.c \
 			clean_list.c \
@@ -62,7 +58,7 @@ clean :
 	make clean -C libft
 
 fclean : clean
-	rm -f ${NAME} *.dSYM
+	rm -rf ${NAME} *.dSYM
 	make fclean -C libft
 
 re : fclean all
