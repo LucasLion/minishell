@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/16 17:33:10 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/16 18:32:42 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,12 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <errno.h>
+# include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/types.h>
 # include <sys/stat.h>
+# include <sys/wait.h>
 # include <fcntl.h>
 
 typedef struct s_number
@@ -71,6 +73,10 @@ typedef struct s_command
 	struct s_command	*previous;
 }					t_command;
 
+/* -------------- EXEC -------------- */
+
+int	exec_command(char *command, char **argv, char **envp);
+
 /* -------------- FREE -------------- */
 
 void  free_tab2(char **tab);
@@ -79,6 +85,7 @@ void  free_tab3(char ***tab);
 /* -------------- BUILTINS -------------- */
 
 void	echo(char **args);
+int		ms_exit(char **argv, char **envp);
 void	pwd();
 char     **unset(char **envp, char *line);
 

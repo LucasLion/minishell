@@ -1,0 +1,1 @@
+rm: impossible de supprimer 'test_output.txt': Aucun fichier ou dossier de ce type
