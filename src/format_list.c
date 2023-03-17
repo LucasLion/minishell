@@ -99,11 +99,9 @@ int format_chevron_sup(t_char *node)
 int format_list(t_char *list)
 {
     t_char  *temp;
-    t_char  *head;
     int     flag;
 
     temp = list;
-    head = list;
     flag = 0;
     while(temp)
     {  

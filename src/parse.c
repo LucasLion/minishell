@@ -39,9 +39,6 @@ void handle_chevrons(char **tab, int index, t_command *new)
 
 void find_command_until_pipe(char **tab, int *i,t_command *new)
 {
-    int j;
-    
-    j = 0;
     if (tab[*i][0] == '<' || tab[*i][0] == '>')
     {
         handle_chevrons(tab, *i, new);

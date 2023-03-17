@@ -94,10 +94,8 @@ int fill_list_string_append(char *str, t_string **list)
 void print_list_string_from_head(t_string *list)
 {
     t_string    *head;
-    int         command;
     
     head = list;
-    command = 0;
     if (head == NULL)
     {
         printf("NULL\n");

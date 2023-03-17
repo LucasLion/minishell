@@ -38,16 +38,10 @@ int	exec_command(char *command, char **argv, char **envp)
 	size_t	exit_status;
 	int		status;
 	pid_t	pid;
-	char	**path;
-	int	path_len;
-	int	command_len;
-	int	exec_len;
-
+	//char	**path;
+    (void)command;
 	pid = fork();
-	path = get_path(envp);
-	command_len = ft_strlen(command);
-	path_len = ft_strlen(path[4]);
-	exec_len = command_len + path_len + 1;
+	//path = get_path(envp);
 	if (pid == 0)
 		exit_status = execve("/bin/df", argv, envp);
 	else if (pid < 0)
