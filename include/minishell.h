@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/14 13:02:16 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/15 14:34:36 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,19 @@ typedef struct s_command
 /* -------------- FREE -------------- */
 
 void  free_tab2(char **tab);
+void	free_tab_ms(char **tab);
 void  free_tab3(char ***tab);
+int		tab_len(char **envp);
+
+/* -------------- EXEC -------------- */
+
+void	exec_command(char *input, t_command *list);
 
 /* -------------- BUILTINS -------------- */
 
 void	echo(char **args);
 void	pwd();
+void	env(char **envp);
 char     **unset(char **envp, char *line);
 
 /* -------------- VERIF_LINE -------------- */
@@ -104,12 +111,10 @@ char     **ms_export(char **envp, int env_len);
 t_env    *create_var_list(char **envp);
 char     ***create_args_list(char *args);
 char     ***create_env_list(char **envp, int env_len);
-int      tab_len(char **envp);
-char     **sort_envp(char **envp);
+void     sort_tab(char **tab, int size);
 
 /* -------------- PARSING -------------- */
 
-void	free_tab_ms(char **tab);
 void	print_args(char **tab, int i);
 int		quotes_nbr(char *str);
 int		command_len(char *str);

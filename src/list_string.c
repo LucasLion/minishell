@@ -6,11 +6,11 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 11:19:41 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/11 13:36:30 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/15 14:39:46 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 
 int	lstadd_back_list_string(t_string **list, t_string *new)
@@ -94,10 +94,8 @@ int fill_list_string_append(char *str, t_string **list)
 void print_list_string_from_head(t_string *list)
 {
     t_string    *head;
-    int         command;
     
     head = list;
-    command = 0;
     if (head == NULL)
     {
         printf("NULL\n");

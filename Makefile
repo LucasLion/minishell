@@ -6,7 +6,7 @@
 #    By: amouly <amouly@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 15:27:43 by llion             #+#    #+#              #
-#    Updated: 2023/03/14 13:11:32 by llion            ###   ########.fr        #
+#    Updated: 2023/03/15 14:27:24 by llion            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,21 +19,22 @@ HEADERS = -I include -I libft
 
 SOURCES = 	main-lucas.c	\
 			memory_utils.c	\
+			exec_commands.c	\
 			unset.c			\
-			find_arg.c \
-			verif_line.c \
-			split_ms.c \
+			find_arg.c		\
+			verif_line.c	\
+			split_ms.c		\
 			echo.c			\
 			pwd.c			\
 			export.c		\
-			list_char.c \
-			format_line.c \
-			format_list.c \
-			parse.c \
-			parse_v1.c \
-			list_int.c \
-			list_string.c \
-			list_command.c \
+			list_char.c		\
+			format_line.c	\
+			format_list.c	\
+			parse.c			\
+			parse_v1.c		\
+			list_int.c		\
+			list_string.c	\
+			list_command.c	\
 			clean_list.c
 
 OBJS = ${addprefix src/,${SOURCES:.c=.o}}

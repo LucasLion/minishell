@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 08:04:32 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/14 13:12:29 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/15 10:53:27 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,9 @@ int	len_word(char const *str, int *pos)
 {
 	int count;
 	int flag;
-	int flag1;
 
 	count  = 0;
 	flag = 0;
-	flag1 = 0;
 	while ((str[*pos] == '\0' || str[*pos] == ' '))
 		(*pos)++;
 		
@@ -86,11 +84,9 @@ void	put_word(char const *str, int *pos, char *line_tab)
 {
 	int i;
 	int flag;
-	int flag1;
 
 	i = 0;
 	flag = 0;
-	flag1 = 0;
 	while ((str[*pos] == '\0' || str[*pos] == ' '))
 		(*pos)++;
 
@@ -134,7 +130,7 @@ int	fill_tab_split_ms(char **tab, char const *s)
 	{
 		pos_word = pos;
 		len = len_word(s, &pos);
-		tab[i] = malloc (sizeof(char) * (len + 1));
+		tab[i] = malloc(sizeof(char) * (len + 1));
 		if (tab[i] == NULL)
 			return (free_tab_ms_split(tab, i));
 		put_word(s, &pos_word, tab[i]);

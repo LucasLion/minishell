@@ -12,6 +12,7 @@
 	- https://web.mit.edu/gnu/doc/html/rlman_2.html
 	- https://www.pierre-giraud.com/shell-bash/commande/
 	- https://phoenixnap.com/kb/bash-heredoc
+	- https://www.cristal.univ-lille.fr/~marquet/ens/sem/processus1/index.html
 
 	MAN DE BASH : BIEN FAIT
 	- https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Shell-Syntax

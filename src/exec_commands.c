@@ -1,38 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   exec_commands.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
+/*   By: llion <llion@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/04 14:21:07 by llion             #+#    #+#             */
-/*   Updated: 2023/03/15 15:36:45 by llion            ###   ########.fr       */
+/*   Created: 2023/03/15 14:25:45 by llion             #+#    #+#             */
+/*   Updated: 2023/03/15 15:32:20 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	pwd()
+void	exec_command(char *input, t_command *list)
 {
-	char buffer[1024];
+	parse_input_loc(input, list);
 
-	if (getcwd(buffer, sizeof(buffer)) == NULL)
-	{
-		printf("Error");
-		exit(EXIT_FAILURE);
-	}
-	printf("%s\n", buffer);
+	//if (list->command)
+	//	printf("%s\n", list->command->string);
 }
-
-void	env(char **envp)
-{
-	int	i;
-
-	i = 0;
-	while (envp[i])
-	{
-		printf("%s\n", envp[i]);
-		i++;
-	}
-}
-

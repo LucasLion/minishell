@@ -6,11 +6,11 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 15:03:31 by event             #+#    #+#             */
-/*   Updated: 2023/03/14 13:12:29 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/15 14:37:30 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 void handle_chevrons(char **tab, int index, t_command *new)
 {
@@ -39,9 +39,6 @@ void handle_chevrons(char **tab, int index, t_command *new)
 
 void find_command_until_pipe(char **tab, int *i,t_command *new)
 {
-    int j;
-    
-    j = 0;
     if (tab[*i][0] == '<' || tab[*i][0] == '>')
     {
         handle_chevrons(tab, *i, new);
@@ -111,6 +108,5 @@ void    parse_input_loc(char *input, t_command *list)
         count++;
         fill_list_command(tab, &i, &list, &count);
     }
-    
     print_list_command_from_head(list);
 }

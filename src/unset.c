@@ -6,7 +6,7 @@
 /*   By: llion <llion@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+ #+#+   +#+          */
 /*   Created: 2023/03/10 18:39:28 by llion             #+#    #+#             */
-/*   Updated: 2023/03/14 14:00:21 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/15 12:48:34 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	**args_list(char **envp, char *line)
 		j = 0;
 		while (envp[j])
 		{
-			if (ft_strncmp(envp[j], vars[i], size) == 0)
+			if (ft_strncmp(envp[j], vars[i], ft_strlen(vars[i])) == 0)
 			{
 				args[k] = ft_strdup(vars[i]);
 				k++;
@@ -94,24 +94,26 @@ int	compare_args(char *str, char **args)
 	}
 	return (1);
 }
+
 char	**unset(char **envp, char *line)
 {
 	int		i;
+	int		j;
 	char	**new_envp;
 	char	**args;
+	int		new_len;
 
-	// TODO la fonction segfault la deuxieme fois
-	// peu d'indices
 	args = args_list(envp, line);
-	new_envp = ft_calloc(tab_len(envp) - tab_len(args), sizeof(char *));
+	new_len = tab_len(envp) - tab_len(args);
+	new_envp = ft_calloc(new_len, sizeof(char *));
 	i = 0;
-	while(i < tab_len(envp) - tab_len(args))
+	j = 0;
+	while(i < new_len) 
 	{
 		if (compare_args(envp[i], args))
 		{
-			new_envp[i] = ft_strdup(envp[i]);	
-			// il faudra tout free
-			//printf("%d: %s\n", i, new_envp[i]);
+			new_envp[j] = ft_strdup(envp[i]);	
+			j++;
 		}
 		i++;
 	}
