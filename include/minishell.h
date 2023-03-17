@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/15 14:34:36 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/16 18:32:42 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,12 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <errno.h>
+# include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/types.h>
 # include <sys/stat.h>
+# include <sys/wait.h>
 # include <fcntl.h>
 
 typedef struct s_number
@@ -71,22 +73,20 @@ typedef struct s_command
 	struct s_command	*previous;
 }					t_command;
 
+/* -------------- EXEC -------------- */
+
+int	exec_command(char *command, char **argv, char **envp);
+
 /* -------------- FREE -------------- */
 
 void  free_tab2(char **tab);
-void	free_tab_ms(char **tab);
 void  free_tab3(char ***tab);
-int		tab_len(char **envp);
-
-/* -------------- EXEC -------------- */
-
-void	exec_command(char *input, t_command *list);
 
 /* -------------- BUILTINS -------------- */
 
 void	echo(char **args);
+int		ms_exit(char **argv, char **envp);
 void	pwd();
-void	env(char **envp);
 char     **unset(char **envp, char *line);
 
 /* -------------- VERIF_LINE -------------- */
@@ -111,14 +111,8 @@ char     **ms_export(char **envp, int env_len);
 t_env    *create_var_list(char **envp);
 char     ***create_args_list(char *args);
 char     ***create_env_list(char **envp, int env_len);
-void     sort_tab(char **tab, int size);
-
-/* -------------- PARSING -------------- */
-
-void	print_args(char **tab, int i);
-int		quotes_nbr(char *str);
-int		command_len(char *str);
-char	**find_args(char *str);
+int      tab_len(char **envp);
+char     **sort_envp(char **envp);
 
 /* -------------- LIST_CHAR.c -------------- */
 
@@ -129,13 +123,6 @@ void    print_list_from_bottom(t_char *list);
 int     insert_space_node(t_char *previous, t_char *next);
 int     insert_two_space(t_char *node);
 void    insert_space_everywhere(t_char **list);
-
-/* -------------- LIST_INT.c -------------- */
-
-int	    lstadd_back_list_int(t_number **list, t_number *new);
-int     fill_list_int(int nbr, t_number **list);
-void    print_list_int_from_head(t_number *list);
-void    print_list_int_from_bottom(t_number *list);
 
 /* -------------- LIST_STRING.c -------------- */
 
@@ -171,21 +158,24 @@ void    print_input_after_formating(char *line_input);
 void 	handle_chevrons(char **tab, int index, t_command *new);
 void 	find_command_until_pipe(char **tab, int *i,t_command *new);
 int 	fill_list_command(char **tab, int *i, t_command **list, int *count);
-void    parse_input_loc(char *input, t_command *list);
-void    parse_input(char *input);
-
-/* -------------- PARSE_V1.c -------------- */
-
-int 	count_nb_of_pipes(char **tab);
-void 	handle_chevrons_v1(char **tab, int index);
-void 	find_command_until_pipe_v1(char **tab, int *i, int *cmd, int *arg);
-void    parse_input_v1(char *input);
+void    parse_input(char *input, t_command **list);
 
 /* -------------- CLEAN_LIST.c -------------- */
 
 void	clean_list_char(t_char **list);
 void	clean_list_string(t_string **list);
 void	clean_list_command(t_command **list);
+
+/* -------------- LIST_TO_TAB.c -------------- */
+
+int 	length_list_string(t_string *list);
+int 	size_var(char *string_list, int *i);
+int 	count_size_env(char *string_list, int *i, char **envp);
+void 	copy_env_var(char *string_list, int *i, char **envp, char *ret, int *j);
+int 	count_char(char *string_list, char **envp);
+char 	*copy_string(char *string_list, char **envp);
+char 	**list_to_tab_argv(t_string *list, char **envp);
+void 	print_tab(char **tab);
 
 
 

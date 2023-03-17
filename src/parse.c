@@ -6,11 +6,11 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 15:03:31 by event             #+#    #+#             */
-/*   Updated: 2023/03/15 14:37:30 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/16 17:58:54 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 void handle_chevrons(char **tab, int index, t_command *new)
 {
@@ -39,6 +39,9 @@ void handle_chevrons(char **tab, int index, t_command *new)
 
 void find_command_until_pipe(char **tab, int *i,t_command *new)
 {
+    int j;
+    
+    j = 0;
     if (tab[*i][0] == '<' || tab[*i][0] == '>')
     {
         handle_chevrons(tab, *i, new);
@@ -74,27 +77,7 @@ int fill_list_command(char **tab, int *i, t_command **list, int *count)
     return (1);
 }
 
-void    parse_input(char *input)
-{
-    char    **tab;
-    int     i;
-    int     count;
-    t_command   *list_of_command;
-    
-    i = 0;
-    tab = ft_split_ms(format_line(input));
-    count = 0;
-    list_of_command = NULL;
-    while(tab[i])
-    {
-        count++;
-        fill_list_command(tab, &i, &list_of_command, &count);
-    }
-    print_list_command_from_head(list_of_command);
-}
-
-
-void    parse_input_loc(char *input, t_command *list)
+void parse_input(char *input, t_command **list)
 {
     char    **tab;
     int     i;
@@ -102,11 +85,15 @@ void    parse_input_loc(char *input, t_command *list)
     
     i = 0;
     tab = ft_split_ms(format_line(input));
+    if (tab == NULL)
+        return ;
     count = 0;
     while(tab[i])
     {
         count++;
-        fill_list_command(tab, &i, &list, &count);
+        if (!fill_list_command(tab, &i, list, &count))
+          return ;
     }
-    print_list_command_from_head(list);
+    free_tab2(tab);
+    return ;
 }

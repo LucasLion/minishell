@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 15:50:37 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/15 10:54:18 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/11 13:35:05 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,11 @@ int format_chevron_sup(t_char *node)
 int format_list(t_char *list)
 {
     t_char  *temp;
+    t_char  *head;
     int     flag;
 
     temp = list;
+    head = list;
     flag = 0;
     while(temp)
     {  

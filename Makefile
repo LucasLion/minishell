@@ -6,7 +6,7 @@
 #    By: amouly <amouly@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 15:27:43 by llion             #+#    #+#              #
-#    Updated: 2023/03/15 14:27:24 by llion            ###   ########.fr        #
+#    Updated: 2023/03/16 18:32:19 by llion            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,25 +17,23 @@ READLINE = -lreadline
 LIBFT = ./libft/libft.a
 HEADERS = -I include -I libft 
 
-SOURCES = 	main-lucas.c	\
+SOURCES = 	main_lucas.c \
 			memory_utils.c	\
-			exec_commands.c	\
 			unset.c			\
-			find_arg.c		\
-			verif_line.c	\
-			split_ms.c		\
+			verif_line.c \
+			split_ms.c \
 			echo.c			\
 			pwd.c			\
 			export.c		\
-			list_char.c		\
-			format_line.c	\
-			format_list.c	\
-			parse.c			\
-			parse_v1.c		\
-			list_int.c		\
-			list_string.c	\
-			list_command.c	\
-			clean_list.c
+			list_char.c \
+			format_line.c \
+			format_list.c \
+			parse.c \
+			list_string.c \
+			list_command.c \
+			clean_list.c \
+			exec_command.c
+			list_to_tab.c
 
 OBJS = ${addprefix src/,${SOURCES:.c=.o}}
 OBJBONUS = ${addprefix src/,${SRCBONUS:.c=.o}}
@@ -43,26 +41,28 @@ OBJBONUS = ${addprefix src/,${SRCBONUS:.c=.o}}
 all :  ${NAME}
 
 .c.o: 
-	gcc ${FLAGS} ${HEADERS} -c $< -o ${<:.c=.o}
+	@gcc ${FLAGS} ${HEADERS} -c $< -o ${<:.c=.o}
 
 ${NAME} : ${OBJS} 
-	make -C libft
-	gcc  ${FLAGS} ${OBJS} ${LIBFT} ${HEADERS} -o ${NAME} ${READLINE}
-
-bonus : ${OBJBONUS} 
-	make -C libft
-	gcc ${FLAGS} ${OBJBONUS} ${LIBFT} ${HEADERS} -o ${NAME} ${READLINE}
+	@make -sC libft
+	@echo "----> libft COMPILED"
+	@gcc  ${FLAGS} ${OBJS} ${LIBFT} ${HEADERS} -o ${NAME} ${READLINE}
+	@echo "----> minishell COMPILED"
 
 debug : ${OBJS} ${OBJBONUS} 
 	make -C libft
 	gcc ${FLAGS} ${OBJS} ${LIBFT} ${HEADERS} -fsanitize=address -o ${NAME}  ${READLINE}
 
 clean :
-	rm -f ${OBJS} ${OBJBONUS} 
-	make clean -C libft
+	@rm -f ${OBJS} ${OBJBONUS} 
+	@echo "----> objects REMOVED"
+	@make clean -sC libft
+	@echo "----> libft REMOVED"
 
 fclean : clean
-	rm -f ${NAME} 
-	make fclean -C libft
+	@rm -rf ${NAME} *.dSYM
+	@make fclean -sC libft
+	@echo "----> Everything is GONE"
+
 
 re : fclean all
