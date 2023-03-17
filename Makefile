@@ -6,7 +6,7 @@
 #    By: amouly <amouly@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 15:27:43 by llion             #+#    #+#              #
-#    Updated: 2023/03/16 18:32:19 by llion            ###   ########.fr        #
+#    Updated: 2023/03/17 09:51:45 by amouly           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ READLINE = -lreadline
 LIBFT = ./libft/libft.a
 HEADERS = -I include -I libft 
 
-SOURCES = 	main_lucas.c \
+SOURCES = 	main_antoine.c \
 			memory_utils.c	\
 			unset.c			\
 			verif_line.c \
@@ -32,7 +32,7 @@ SOURCES = 	main_lucas.c \
 			list_string.c \
 			list_command.c \
 			clean_list.c \
-			exec_command.c
+			exec_command.c \
 			list_to_tab.c
 
 OBJS = ${addprefix src/,${SOURCES:.c=.o}}

@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/16 18:32:42 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/17 10:31:08 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,13 @@ typedef struct s_command
 
 /* -------------- EXEC -------------- */
 
-int	exec_command(char *command, char **argv, char **envp);
+char	**get_path(char **envp);
+int		exec_command(char *command, char **argv, char **envp);
 
 /* -------------- FREE -------------- */
 
-void  free_tab2(char **tab);
-void  free_tab3(char ***tab);
+void	free_tab2(char **tab);
+void	free_tab3(char ***tab);
 
 /* -------------- BUILTINS -------------- */
 
@@ -137,6 +138,7 @@ void 	print_list_string_from_head_command(t_string *list);
 void    init_struct_command(t_command *list_of_command);
 int		lstadd_back_list_command(t_command **list, t_command *new);
 void 	print_list_command_from_head(t_command *list);
+int 	length_list_command(t_command *list, int *nb_of_pipes);
 
 /* -------------- FORMAT_LIST.c -------------- */
 
@@ -174,7 +176,7 @@ int 	count_size_env(char *string_list, int *i, char **envp);
 void 	copy_env_var(char *string_list, int *i, char **envp, char *ret, int *j);
 int 	count_char(char *string_list, char **envp);
 char 	*copy_string(char *string_list, char **envp);
-char 	**list_to_tab_argv(t_string *list, char **envp);
+char 	**list_to_tab(t_string *list, char **envp);
 void 	print_tab(char **tab);
 
 

@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 11:19:41 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/16 11:19:05 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/17 10:33:50 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,3 +83,23 @@ void print_list_command_from_head(t_command *list)
         head = head->next;
     }
 }
+
+int length_list_command(t_command *list, int *nb_of_pipes)
+{
+    int         count;
+    t_command   *temp;
+    
+    count = 0;
+    temp = list;
+    if (temp == NULL)
+        return (0); 
+    while (temp)
+    {
+        count++;
+        if (temp->pipe_after == 1)
+            (*nb_of_pipes)++;
+        temp = temp->next;
+    }
+    return (count);
+}
+

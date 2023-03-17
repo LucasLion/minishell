@@ -19,7 +19,7 @@ int main(int argc, char **argv, char **envp)
         parse_input(input, &list_of_command);
         //print_list_command_from_head(list_of_command);
 
-        tab_argv = list_to_tab_argv(list_of_command->command, envp);
+        tab_argv = list_to_tab(list_of_command->command, envp);
         command = copy_string(list_of_command->command->string, envp);
         printf("LA commande est : %s\nET voici la liste des arguments : \n", command);
         print_tab(tab_argv);

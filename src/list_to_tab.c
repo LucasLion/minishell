@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 09:45:36 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/16 18:17:38 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/17 09:32:25 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ char *copy_string(char *string_list, char **envp)
 
 
 
-char **list_to_tab_argv(t_string *list, char **envp)
+char **list_to_tab(t_string *list, char **envp)
 {
     int len;
     char **ret;
