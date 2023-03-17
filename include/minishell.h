@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/17 10:31:08 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/17 14:48:59 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,13 @@ typedef struct s_number
 	struct s_number	    *next;
     struct s_number	    *previous;
 }					t_number;
+
+typedef struct s_pipe
+{
+	int			        nbr_of_pipes;
+	int					reading_index;
+    int					writing_index;
+}					t_pipe;
 
 typedef struct s_char
 {
@@ -178,6 +185,10 @@ int 	count_char(char *string_list, char **envp);
 char 	*copy_string(char *string_list, char **envp);
 char 	**list_to_tab(t_string *list, char **envp);
 void 	print_tab(char **tab);
+
+/* -------------- PIPE.c -------------- */
+
+int 	managing_pipes(t_command *list);
 
 
 

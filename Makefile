@@ -6,7 +6,7 @@
 #    By: amouly <amouly@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 15:27:43 by llion             #+#    #+#              #
-#    Updated: 2023/03/17 09:51:45 by amouly           ###   ########.fr        #
+#    Updated: 2023/03/17 14:00:32 by amouly           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,8 @@ SOURCES = 	main_antoine.c \
 			list_command.c \
 			clean_list.c \
 			exec_command.c \
-			list_to_tab.c
+			list_to_tab.c \
+			pipe.c
 
 OBJS = ${addprefix src/,${SOURCES:.c=.o}}
 OBJBONUS = ${addprefix src/,${SRCBONUS:.c=.o}}
