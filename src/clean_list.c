@@ -6,11 +6,11 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 11:51:24 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/14 12:21:19 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/18 12:31:09 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 void	clean_list_char(t_char **list)
 {

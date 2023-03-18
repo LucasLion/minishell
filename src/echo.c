@@ -6,11 +6,11 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 14:59:28 by llion             #+#    #+#             */
-/*   Updated: 2023/03/16 12:48:13 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/18 12:27:22 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 /*void	print_tab(char **tab, int i)
 {

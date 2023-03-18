@@ -6,11 +6,11 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 15:03:31 by event             #+#    #+#             */
-/*   Updated: 2023/03/16 17:58:54 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/18 12:30:50 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 void handle_chevrons(char **tab, int index, t_command *new)
 {

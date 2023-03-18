@@ -6,11 +6,11 @@
 /*   By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/16 18:27:47 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/17 15:13:54 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 char	**get_path(char **envp)
 {
@@ -32,6 +32,8 @@ char	**get_path(char **envp)
 	split_path = ft_split(path+5, ':');
 	return (split_path);
 }
+
+
 
 int	exec_command(char *command, char **argv, char **envp)
 {
