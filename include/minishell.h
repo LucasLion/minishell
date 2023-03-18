@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/18 11:05:37 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/18 11:41:02 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_pipe
 	char		**tab_argv_1;
 	char		*cmd_2;
 	char		**tab_argv_2;
+	char		**envp;
 	
 }					t_pipe;
 
@@ -190,7 +191,12 @@ void 	copy_env_var(char *string_list, int *i, char **envp, char *ret, int *j);
 int 	count_char(char *string_list, char **envp);
 char 	*copy_string(char *string_list, char **envp);
 char 	**list_to_tab(t_string *list, char **envp);
+
+/* -------------- TAB_UTILS.c -------------- */
+
 void 	print_tab(char **tab);
+int 	len_tab(char **tab);
+char    **copy_tab(char **tab);
 
 /* -------------- PIPE.c -------------- */
 

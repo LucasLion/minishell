@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 09:45:36 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/18 11:11:20 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/18 11:23:22 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,20 +193,4 @@ char **list_to_tab(t_string *list, char **envp)
     }
     ret[i] = 0;
     return (ret);
-}
-
-
-
-void print_tab(char **tab)
-{
-    int i = 0;
-      
-    if (tab == NULL)
-        return ;
-    while (tab[i])
-	{
-		printf("tab[%d] : %s\n", i, tab[i]);
-		i++;
-	}
-    printf("tab[%d] : %s\n", i, tab[i]);
 }
