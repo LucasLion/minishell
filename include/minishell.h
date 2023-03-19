@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/18 11:41:02 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/19 16:23:12 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ typedef struct s_pipe
 	char		*cmd_2;
 	char		**tab_argv_2;
 	char		**envp;
+	int			fd_writing;
+	int			fd_reading;
 	
 }					t_pipe;
 
