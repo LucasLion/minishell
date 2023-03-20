@@ -28,7 +28,7 @@ int main(int argc, char **argv, char **env)
         command = copy_string(list_of_command->command->string, envp);
         //printf("LA commande est : %s\nET voici la liste des arguments : \n", command);
         //print_tab(tab_argv);
-       /exec_command(command, tab_argv, envp);
+         exec_command(command, tab_argv, envp);
         
         clean_list_command(&list_of_command);
 

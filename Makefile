@@ -6,7 +6,7 @@
 #    By: amouly <amouly@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 15:27:43 by llion             #+#    #+#              #
-#    Updated: 2023/03/20 11:15:13 by amouly           ###   ########.fr        #
+#    Updated: 2023/03/20 11:22:56 by llion            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,9 +17,9 @@ READLINE = -lreadline
 LIBFT = ./libft/libft.a
 HEADERS = -I include -I libft 
 
-SOURCES = 	main_antoine.c \
-			memory_utils.c	\
-			unset.c			\
+SOURCES = 	memory_utils.c	\
+			unset.c		\
+			main_antoine.c \
 			verif_line.c \
 			split_ms.c \
 			echo.c			\
