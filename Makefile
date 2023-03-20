@@ -6,7 +6,7 @@
 #    By: amouly <amouly@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 15:27:43 by llion             #+#    #+#              #
-#    Updated: 2023/03/16 18:32:19 by llion            ###   ########.fr        #
+#    Updated: 2023/03/18 13:12:03 by llion            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,22 +32,27 @@ SOURCES = 	main_lucas.c \
 			list_string.c \
 			list_command.c \
 			clean_list.c \
-			exec_command.c
+			exec_command.c\
 			list_to_tab.c
 
-OBJS = ${addprefix src/,${SOURCES:.c=.o}}
-OBJBONUS = ${addprefix src/,${SRCBONUS:.c=.o}}
+OBJS = ${addprefix objs/,${notdir ${SOURCES:.c=.o}}}
 
 all :  ${NAME}
 
-.c.o: 
-	@gcc ${FLAGS} ${HEADERS} -c $< -o ${<:.c=.o}
+#objs/%.o: src/%.c
+#	@gcc ${FLAGS} ${HEADERS} -c $< -o $@
+
+${OBJS} : objs/%.o : src/%.c
+	@mkdir -p objs
+	@${CC} ${FLAGS} ${HEADERS} -c $< -o $@
+
 
 ${NAME} : ${OBJS} 
 	@make -sC libft
 	@echo "----> libft COMPILED"
 	@gcc  ${FLAGS} ${OBJS} ${LIBFT} ${HEADERS} -o ${NAME} ${READLINE}
 	@echo "----> minishell COMPILED"
+	
 
 debug : ${OBJS} ${OBJBONUS} 
 	make -C libft
@@ -63,6 +68,5 @@ fclean : clean
 	@rm -rf ${NAME} *.dSYM
 	@make fclean -sC libft
 	@echo "----> Everything is GONE"
-
 
 re : fclean all

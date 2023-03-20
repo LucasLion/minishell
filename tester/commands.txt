@@ -1,0 +1,168 @@
+# Test de la commande echo
+echo Hello, world!
+echo "Hello, world!"
+echo 'Hello, world!'
+echo -n "Hello, world!"
+echo $PATH
+
+# Test de la commande pwd
+pwd
+
+# Test de la comande export
+env | grep "_="
+export | grep "SHLVL"
+export | grep "OLDPWD"
+export | grep "PWD"
+export TEST
+export TEST=
+export TEST=123
+export ___TEST=123
+export --TEST=123
+export ""=""
+export ''=''
+export "="="="
+export '='='='
+export TE-ST=100
+export -TEST=100
+export TEST-=100
+export _TEST=100
+export | grep "SHLVL"
+export TEST
+export ==========
+export 1TEST=
+export TEST
+export TES=T=""
+export TES.T=123
+export TES\\\\T
+export TES.T=123
+export TES+T=123
+export TES=T=123
+export TES}T=123
+export TES{T=123
+export TES-T=123
+export -TEST=123
+export _TEST=123
+export TES_T=123
+export TEST_=123
+export TES@T=123
+export TES!T=123
+export TES$?T=123
+export =============123
+export +++++++=123
+export ________=123
+export export
+export echo
+export pwd
+export cd
+export export
+export unset
+export sudo
+export TES^T=123
+export TES!T=123
+
+# Test de la commande unset
+unset
+export TEST=100
+unset doesntexist
+unset PWD
+unset PWD 
+unset OLDPWD 
+unset PATH
+unset TES;T
+unset TES.T
+unset TES+T
+unset TES=T
+unset TES}T
+unset TES{T
+unset TES-T
+unset -TEST
+unset _TEST
+unset TES_T
+unset TEST_
+unset TE*ST
+unset TES#T
+unset TES@T
+unset TES!T
+unset TES$?T
+unset ============
+unset +++++++
+unset ________
+unset export
+unset echo
+unset pwd
+unset cd
+unset unset
+unset sudo
+unset TES^T
+unset TES!T
+unset TES\~T
+
+# Test de la commande cd
+cd /
+cd /usr
+cd ..
+cd ~
+cd -
+
+# Test de la commande ls
+ls
+ls -l
+ls -a
+ls -la
+ls /usr
+
+# Test de la commande cat
+echo "Hello, world!" > test_file.txt
+cat test_file.txt
+
+# Test de la gestion des variables d'environnement
+export TEST_VAR="Hello, world!"
+echo $TEST_VAR
+unset TEST_VAR
+echo $TEST_VAR
+
+# Test des pipes
+echo "Hello, world!" | cat
+echo "Hello, world!" | cat | cat
+env | grep "_="
+env | grep "SHLVL"
+echo oui | cat -e
+echo oui | echo non | echo something | grep oui
+echo oui | echo non | echo something | grep non
+echo oui | echo non | echo something | grep something
+cd .. | echo "something"
+cd .. | echo "something"
+cd / | echo "something"
+cd .. | pwd
+ifconfig | grep ":"
+ifconfig | grep nothing
+whoami | grep $USER
+whoami | grep $USER > tmp/file
+whoami | cat -e | cat -e > tmp/file 
+cat Makefile | grep "FLAGS"
+cat Makefile | cat -e | cat -e
+cat Makefile | grep "FLAGS" | grep "FLAGS" | cat -e
+export TEST=123 | cat -e | cat -e
+unset TEST | cat -e
+echo test | cat -e | cat -e | cat -e
+whereis ls | cat -e | cat -e > test
+echo test | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e
+whereis grep > tmp/file 
+whereis grep > tmp/file
+ls -la > tmp/file
+ls -la > tmp/file 
+
+# Test des redirections
+echo "Hello, world!" > test_output.txt
+cat test_output.txt
+
+# Test des redirections avec cat
+echo "Hello, world!" | cat > test_output.txt
+cat test_output.txt
+
+# Test des redirections avec plusieurs commandes
+echo "Hello, world!" | cat | cat > test_output.txt
+cat test_output.txt
+
+# Test amouly
+echo "coucou"

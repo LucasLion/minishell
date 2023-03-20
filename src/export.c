@@ -6,11 +6,11 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 14:21:07 by llion             #+#    #+#             */
-/*   Updated: 2023/03/16 14:12:46 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/15 14:09:44 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 int   tab_len(char **tab)
 {
@@ -22,6 +22,33 @@ int   tab_len(char **tab)
       i++;
    }
    return (i);
+}
+
+void sort_tab(char **tab, int size)
+{
+    int i;
+	int	j;
+	int	min;
+    char *tmp;
+
+	i = 0;
+    while (i < size - 1)
+	{
+		j = i + 1;
+        min = i;
+        while  (j < size)
+		{
+            if (ft_strncmp(tab[j], tab[min], ft_strlen(tab[j])) < 0)
+            {
+                min = j;
+            }
+			j++;
+        }
+        tmp = tab[i];
+        tab[i] = tab[min];
+        tab[min] = tmp;
+		i++;
+    }
 }
 
 char  	***create_args_list(char *args)

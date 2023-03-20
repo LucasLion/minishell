@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/16 18:32:42 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/18 15:36:27 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ typedef struct s_command
 
 /* -------------- EXEC -------------- */
 
-int	exec_command(char *command, char **argv, char **envp);
+int	exec_command(char **argv, char **envp, t_command *list, char *line);
 
 /* -------------- FREE -------------- */
 
