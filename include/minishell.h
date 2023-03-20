@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/16 18:32:42 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/20 10:50:23 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ typedef struct s_command
 
 /* -------------- EXEC -------------- */
 
-int	exec_command(char *command, char **argv, char **envp);
+int	exec_command(char **argv, char **envp, t_command *list, char *line);
 
 /* -------------- FREE -------------- */
 
@@ -85,9 +85,11 @@ void  free_tab3(char ***tab);
 /* -------------- BUILTINS -------------- */
 
 void	echo(char **args);
-int		ms_exit(char **argv, char **envp);
+int		ms_exit();
 void	pwd();
 char     **unset(char **envp, char *line);
+void    env(char **envp);
+int    exec_builtin(char *builtin, t_command *list, char **envp);
 
 /* -------------- VERIF_LINE -------------- */
 
@@ -107,12 +109,13 @@ void    split_and_print(char *line);
 
 /* -------------- EXPORT -------------- */
 
-char     **ms_export(char **envp, int env_len);
+char     **ms_export(char **envp, int env_len, char *params);
 t_env    *create_var_list(char **envp);
 char     ***create_args_list(char *args);
 char     ***create_env_list(char **envp, int env_len);
 int      tab_len(char **envp);
 char     **sort_envp(char **envp);
+void	sort_tab(char **tab, int size);
 
 /* -------------- LIST_CHAR.c -------------- */
 
