@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/20 11:14:56 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/20 16:36:29 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ typedef struct s_command
 
 char	**get_path_split(char **envp);
 char    *get_path(char **envp, char *cmd);
-int		exec_command(char *command, char **argv, char **envp);
+char	**exec_command(char *command, char **argv, char **envp);
 //int	exec_command(char **argv, char **envp, t_command *list, char *line);
 
 /* -------------- FREE -------------- */
@@ -102,12 +102,12 @@ void	free_tab3(char ***tab);
 
 /* -------------- BUILTINS -------------- */
 
-void	echo(char **args);
+void	echo(char **argv);
 int		ms_exit();
 void	pwd();
-char     **unset(char **envp, char *line);
+char     **unset(char **argv, char **envp);
 void    env(char **envp);
-int    exec_builtin(char *builtin, t_command *list, char **envp);
+char	**exec_builtin(char *builtin, char **argv, char **envp);
 
 /* -------------- VERIF_LINE -------------- */
 
@@ -127,13 +127,13 @@ void    split_and_print(char *line);
 
 /* -------------- EXPORT -------------- */
 
-char     **ms_export(char **envp, int env_len, char *params);
+char     **ms_export(char **argv, char **envp, int env_len);
 t_env    *create_var_list(char **envp);
-char     ***create_args_list(char *args);
+char     ***create_args_list(char **argv);
 char     ***create_env_list(char **envp, int env_len);
 int      tab_len(char **envp);
 char     **sort_envp(char **envp);
-void	sort_tab(char **tab, int size);
+char	**sort_tab(char **tab, int size);
 
 /* -------------- LIST_CHAR.c -------------- */
 

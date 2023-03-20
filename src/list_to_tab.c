@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 09:45:36 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/20 11:13:39 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/20 12:51:14 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,8 +177,6 @@ char **list_to_tab(t_string *list, char **envp)
     int i;
     t_string *temp;
 
-    //if (list->next == NULL)
-    //    return NULL;
     temp = list;
     len = length_list_string(list);
     i = 0;

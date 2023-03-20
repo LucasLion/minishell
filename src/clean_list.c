@@ -43,7 +43,6 @@ void	clean_list_string(t_string **list)
 	}
 }
 
-
 void	clean_list_command(t_command **list)
 {
 	t_command	*next;

@@ -6,7 +6,7 @@
 #    By: amouly <amouly@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 15:27:43 by llion             #+#    #+#              #
-#    Updated: 2023/03/20 11:22:56 by llion            ###   ########.fr        #
+#    Updated: 2023/03/20 14:10:58 by llion            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ HEADERS = -I include -I libft
 
 SOURCES = 	memory_utils.c	\
 			unset.c		\
-			main_antoine.c \
+			main_lucas.c \
 			verif_line.c \
 			split_ms.c \
 			echo.c			\
@@ -44,7 +44,7 @@ all :  ${NAME}
 #objs/%.o: src/%.c
 #	@gcc ${FLAGS} ${HEADERS} -c $< -o $@
 
-${OBJS} : objs/%.o : src/%.c
+objs/%.o : src/%.c
 	@mkdir -p objs
 	@${CC} ${FLAGS} ${HEADERS} -c $< -o $@
 
@@ -61,7 +61,7 @@ debug : ${OBJS} ${OBJBONUS}
 	gcc ${FLAGS} ${OBJS} ${LIBFT} ${HEADERS} -fsanitize=address -o ${NAME}  ${READLINE}
 
 clean :
-	@rm -f ${OBJS} ${OBJBONUS} 
+	@rm -f ${OBJS} objs/%.o ${OBJBONUS} 
 	@echo "----> objects REMOVED"
 	@make clean -sC libft
 	@echo "----> libft REMOVED"
