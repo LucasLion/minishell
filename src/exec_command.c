@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+        */
+/*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/20 10:58:05 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/20 11:12:49 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	**get_path(char **envp)
+char	**get_path_split(char **envp)
 {
 	int	i;
 	char	*path;
@@ -25,7 +25,7 @@ char	**get_path(char **envp)
 		if (ft_strncmp(envp[i], "PATH", 4) == 0)
 		{
 			path = ft_strdup(envp[i]);
-			ft_strlcat(path, "/", ft_strlen(path) + 1);
+			//ft_strlcat(path, "/", ft_strlen(path) + 1);
 		}
 		i++;
 	}
@@ -33,7 +33,33 @@ char	**get_path(char **envp)
 	return (split_path);
 }
 
-char	*get_command(t_command *list, char **envp)
+char	*get_path(char **envp, char *cmd)
+{
+	char	**split_path;
+	char	*ret;
+	char	*temp;
+	int		i;
+
+	i = 0;
+	split_path = get_path_split(envp);
+	while(split_path[i])
+	{
+		temp = ft_strjoin(split_path[i], "/");
+		ret = ft_strjoin(temp, cmd);
+		free(temp);
+		if (access(ret, X_OK) == 0)
+			return (ret);
+		free (ret);
+		i++;
+	}
+	return (NULL);
+	
+	//print_tab(split_path);
+}
+
+
+
+/*int	exec_command(char *command, char **argv, char **envp)
 {
 	char	*cmd;
 	char	*pre_cmd;
@@ -124,4 +150,32 @@ int	exec_command(char **argv, char **envp, t_command *list, char *line)
 		wait(&status);
 	}
 	return (exit_status);
+}*/
+
+
+int	exec_command(char *command, char **argv, char **envp)
+{
+	char	*path;
+	size_t	exit_status;
+	int		status;
+	pid_t	pid;
+	
+	path = get_path(envp, command);
+	if (path == NULL)
+	{
+		printf ("%s : command not found \n", command);
+		return (0);
+	}
+	pid = fork();
+	if (pid == 0)
+		exit_status = execve(path, argv, envp);
+	else if (pid < 0)
+		return (EXIT_FAILURE);
+	else
+	{
+		exit_status = EXIT_FAILURE;
+		wait(&status);
+	}
+	return (exit_status);
 }
+

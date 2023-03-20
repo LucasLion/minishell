@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 09:45:36 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/18 12:31:27 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/20 11:13:39 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,22 +170,22 @@ char *copy_string(char *string_list, char **envp)
 
 
 
-char **list_to_tab_argv(t_string *list, char **envp)
+char **list_to_tab(t_string *list, char **envp)
 {
     int len;
     char **ret;
     int i;
     t_string *temp;
 
-    if (list->next == NULL)
-        return NULL;
-    temp = list->next;
+    //if (list->next == NULL)
+    //    return NULL;
+    temp = list;
     len = length_list_string(list);
     i = 0;
-    ret = malloc(sizeof(char *) * (len));
+    ret = malloc(sizeof(char *) * (len + 1));
     if (ret == NULL)
         return (NULL); 
-    while (i < len - 1)
+    while (i < len)
     {
         ret[i] = copy_string(temp->string, envp);
         i++;
@@ -193,19 +193,4 @@ char **list_to_tab_argv(t_string *list, char **envp)
     }
     ret[i] = 0;
     return (ret);
-}
-
-
-
-void print_tab(char **tab)
-{
-    int i = 0;
-      
-    if (tab == NULL)
-        return ;
-    while (tab[i])
-	{
-		printf("tab[%d] : %s\n", i, tab[i]);
-		i++;
-	}
 }
