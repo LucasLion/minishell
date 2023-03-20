@@ -6,7 +6,7 @@
 #    By: amouly <amouly@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 15:27:43 by llion             #+#    #+#              #
-#    Updated: 2023/03/20 11:22:56 by llion            ###   ########.fr        #
+#    Updated: 2023/03/20 17:41:55 by amouly           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ SOURCES = 	memory_utils.c	\
 			exec_command.c \
 			list_to_tab.c \
 			pipe.c \
-			tab_utils.c
+			tab_utils.c 
 
 OBJS = ${addprefix objs/,${notdir ${SOURCES:.c=.o}}}
 

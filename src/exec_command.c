@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/20 11:23:22 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/20 11:38:20 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,28 +59,6 @@ char	*get_path(char **envp, char *cmd)
 
 
 
-/*int	exec_command(char *command, char **argv, char **envp)
-{
-	char	*cmd;
-	char	*pre_cmd;
-	char	**path;
-	int	i;
-
-	i = 0;
-	path = get_path(envp);
-	pre_cmd = NULL;
-	cmd = NULL;
-	while (path[i])
-	{
-		pre_cmd = ft_strjoin(path[i], "/");
-		cmd = ft_strjoin(pre_cmd, list->command->string);
-		if (access(cmd, F_OK) == 0)
-			return (cmd);
-		i++;
-	}
-	return (cmd);
-}
-
 char *is_builtin(char *cmd)
 {
     if (ft_strncmp(cmd, "echo", ft_strlen(cmd)) == 0)
@@ -126,7 +104,7 @@ int    exec_builtin(char *builtin, t_command *list, char **envp)
     return (0);
 }
 
-int	exec_command(char **argv, char **envp, t_command *list, char *line)
+/*int	exec_command(char **argv, char **envp, t_command *list, char *line)
 {
 	int	exit_status;
 	int		status;

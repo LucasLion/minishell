@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/20 11:14:56 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/20 15:06:00 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,13 @@ typedef struct s_number
 typedef struct s_pipe
 {
 	int			nbr_of_pipes;
-	int			reading_index;
-    int			writing_index;
-	char		*cmd_1;
-	char		**tab_argv_1;
-	char		*cmd_2;
-	char		**tab_argv_2;
+	int			nbr_of_commands;
+	int			i;
+	char		*cmd;
+	char		**tab_arg;
 	char		**envp;
-	int			fd_writing;
-	int			fd_reading;
+	int			fd_input;
+	int			fd_output;
 	
 }					t_pipe;
 
@@ -207,6 +205,7 @@ char    **copy_tab(char **tab);
 /* -------------- PIPE.c -------------- */
 
 int 	managing_pipes(t_command *list, char **envp);
+int 	managing_pipe(t_command *list , char **envp);
 
 
 
