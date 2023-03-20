@@ -6,7 +6,7 @@
 /*   By: llion <llion@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+ #+#+   +#+          */
 /*   Created: 2023/03/10 18:39:28 by llion             #+#    #+#             */
-/*   Updated: 2023/03/20 10:33:23 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/20 13:57:16 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,38 +49,6 @@ int check_args(char *line, char **envp)
 	return (count);
 }
 
-char	**args_list(char **envp, char *line)
-{
-	int		i;
-	int		j;
-	int		k;
-	char	**args;
-	char	**vars;
-	int		size;
-
-	size = check_args(line, envp);
-	args = ft_calloc(size + 1, sizeof(char *));
-	vars = ft_split(line, ' ');
-	k = 0;
-	i = 0;
-	while (vars[i])
-	{
-		j = 0;
-		while (envp[j])
-		{
-			if (ft_strncmp(envp[j], vars[i], ft_strlen(vars[i])) == 0)
-			{
-				args[k] = ft_strdup(vars[i]);
-				k++;
-			}
-			j++;
-		}
-		i++;
-	}
-	args[k] = 0;
-	return (args);
-}
-
 int	compare_args(char *str, char **args)
 {
 	int	i;
@@ -95,29 +63,28 @@ int	compare_args(char *str, char **args)
 	return (1);
 }
 
-char	**unset(char **envp, char *line)
+char	**unset(char **argv, char **envp)
 {
 	int		i;
 	int		j;
 	char	**new_envp;
-	char	**args;
 	int		new_len;
 
-	args = args_list(envp, line);
-	new_len = tab_len(envp) - tab_len(args);
-	new_envp = ft_calloc(new_len, sizeof(char *));
+	new_len = tab_len(envp) - tab_len(argv) + 1;
+	new_envp = ft_calloc(new_len + 1, sizeof(char *));
+	new_envp[new_len] = 0;
 	i = 0;
 	j = 0;
-	while(i < new_len) 
+	while(i < new_len + 1) 
 	{
-		if (compare_args(envp[i], args))
+		if (compare_args(envp[i], argv))
 		{
 			new_envp[j] = ft_strdup(envp[i]);	
 			j++;
 		}
 		i++;
 	}
-	new_envp[i] = 0;
+	free_tab2(envp);
 	return (new_envp);
 }
 
