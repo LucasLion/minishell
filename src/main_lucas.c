@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 14:55:57 by llion             #+#    #+#             */
-/*   Updated: 2023/03/16 18:34:26 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/20 11:01:23 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	(void)envp;
-	//char	**new_envp;
 	char	*line;
 	t_command	*list;
 	int exit_status;
@@ -26,10 +25,7 @@ int main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		line = readline("Minishell$ ");
-		add_history(line);
-		parse_input(line, &list);
-		if (ft_strncmp(line, list->command->string, 2) == 0)
-			exec_command(list->command->string, argv, envp);
+		exec_command(argv, envp, list, line);
 	}
 	return (exit_status);
 }

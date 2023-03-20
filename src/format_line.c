@@ -6,11 +6,11 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 15:50:37 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/16 12:55:13 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/20 09:56:53 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 
 int length_list(t_char *list)

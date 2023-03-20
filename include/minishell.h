@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/16 18:32:42 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/20 11:14:56 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,21 @@ typedef struct s_number
 	struct s_number	    *next;
     struct s_number	    *previous;
 }					t_number;
+
+typedef struct s_pipe
+{
+	int			nbr_of_pipes;
+	int			reading_index;
+    int			writing_index;
+	char		*cmd_1;
+	char		**tab_argv_1;
+	char		*cmd_2;
+	char		**tab_argv_2;
+	char		**envp;
+	int			fd_writing;
+	int			fd_reading;
+	
+}					t_pipe;
 
 typedef struct s_char
 {
@@ -75,19 +90,24 @@ typedef struct s_command
 
 /* -------------- EXEC -------------- */
 
-int	exec_command(char *command, char **argv, char **envp);
+char	**get_path_split(char **envp);
+char    *get_path(char **envp, char *cmd);
+int		exec_command(char *command, char **argv, char **envp);
+//int	exec_command(char **argv, char **envp, t_command *list, char *line);
 
 /* -------------- FREE -------------- */
 
-void  free_tab2(char **tab);
-void  free_tab3(char ***tab);
+void	free_tab2(char **tab);
+void	free_tab3(char ***tab);
 
 /* -------------- BUILTINS -------------- */
 
 void	echo(char **args);
-int		ms_exit(char **argv, char **envp);
+int		ms_exit();
 void	pwd();
 char     **unset(char **envp, char *line);
+void    env(char **envp);
+int    exec_builtin(char *builtin, t_command *list, char **envp);
 
 /* -------------- VERIF_LINE -------------- */
 
@@ -107,12 +127,13 @@ void    split_and_print(char *line);
 
 /* -------------- EXPORT -------------- */
 
-char     **ms_export(char **envp, int env_len);
+char     **ms_export(char **envp, int env_len, char *params);
 t_env    *create_var_list(char **envp);
 char     ***create_args_list(char *args);
 char     ***create_env_list(char **envp, int env_len);
 int      tab_len(char **envp);
 char     **sort_envp(char **envp);
+void	sort_tab(char **tab, int size);
 
 /* -------------- LIST_CHAR.c -------------- */
 
@@ -137,6 +158,7 @@ void 	print_list_string_from_head_command(t_string *list);
 void    init_struct_command(t_command *list_of_command);
 int		lstadd_back_list_command(t_command **list, t_command *new);
 void 	print_list_command_from_head(t_command *list);
+int 	length_list_command(t_command *list, int *nb_of_pipes);
 
 /* -------------- FORMAT_LIST.c -------------- */
 
@@ -174,8 +196,17 @@ int 	count_size_env(char *string_list, int *i, char **envp);
 void 	copy_env_var(char *string_list, int *i, char **envp, char *ret, int *j);
 int 	count_char(char *string_list, char **envp);
 char 	*copy_string(char *string_list, char **envp);
-char 	**list_to_tab_argv(t_string *list, char **envp);
+char 	**list_to_tab(t_string *list, char **envp);
+
+/* -------------- TAB_UTILS.c -------------- */
+
 void 	print_tab(char **tab);
+int 	len_tab(char **tab);
+char    **copy_tab(char **tab);
+
+/* -------------- PIPE.c -------------- */
+
+int 	managing_pipes(t_command *list, char **envp);
 
 
 

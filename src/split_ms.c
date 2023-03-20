@@ -6,11 +6,11 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 08:04:32 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/16 11:18:29 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/18 12:27:12 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 int put_flag(char c, int flag)
 {
@@ -63,11 +63,9 @@ int	len_word(char const *str, int *pos)
 {
 	int count;
 	int flag;
-	int flag1;
 
 	count  = 0;
 	flag = 0;
-	flag1 = 0;
 	while ((str[*pos] == '\0' || str[*pos] == ' '))
 		(*pos)++;
 		
@@ -86,11 +84,9 @@ void	put_word(char const *str, int *pos, char *line_tab)
 {
 	int i;
 	int flag;
-	int flag1;
 
 	i = 0;
 	flag = 0;
-	flag1 = 0;
 	while ((str[*pos] == '\0' || str[*pos] == ' '))
 		(*pos)++;
 

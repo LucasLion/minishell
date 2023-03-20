@@ -6,11 +6,15 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 11:19:41 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/16 11:19:05 by amouly           ###   ########.fr       */
+<<<<<<< HEAD
+/*   Updated: 2023/03/17 10:33:50 by amouly           ###   ########.fr       */
+=======
+/*   Updated: 2023/03/20 10:37:15 by llion            ###   ########.fr       */
+>>>>>>> 1dfc10f4c6ddfa597e1da59e101f25d7aa0a3da8
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 void    init_struct_command(t_command *list_of_command)
 {
@@ -83,3 +87,23 @@ void print_list_command_from_head(t_command *list)
         head = head->next;
     }
 }
+
+int length_list_command(t_command *list, int *nb_of_pipes)
+{
+    int         count;
+    t_command   *temp;
+    
+    count = 0;
+    temp = list;
+    if (temp == NULL)
+        return (0); 
+    while (temp)
+    {
+        count++;
+        if (temp->pipe_after == 1)
+            (*nb_of_pipes)++;
+        temp = temp->next;
+    }
+    return (count);
+}
+
