@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 14:21:07 by llion             #+#    #+#             */
-/*   Updated: 2023/03/15 14:09:44 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/20 10:52:22 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,27 +155,28 @@ void  edit_variable(char **envp, char *var, char *val, int j)
    ft_strlcat(envp[j], val, ft_strlen(envp[j]) + ft_strlen(val) + 1); 
 }
 
-char   **ms_export(char **envp, int env_len)
+char   **ms_export(char **envp, int env_len, char *params)
 {
    int   i;
    int   j;
    int   k;
    int   flag;
-   char *string;
    char ***args;
    char ***env;
 
+   printf("YOU'RE HERE\n");
    i = 0;
    k = 0;
    flag = 0;
    env_len = tab_len(envp);
-   string = "LANG=YEAHSHIT USER=YOUSUCK LUCAS=gentil ANTOINE=mechant";
-   //string = "";
-   args = create_args_list(string);
+   args = create_args_list(params);
    env = create_env_list(envp, env_len);
-   if (ft_strlen(string) == 0)
+   if (ft_strlen(params) == 0)
+   {
+      sort_tab(envp, tab_len(envp));
       while (envp[k])
          printf("declare -x %s\n", envp[k++]);
+   }
    else if (args)
    {
       while (args[i])

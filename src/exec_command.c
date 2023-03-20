@@ -6,7 +6,7 @@
 /*   By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/18 16:10:06 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/20 10:58:05 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,53 @@ char	*get_command(t_command *list, char **envp)
 	return (cmd);
 }
 
+char *is_builtin(char *cmd)
+{
+    if (ft_strncmp(cmd, "echo", ft_strlen(cmd)) == 0)
+        return ("echo");
+    else if (ft_strncmp(cmd, "cd", ft_strlen(cmd)) == 0)
+        return ("cd");
+    else if (ft_strncmp(cmd, "pwd", ft_strlen(cmd)) == 0)
+        return ("pwd");
+    else if (ft_strncmp(cmd, "export", ft_strlen(cmd)) == 0)
+        return ("export");
+    else if (ft_strncmp(cmd, "unset", ft_strlen(cmd)) == 0)
+        return ("unset");
+    else if (ft_strncmp(cmd, "env",	3) == 0)
+        return ("env");
+    else if (ft_strncmp(cmd, "exit", ft_strlen(cmd)) == 0)
+        return ("exit");
+    else
+        return (NULL);
+}
+
+int    exec_builtin(char *builtin, t_command *list, char **envp)
+{
+    (void)list;
+
+    if (ft_strncmp(builtin, "pwd", 3) == 0)
+        pwd();
+    else if (ft_strncmp(builtin, "export", 6) == 0)
+        ms_export(envp, tab_len(envp), list->input->string);
+    else if (ft_strncmp(builtin, "unset", 5) == 0)
+        unset(envp, builtin);
+    else if (ft_strncmp(builtin, "env", 3) == 0)
+        env(envp);
+    else if (ft_strncmp(builtin, "exit", 4) == 0)
+        ms_exit();
+	//else if (ft_strncmp(builtin, "echo", 4) == 0)
+    //    echo();
+	//else if (ft_strncmp(builtin, "cd", 2) == 0)
+	//    cd(list, envp);
+    return (0);
+}
+
 int	exec_command(char **argv, char **envp, t_command *list, char *line)
 {
-	(void)argv;
-	(void)envp;
 	int	exit_status;
 	int		status;
 	char	*cmd;
+    char    *builtin;
 
 	pid_t	pid;
 	pid = fork();
@@ -69,8 +109,12 @@ int	exec_command(char **argv, char **envp, t_command *list, char *line)
 	{
 		parse_input(line, &list);
 		add_history(line);
-		cmd = get_command(list, envp);
-		exit_status = execve(cmd, argv, envp);
+        builtin = is_builtin(list->command->string);
+        cmd = get_command(list, envp);
+        if (builtin)
+            return (exec_builtin(builtin, list, envp));
+        else
+            return (execve(cmd, argv, envp));
 	}
 	else if (pid < 0)
 		return (EXIT_FAILURE);

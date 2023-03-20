@@ -6,16 +6,14 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 14:21:07 by llion             #+#    #+#             */
-/*   Updated: 2023/03/18 12:29:49 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/20 10:53:17 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	ms_exit(char **argv, char **envp)
+int	ms_exit()
 {
-	(void)argv;
-	(void)envp;
 	int	status;
 
 	if (WIFEXITED(status))
@@ -35,4 +33,16 @@ void	pwd()
 		exit(EXIT_FAILURE);
 	}
 	printf("%s\n", buffer);
+}
+
+void    env(char **envp)
+{
+    int i;
+
+    i = 0;
+    while (envp[i])
+    {
+        printf("%s\n", envp[i]);
+        i++;
+    }
 }
