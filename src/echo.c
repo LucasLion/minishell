@@ -6,13 +6,13 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 14:59:28 by llion             #+#    #+#             */
-/*   Updated: 2023/03/16 12:48:13 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/20 10:55:24 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
-/*void	print_tab(char **tab, int i)
+void	print_tab_echo(char **tab, int i)
 {
 	int	counter;
 
@@ -28,10 +28,10 @@
 void	echo(char **args)
 {
 	if (ft_strncmp(args[1], "-n", 2) == 0)
-		print_tab(args, 2);
+		print_tab_echo(args, 2);
 	else
     {
-		print_tab(args, 1);
+		print_tab_echo(args, 1);
 		printf("\n");
     }
-}*/
+}

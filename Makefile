@@ -6,7 +6,7 @@
 #    By: amouly <amouly@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 15:27:43 by llion             #+#    #+#              #
-#    Updated: 2023/03/18 11:38:02 by amouly           ###   ########.fr        #
+#    Updated: 2023/03/20 11:15:13 by amouly           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,19 +37,24 @@ SOURCES = 	main_antoine.c \
 			pipe.c \
 			tab_utils.c
 
-OBJS = ${addprefix src/,${SOURCES:.c=.o}}
-OBJBONUS = ${addprefix src/,${SRCBONUS:.c=.o}}
+OBJS = ${addprefix objs/,${notdir ${SOURCES:.c=.o}}}
 
 all :  ${NAME}
 
-.c.o: 
-	@gcc ${FLAGS} ${HEADERS} -c $< -o ${<:.c=.o}
+#objs/%.o: src/%.c
+#	@gcc ${FLAGS} ${HEADERS} -c $< -o $@
+
+${OBJS} : objs/%.o : src/%.c
+	@mkdir -p objs
+	@${CC} ${FLAGS} ${HEADERS} -c $< -o $@
+
 
 ${NAME} : ${OBJS} 
 	@make -sC libft
 	@echo "----> libft COMPILED"
 	@gcc  ${FLAGS} ${OBJS} ${LIBFT} ${HEADERS} -o ${NAME} ${READLINE}
 	@echo "----> minishell COMPILED"
+	
 
 debug : ${OBJS} ${OBJBONUS} 
 	make -C libft
@@ -65,6 +70,5 @@ fclean : clean
 	@rm -rf ${NAME} *.dSYM
 	@make fclean -sC libft
 	@echo "----> Everything is GONE"
-
 
 re : fclean all

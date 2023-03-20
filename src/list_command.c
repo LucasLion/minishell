@@ -6,11 +6,15 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 11:19:41 by amouly            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/03/17 10:33:50 by amouly           ###   ########.fr       */
+=======
+/*   Updated: 2023/03/20 10:37:15 by llion            ###   ########.fr       */
+>>>>>>> 1dfc10f4c6ddfa597e1da59e101f25d7aa0a3da8
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 void    init_struct_command(t_command *list_of_command)
 {
