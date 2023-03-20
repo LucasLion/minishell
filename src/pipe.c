@@ -6,26 +6,11 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:22:46 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/20 12:05:52 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/20 17:44:56 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-typedef struct s_pipe
-{
-	int			nbr_of_pipes;
-	int			reading_index;
-    int			writing_index;
-	char		*cmd_1;
-	char		**tab_argv_1;
-	char		*cmd_2;
-	char		**tab_argv_2;
-	char		**envp;
-	
-}					t_pipe;
-*/
 
 int **create_pipes(int nb_of_pipes, int **fd)
 {
@@ -42,22 +27,6 @@ int **create_pipes(int nb_of_pipes, int **fd)
     }
     return (fd);
 }
-
-void close_fd_everyhing_but(int **fd, t_pipe *info)
-{
-    int i;
-
-    i = 0;
-    while (i < info->nbr_of_pipes)
-    {
-        if (i != info->reading_index)
-            close (fd[i][0]);
-        if (i != info->writing_index)
-            close (fd[i][1]);
-        i++;
-    }
-}
-
 void close_fd_everyhing(int **fd, int nbr_of_pipes)
 {
     int i;
@@ -70,174 +39,128 @@ void close_fd_everyhing(int **fd, int nbr_of_pipes)
         i++;
     }
 }
-
-int create_forks(int **fd, t_pipe *pipe_info)
+void close_fd_everyhing_but(int **fd, int nbr_of_pipes, int a, int b)
 {
-    int pid1;
-    int pid2;
-    
-    pid1 = fork();
-    if (pid1 == -1)
-        return (0);
-    //error
-    if (pid1 == 0)
+    int i;
+
+    i = 0;
+    while (i < nbr_of_pipes)
     {
-        close (fd[pipe_info->reading_index][0]); 
-        dup2(fd[pipe_info->writing_index][1], STDOUT_FILENO);
-        exec_command(pipe_info->cmd_1, pipe_info->tab_argv_1, pipe_info->envp);
-        //close (fd[pipe_info->writing_index][1]);
-        close_fd_everyhing(fd, pipe_info->nbr_of_pipes);
-        exit (0);
+        if (fd[a][b] != fd [i][0])
+            close (fd[i][0]);
+        if (fd[a][b] != fd [i][1])
+            close (fd[i][1]);
+        i++;
     }
-    pid2 = fork();
-    if (pid2 == -1)
-        return (0);
-    //error
-    if (pid2 == 0)
+}
+void close_fd_everyhing_but_two(int **fd, int nbr_of_pipes, int read, int write)
+{
+    int i;
+
+    i = 0;
+    while (i < nbr_of_pipes)
     {
-        close (fd[pipe_info->writing_index][1]); 
-        dup2(fd[pipe_info->reading_index][0], STDIN_FILENO);
-        exec_command(pipe_info->cmd_2, pipe_info->tab_argv_2, pipe_info->envp);
-       // close (fd[pipe_info->reading_index][0]);  
-        close_fd_everyhing(fd, pipe_info->nbr_of_pipes);
-        exit (0);
+        if (fd[read][0] != fd [i][0])
+            close (fd[i][0]);
+        if (fd[write][1] != fd [i][1])
+            close (fd[i][1]);
+        i++;
     }
-    close_fd_everyhing(fd, pipe_info->nbr_of_pipes);
-    waitpid(pid1,NULL,0);
-    waitpid(pid2,NULL,0);
+}
+
+
+
+
+void wait_all_pid(int *pid, int nbr_of_command)
+{
+    int i;
+
+    i = 0;
+    while(i < nbr_of_command)
+    {
+        waitpid(pid[i], NULL, 0);
+        i++;
+    }
+}
+
+int child_process(t_pipe *pipe_info, int **fd)
+{
+        if (pipe_info->i == 0)
+        {
+            close_fd_everyhing_but(fd,pipe_info->nbr_of_pipes,pipe_info->i,1);
+            dup2(fd[pipe_info->i][1], STDOUT_FILENO);
+            exec_command(pipe_info->cmd, pipe_info->tab_arg, pipe_info->envp);
+            close(fd[pipe_info->i][1]);
+            exit (0);
+        }
+        else if (pipe_info->i == pipe_info->nbr_of_commands - 1 )
+        {
+            close_fd_everyhing_but(fd,pipe_info->nbr_of_pipes,pipe_info->i-1,0);
+            dup2(fd[pipe_info->i -1][0], STDIN_FILENO);
+            exec_command(pipe_info->cmd, pipe_info->tab_arg, pipe_info->envp);
+            close(fd[pipe_info->i - 1][0]);
+            exit (0);
+        }
+        else
+        {
+            close_fd_everyhing_but_two(fd,pipe_info->nbr_of_pipes,pipe_info->i-1,pipe_info->i);
+            dup2(fd[pipe_info->i -1][0], STDIN_FILENO);
+            dup2(fd[pipe_info->i][1], STDOUT_FILENO);
+            exec_command(pipe_info->cmd, pipe_info->tab_arg, pipe_info->envp);
+            close(fd[pipe_info->i][1]);
+            close(fd[pipe_info->i - 1][0]);
+            exit (0);
+        }
     return (0);
 }
 
 
-/*int create_forks(int **fd, t_pipe *pipe_info)
-{
-    int pid1;
-    int pid2;
-    
-    pid1 = fork();
-    if (pid1 == -1)
-        return (0);
-    //error
-    if (pid1 == 0)
-    {  
-        close_fd_everyhing_but(fd, pipe_info);
-        close (fd[pipe_info->reading_index][0]);
-        if (pipe_info->fd_writing == 1)
-            close(fd[pipe_info->fd_reading][0]);  
-        dup2(fd[pipe_info->writing_index][1], pipe_info->fd_writing);
-        exec_command(pipe_info->cmd_1, pipe_info->tab_argv_1, pipe_info->envp);
-        if (pipe_info->fd_writing != 1)
-            close(fd[pipe_info->fd_reading][0]);
-        close (fd[pipe_info->writing_index][1]);
-        exit (0);
-    }
-    pid2 = fork();
-    if (pid2 == -1)
-        return (0);
-    //error
-    if (pid2 == 0)
-    {
-        close_fd_everyhing_but(fd, pipe_info);
-        close (fd[pipe_info->writing_index][1]);
-        if (pipe_info->fd_reading == 0)
-            close(fd[pipe_info->fd_writing][1]); 
-        dup2(fd[pipe_info->reading_index][0], pipe_info->fd_reading);
-        exec_command(pipe_info->cmd_2, pipe_info->tab_argv_2, pipe_info->envp);
-        close (fd[pipe_info->reading_index][0]);
-        if (pipe_info->fd_reading != 0)
-            close(fd[pipe_info->fd_writing][1]);    
-        exit (0);
-    }
-    close_fd_everyhing(fd, pipe_info->nbr_of_pipes);
-    waitpid(pid1,NULL,0);
-    waitpid(pid2,NULL,0);
-    return (0);
-}*/
-
-
-
-void    init_fd(t_pipe *pipe_info, t_command *list, int i, int **fd)
+void    init_fd_test(t_pipe *pipe_info, t_command *list)
 {
     (void) list;
-   // (void) fd;
     
-    pipe_info->fd_reading = STDIN_FILENO ;
-    pipe_info->fd_writing = STDOUT_FILENO;
-    if (i > 0)
-        pipe_info->fd_reading = fd[i][0] ;
-    if (i < pipe_info->nbr_of_pipes - 1)
-        pipe_info->fd_writing = fd[i + 1][1];
+    pipe_info->fd_input = STDIN_FILENO ;
+    pipe_info->fd_output = STDOUT_FILENO;
 }
 
-int managing_forks(int **fd, int nb_of_pipes, t_command *list, char **envp )
+int managing_fork(int **fd, int nb_of_pipes, t_command *list, char **envp, int nbr_of_commands )
 {
-    int i;
     t_pipe pipe_info;
     t_command *temp = list;
 
     pipe_info.nbr_of_pipes = nb_of_pipes;
+    pipe_info.nbr_of_commands = nbr_of_commands;
     pipe_info.envp = envp;    
-    i = 0;
-    while (i < nb_of_pipes)
+    pipe_info.i = 0;
+    int pid[pipe_info.nbr_of_commands];
+    init_fd_test(&pipe_info, list);
+    while (pipe_info.i <= nb_of_pipes)
     {
-        pipe_info.reading_index = i - 1;
-        pipe_info.writing_index = i ; 
-        if (i == 0)
-            pipe_info.reading_index = nb_of_pipes - 1;
-        init_fd(&pipe_info, list, i, fd);
-        pipe_info.tab_argv_1 = list_to_tab(temp->command, envp);
-        pipe_info.cmd_1 = copy_string(temp->command->string, envp);
-        temp= temp->next;
-        if (temp != NULL)
-        {
-            pipe_info.tab_argv_2 = list_to_tab(temp->command, envp);
-            pipe_info.cmd_2 = copy_string(temp->command->string, envp);
-        }
-        create_forks(fd, &pipe_info);
-        //close(pipe_info.fd_temp);
-        i++;   
-    }
+        pipe_info.cmd = copy_string(temp->command->string, envp);
+        pipe_info.tab_arg = list_to_tab(temp->command, envp);
+        pid[pipe_info.i] = fork();
+        if (pid[pipe_info.i] < 0)
+            printf("error\n");
+        else if(pid[pipe_info.i] == 0)
+            child_process(&pipe_info, fd);
+        if (pipe_info.i < nb_of_pipes)
+            temp = temp->next; 
+        pipe_info.i++;  
+    }   
+    close_fd_everyhing(fd,nb_of_pipes);
+    wait_all_pid(pid,nbr_of_commands);
     return (0);
 }
 
-/*int managing_forks(int **fd, int nb_of_pipes, t_command *list, char **envp )
-{
-    int i;
-    t_pipe pipe_info;
-    t_command *temp = list;
 
-    pipe_info.nbr_of_pipes = nb_of_pipes;
-    pipe_info.envp = envp;    
-    i = 0;
-    while (temp != NULL)
-    {
-        pipe_info.reading_index = i - 1;
-        pipe_info.writing_index = i; 
-        if (i == 0)
-            pipe_info.reading_index = nb_of_pipes - 1;
-        if (i < nb_of_pipes - 1)
-        {
-            pipe_info.writing_index = i +1;
-            pipe_info.tab_argv_2 = list_to_tab(temp->next->command, envp);
-            pipe_info.cmd_2 = copy_string(temp->next->command->string, envp);
-             
-        } else
-            pipe_info.writing_index = 0;
-        pipe_info.tab_argv_1 = list_to_tab(temp->command, envp);
-        pipe_info.cmd_1 = copy_string(temp->command->string, envp);
-        temp= temp->next;
-        create_forks(fd, &pipe_info);
-        temp= temp->next;
-        i++;   
-    }
-    return (0);
-}*/
 
-int managing_pipes(t_command *list , char **envp)
+int managing_pipe(t_command *list , char **envp)
 {
     int nb_of_command;
     int nb_of_pipes;
-    
+    int i;
+
+    i = 0;
     nb_of_pipes = 0;
     nb_of_command = length_list_command(list, &nb_of_pipes);
     if (nb_of_pipes > 0)
@@ -245,9 +168,7 @@ int managing_pipes(t_command *list , char **envp)
         int **fd;
         fd = malloc(sizeof (int *) * nb_of_pipes);
         fd = create_pipes(nb_of_pipes, fd);
-        //if (fd == NULL)
-        // return (-1);
-        managing_forks(fd, nb_of_pipes, list, envp);
+        managing_fork(fd, nb_of_pipes, list, envp, nb_of_command);
     }
     else 
         exec_command(copy_string(list->command->string, envp), list_to_tab(list->command, envp), envp);
