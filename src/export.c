@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 14:21:07 by llion             #+#    #+#             */
-/*   Updated: 2023/03/20 11:10:55 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/20 17:35:18 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,46 +24,47 @@ int   tab_len(char **tab)
    return (i);
 }
 
-void sort_tab(char **tab, int size)
+char **sort_tab(char **tab, int size)
 {
     int i;
 	int	j;
 	int	min;
     char *tmp;
+    char **sorted_tab;
 
 	i = 0;
+    sorted_tab = copy_tab(tab);
     while (i < size - 1)
 	{
 		j = i + 1;
         min = i;
         while  (j < size)
 		{
-            if (ft_strncmp(tab[j], tab[min], ft_strlen(tab[j])) < 0)
+            if (ft_strncmp(sorted_tab[j], sorted_tab[min], ft_strlen(sorted_tab[j])) < 0)
             {
                 min = j;
             }
 			j++;
         }
-        tmp = tab[i];
-        tab[i] = tab[min];
-        tab[min] = tmp;
+        tmp = sorted_tab[i];
+        sorted_tab[i] = sorted_tab[min];
+        sorted_tab[min] = tmp;
 		i++;
     }
+    return (sorted_tab);
 }
 
-char  	***create_args_list(char *args)
+char  	***create_args_list(char **argv)
 {
    int   i;
-   char  **tab;
    int   len;
    char  ***ret;
    char  **split;
 
-   if (args == NULL)
+   if (argv == NULL)
       return (NULL);
-   i = 0;
-   tab =  ft_split(args, ' ');
-   len = tab_len(tab);
+   i = 1;
+   len = tab_len(argv);
    if (len > 0)
    {
       ret = ft_calloc(len + 1, sizeof(char **));
@@ -75,7 +76,7 @@ char  	***create_args_list(char *args)
    while (i < len)
    {
       ret[i] = ft_calloc(2, sizeof(char *));
-      split = ft_split(tab[i], '=');
+      split = ft_split(argv[i], '=');
       ret[i][0] = ft_calloc(ft_strlen(split[0]), sizeof(char));
       ret[i][1] = ft_calloc(ft_strlen(split[1]), sizeof(char));
       ft_strlcpy(ret[i][0], split[0], (ft_strlen(split[0]) + 1));
@@ -127,7 +128,7 @@ char  **add_new_variable(char **arg, char **envp)
    i = 0;
    env_size = tab_len(envp);
    new_envp = ft_calloc((env_size + 2), sizeof(char *));
-   line_size = ft_strlen(arg[0]) + ft_strlen(arg[1]) + 1;
+   line_size = (int)ft_strlen(arg[0]) + (int)ft_strlen(arg[1]) + 1;
    new_envp[env_size + 1] = 0;
    while (i < env_size && ft_strncmp(envp[i], arg[0], ft_strlen(arg[0])) < 0)
    {
@@ -144,6 +145,7 @@ char  **add_new_variable(char **arg, char **envp)
       new_envp[i] = ft_strdup(envp[i]);
       i++;
    }
+   free_tab2(envp);
    return (new_envp);
 }
 
@@ -155,7 +157,37 @@ void  edit_variable(char **envp, char *var, char *val, int j)
    ft_strlcat(envp[j], val, ft_strlen(envp[j]) + ft_strlen(val) + 1); 
 }
 
-char   **ms_export(char **envp, int env_len, char *params)
+char  *add_double_quotes(char *str)
+{
+   int   i;
+   int   j;
+   char *ret;
+
+   i = 0;
+   j = 0;
+   ret = ft_calloc(ft_strlen(str) + 3, sizeof(char));
+   while (str[i] != '=')
+   {
+      ret[j] = str[i];
+      i++;
+      j++;
+   }
+   i++;
+   ret[j] = '=';
+   j++;
+   ret[j] = '"';
+   j++;
+   while (str[i])
+   {
+      ret[j] = str[i];
+      i++;
+      j++;
+   }
+   ret[j] = '"';
+   return (ret);
+}
+
+char   **ms_export(char **argv, char **envp, int env_len)
 {
    int   i;
    int   j;
@@ -163,28 +195,38 @@ char   **ms_export(char **envp, int env_len, char *params)
    int   flag;
    char ***args;
    char ***env;
+   char  **sorted;
+   char *formatted;
 
-   printf("YOU'RE HERE\n");
-   i = 0;
+   i = 1;
    k = 0;
    flag = 0;
-   env_len = tab_len(envp);
-   args = create_args_list(params);
+   args = create_args_list(argv);
    env = create_env_list(envp, env_len);
-   if (ft_strlen(params) == 0)
+   if (tab_len(argv) == 1)
    {
-      sort_tab(envp, tab_len(envp));
-      while (envp[k])
-         printf("declare -x %s\n", envp[k++]);
+      sorted = sort_tab(envp, tab_len(envp));
+      while (sorted[k])
+      {
+         if (sorted[k][1] == '=' && sorted[k][0] == '_')
+            k++;
+         else
+         {
+            formatted = add_double_quotes(sorted[k]);
+            printf("declare -x %s\n", formatted);
+            k++;
+         }
+      }
    }
-   else if (args)
+   else
    {
+      // TODO probleme avec les valeurs de variable vide
       while (args[i])
       {
          j = 0;
          while (env[j])
          {
-            if (ft_strncmp(env[j][0], args[i][0], (ft_strlen(args[i][0] + 1))) == 0)
+            if (ft_strncmp(env[j][0], args[i][0], (ft_strlen(args[i][0]))) == 0)
             {
                edit_variable(envp, args[i][0], args[i][1], j);
                flag = 1;
@@ -197,6 +239,8 @@ char   **ms_export(char **envp, int env_len, char *params)
          i++;
       }
    }
+   free_tab3(args);
+   free_tab3(env);
    return (envp);
 }
 

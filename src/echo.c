@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 14:59:28 by llion             #+#    #+#             */
-/*   Updated: 2023/03/20 10:55:24 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/20 13:14:53 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ void	print_tab_echo(char **tab, int i)
 	printf("%s", tab[i]);
 }
 
-void	echo(char **args)
+void	echo(char **argv)
 {
-	if (ft_strncmp(args[1], "-n", 2) == 0)
-		print_tab_echo(args, 2);
+	if (ft_strncmp(argv[1], "-n", 2) == 0)
+		print_tab_echo(argv, 2);
 	else
     {
-		print_tab_echo(args, 1);
+		print_tab_echo(argv, 1);
 		printf("\n");
     }
 }
