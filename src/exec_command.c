@@ -6,7 +6,7 @@
 /*   By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/20 10:58:05 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/20 11:12:02 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,11 @@ int    exec_builtin(char *builtin, t_command *list, char **envp)
     if (ft_strncmp(builtin, "pwd", 3) == 0)
         pwd();
     else if (ft_strncmp(builtin, "export", 6) == 0)
+	{
+		printf("1\n");
         ms_export(envp, tab_len(envp), list->input->string);
+		printf("2\n");
+	}
     else if (ft_strncmp(builtin, "unset", 5) == 0)
         unset(envp, builtin);
     else if (ft_strncmp(builtin, "env", 3) == 0)
