@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/20 17:45:20 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/21 11:29:21 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,8 +204,19 @@ char    **copy_tab(char **tab);
 
 /* -------------- PIPE.c -------------- */
 
-int 	managing_pipes(t_command *list, char **envp);
+int 	**create_pipes(int nb_of_pipes, int **fd);
+void 	close_fd_everyhing(int **fd, int nbr_of_pipes);
+void 	close_fd_everyhing_but_one(int **fd, int nbr_of_pipes, int a, int b);
+void 	close_fd_everyhing_but_two(int **fd, int nbr_of_pipes, int read, int write);
+void 	wait_all_pid(int *pid, int nbr_of_command);
+int 	child_process(t_pipe *pipe_info, int **fd);
+int 	managing_fork(int **fd, int nb_of_pipes, t_command *list, char **envp, int nbr_of_commands );
 int 	managing_pipe(t_command *list , char **envp);
+
+
+/* -------------- REDIR.c -------------- */
+
+void    init_fd(t_pipe *pipe_info, t_command *list);
 
 
 
