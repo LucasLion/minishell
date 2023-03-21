@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/20 17:45:07 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/21 14:25:01 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,8 @@ char	*get_path(char **envp, char *cmd)
 		i++;
 	}
 	return (NULL);
-<<<<<<< HEAD
-	
-	//print_tab(split_path);
 }
 
-
-
-=======
-}
-
->>>>>>> abc38a2575be912fcddc412a08691c7a26f4904c
 char *is_builtin(char *cmd)
 {
     if (ft_strncmp(cmd, "echo", ft_strlen(cmd) + 1) == 0)
@@ -100,11 +91,7 @@ char    **exec_builtin(char *builtin, char **argv, char **envp)
     return (envp);
 }
 
-<<<<<<< HEAD
-/*int	exec_command(char **argv, char **envp, t_command *list, char *line)
-=======
 char	**exec_command(char *command, char **argv, char **envp)
->>>>>>> abc38a2575be912fcddc412a08691c7a26f4904c
 {
 	char	*path;
 	int		status;
