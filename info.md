@@ -1,8 +1,8 @@
-# Gérer les guillements dans la commande echo
+# TO DO
 
-	- Parser la ligne pour compter le nombre de mots
-	- créer les argv meme temps
-		-> recréer un split adapté
+	- gerer le pipe en fin de ligne (readline)
+	- gerer heredoc (readline)
+	- gerer toutes les erreurs(readline)
 	
 
 #	lien utiles

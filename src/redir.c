@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:23:30 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/21 12:46:39 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/21 14:47:25 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ int find_output(t_string *output)
     while (temp)
     {
         if (temp->append == 1)
-            fd = open(temp->string, O_WRONLY, O_CREAT | O_TRUNC | O_APPEND);
+            fd = open(temp->string, O_WRONLY | O_CREAT | O_APPEND);
         else
-            fd = open(temp->string, O_WRONLY, O_CREAT | O_TRUNC);
+            fd = open(temp->string, O_WRONLY | O_CREAT | O_TRUNC);
         temp = temp->next;
     }
     return (fd);
@@ -47,12 +47,6 @@ int find_output(t_string *output)
 void    init_fd(t_pipe *pipe_info, t_command *list)
 {
     
-    /*printf("input :\n");
-    print_list_string_from_head (list->input);
-    printf("OUTPUT : \n");
-    print_list_string_from_head(list->output);
-    printf ("----------------\n");
-    if */
     if (list->input == NULL)
         pipe_info->fd_input = STDIN_FILENO ;
     else

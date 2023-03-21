@@ -3,3 +3,4 @@ src/*.o
 libft/*.o
 minishell
 .idea/
+.vscode/
