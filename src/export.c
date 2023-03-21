@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
+/*   By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/04 14:21:07 by llion             #+#    #+#             */
-/*   Updated: 2023/03/20 17:35:18 by llion            ###   ########.fr       */
+/*   Created: 2023/03/21 16:12:49 by llion             #+#    #+#             */
+/*   Updated: 2023/03/21 17:29:58 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,119 +54,18 @@ char **sort_tab(char **tab, int size)
     return (sorted_tab);
 }
 
-char  	***create_args_list(char **argv)
-{
-   int   i;
-   int   len;
-   char  ***ret;
-   char  **split;
-
-   if (argv == NULL)
-      return (NULL);
-   i = 1;
-   len = tab_len(argv);
-   if (len > 0)
-   {
-      ret = ft_calloc(len + 1, sizeof(char **));
-      if (ret == NULL)
-         return (NULL);
-   }
-   else
-      return (NULL);
-   while (i < len)
-   {
-      ret[i] = ft_calloc(2, sizeof(char *));
-      split = ft_split(argv[i], '=');
-      ret[i][0] = ft_calloc(ft_strlen(split[0]), sizeof(char));
-      ret[i][1] = ft_calloc(ft_strlen(split[1]), sizeof(char));
-      ft_strlcpy(ret[i][0], split[0], (ft_strlen(split[0]) + 1));
-      ft_strlcpy(ret[i][1], split[1], (ft_strlen(split[1]) + 1));
-      i++;
-   }
-   ret[i] = NULL;
-   return (ret);
-}
-
-char  ***create_env_list(char **envp, int env_len)
-{
-   int   i;
-   char  **split;
-   char  ***ret;
-
-   env_len = tab_len(envp);
-   if (env_len > 0)
-   {
-      ret = ft_calloc(env_len + 2, sizeof(char **));
-      if (ret == NULL)
-         return (NULL);
-   }
-   else
-      return (NULL);
-   ret[env_len + 1] = NULL;
-   i = 0;
-
-   while (i < env_len)
-   {
-      ret[i] = ft_calloc(2, sizeof(char *));
-      split = ft_split(envp[i], '=');
-      ret[i][0] = ft_strdup(split[0]);
-      ret[i][1] = ft_strdup(split[1]);
-      i++;
-   }
-   ret[i] = NULL;
-   return (ret);
-
-}
-
-char  **add_new_variable(char **arg, char **envp)
-{
-   int   i;
-   int   env_size;
-   int   line_size;
-   char **new_envp;
-
-   i = 0;
-   env_size = tab_len(envp);
-   new_envp = ft_calloc((env_size + 2), sizeof(char *));
-   line_size = (int)ft_strlen(arg[0]) + (int)ft_strlen(arg[1]) + 1;
-   new_envp[env_size + 1] = 0;
-   while (i < env_size && ft_strncmp(envp[i], arg[0], ft_strlen(arg[0])) < 0)
-   {
-      new_envp[i] = ft_strdup(envp[i]);
-      i++;
-   }
-   new_envp[i] = ft_calloc(line_size + 2, sizeof(char)); 
-   ft_strlcpy(new_envp[i], arg[0], ft_strlen(arg[0]) + 1); 
-   ft_strlcat(new_envp[i], "=", ft_strlen(new_envp[i]) + 2); 
-   ft_strlcat(new_envp[i], arg[1], ft_strlen(new_envp[i]) + ft_strlen(arg[1]) + 1); 
-   i++;
-   while (i < env_size)
-   {
-      new_envp[i] = ft_strdup(envp[i]);
-      i++;
-   }
-   free_tab2(envp);
-   return (new_envp);
-}
-
-void  edit_variable(char **envp, char *var, char *val, int j)
-{
-   envp[j] = ft_calloc(ft_strlen(envp[j]) + ft_strlen(val) + 1, sizeof(char));
-   ft_strlcat(envp[j], var, ft_strlen(var) + 1); 
-   ft_strlcat(envp[j], "=", ft_strlen(envp[j]) + 2); 
-   ft_strlcat(envp[j], val, ft_strlen(envp[j]) + ft_strlen(val) + 1); 
-}
-
+/*
 char  *add_double_quotes(char *str)
 {
    int   i;
    int   j;
-   char *ret;
+   char  *ret;
 
    i = 0;
    j = 0;
+   printf("str: %s\n", str);
    ret = ft_calloc(ft_strlen(str) + 3, sizeof(char));
-   while (str[i] != '=')
+   while (str[i] && str[i] != '=')
    {
       ret[j] = str[i];
       i++;
@@ -186,62 +85,149 @@ char  *add_double_quotes(char *str)
    ret[j] = '"';
    return (ret);
 }
+*/
 
-char   **ms_export(char **argv, char **envp, int env_len)
+void  display_export(char **envp)
 {
    int   i;
-   int   j;
-   int   k;
-   int   flag;
-   char ***args;
-   char ***env;
    char  **sorted;
-   char *formatted;
+   //char  *formatted;
 
-   i = 1;
-   k = 0;
-   flag = 0;
-   args = create_args_list(argv);
-   env = create_env_list(envp, env_len);
-   if (tab_len(argv) == 1)
+   i = 0;
+   sorted = sort_tab(envp, tab_len(envp));
+   while (sorted[i])
    {
-      sorted = sort_tab(envp, tab_len(envp));
-      while (sorted[k])
+      if (sorted[i][1] == '=' && sorted[i][0] == '_')
+         i++;
+      else
       {
-         if (sorted[k][1] == '=' && sorted[k][0] == '_')
-            k++;
-         else
-         {
-            formatted = add_double_quotes(sorted[k]);
-            printf("declare -x %s\n", formatted);
-            k++;
-         }
-      }
-   }
-   else
-   {
-      // TODO probleme avec les valeurs de variable vide
-      while (args[i])
-      {
-         j = 0;
-         while (env[j])
-         {
-            if (ft_strncmp(env[j][0], args[i][0], (ft_strlen(args[i][0]))) == 0)
-            {
-               edit_variable(envp, args[i][0], args[i][1], j);
-               flag = 1;
-            }
-            j++;
-         }
-         if (flag == 0)
-            envp = add_new_variable(args[i], envp);
-         flag = 0;
+         //formatted = add_double_quotes(sorted[i]);
+         printf("declare -x %s\n", sorted[i]);
+         //free(formatted);
          i++;
       }
    }
-   free_tab3(args);
-   free_tab3(env);
-   return (envp);
 }
 
+char *extract_var(char *arg)
+{
+   int   i;
+   int   end;
+   char  *var;
 
+   i = 0;
+   end = 0;
+   while (arg[end] && arg[end] != '=')
+      end++;
+   var = ft_calloc(end + 1, sizeof(char));
+   while (arg[i] && arg[i] != '=')
+   {
+      var[i] = arg[i];
+      i++;
+   }
+   var[i] = '\0';
+   return (var);
+}
+
+char *extract_val(char *arg)
+{
+   int   i;
+   char  *var;
+
+   i = 0;
+   while (arg[i] && arg[i] != '=')
+      i++;
+   var = ft_calloc(ft_strlen(arg) - i + 1, sizeof(char));
+   i = 0;
+   while (arg[i] && arg[i] != '=')
+   {
+      var[i] = arg[i];
+      i++;
+   }
+   var[i] = '\0';
+   return (var);
+}
+
+char  **add_new_variable(char *arg, char **envp)
+{
+   int   i;
+   int   env_size;
+   int   line_size;
+   char  **nenvp;
+   char  *var_arg;
+   char  *val_arg;
+
+   i = 0;
+   var_arg = extract_var(arg);
+   val_arg = extract_val(arg);
+   printf("val: %s\n", val_arg);
+   env_size = tab_len(envp);
+   nenvp = ft_calloc((env_size + 2), sizeof(char *));
+   line_size = (int)ft_strlen(var_arg) + (int)ft_strlen(val_arg) + 2;
+   while (i < env_size)
+   {
+      nenvp[i] = ft_strdup(envp[i]);
+      i++;
+   }
+   nenvp[i] = ft_calloc(line_size + 1, sizeof(char)); 
+   ft_strlcat(nenvp[i], var_arg, ft_strlen(var_arg) + 1); 
+   ft_strlcat(nenvp[i], "=", ft_strlen(var_arg) + 2); 
+   ft_strlcat(nenvp[i], val_arg, ft_strlen(var_arg) + ft_strlen(val_arg) + 2); 
+   nenvp[env_size + 1] = 0;
+   free_tab2(envp);
+   free(var_arg);
+   free(val_arg);
+   return (nenvp);
+}
+
+int   check_if_variable(char *arg, char **envp)
+{
+   int   i;
+   char  *var_arg;
+   char  *val_arg;
+   char  *var_env;
+   char  *val_env;
+   int   flag;
+
+   i = 0;
+   flag = 0;
+   var_arg = extract_var(arg);
+   val_arg = extract_val(arg);
+   while (envp[i])
+   {
+      var_env = extract_var(envp[i]);
+      val_env = extract_val(envp[i]);
+      if (ft_strncmp(var_env, var_arg, ft_strlen(var_arg) + 1) == 0)
+         flag = 1;
+      i++;
+   }
+   return (flag);
+}
+
+char   **ms_export(char **argv, char **envp, int env_len)
+{
+   (void)env_len;
+   int   flag;
+   int   i;
+
+   i = 1; 
+   flag = 0;
+   if (tab_len(argv) == 1)
+      display_export(envp);
+   else
+   {
+      while (argv[i])
+      {
+         flag = check_if_variable(argv[i], envp);
+         if (flag == 0)
+            envp = add_new_variable(argv[i], envp);
+         else
+            printf("edit variable\n");
+            //envp = edit_variable(argv[i], envp);
+         i++;
+      }
+      flag = 0;
+      i++;
+   }
+   return (envp);
+}

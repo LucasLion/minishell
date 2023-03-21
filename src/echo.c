@@ -6,11 +6,13 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 14:59:28 by llion             #+#    #+#             */
-/*   Updated: 2023/03/20 13:14:53 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/21 14:39:04 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+// TODO gerer le cas particulier du blackslash
 
 void	print_tab_echo(char **tab, int i)
 {
@@ -27,11 +29,13 @@ void	print_tab_echo(char **tab, int i)
 
 void	echo(char **argv)
 {
-	if (ft_strncmp(argv[1], "-n", 2) == 0)
+	if (argv[1] && ft_strncmp(argv[1], "-n", 2) == 0)
 		print_tab_echo(argv, 2);
-	else
-    {
+	else if (argv[1])
+	{
 		print_tab_echo(argv, 1);
 		printf("\n");
-    }
+	}
+	else
+		printf("\n");
 }
