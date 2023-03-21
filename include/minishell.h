@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/21 11:29:21 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/21 17:15:27 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ typedef struct s_env
 typedef struct s_string
 {
 	char				*string;
-	int					append;
+	int					append_or_heredoc;
 	struct s_string		*next;
     struct s_string		*previous;
 }					t_string;
@@ -78,8 +78,6 @@ typedef struct s_command
 	int					redir_input;
 	t_string			*output;
 	int					redir_output;
-	t_string			*delimiters;
-	int					delimiter;
 	int					order;
 	int					pipe_after;
     struct s_command	*next;
@@ -147,7 +145,7 @@ void    insert_space_everywhere(t_char **list);
 
 int		lstadd_back_list_string(t_string **list, t_string *new);
 int 	fill_list_string(char *str, t_string **list);
-int 	fill_list_string_append(char *str, t_string **list);
+int 	fill_list_string_append_or_heredoc(char *str, t_string **list);
 void 	print_list_string_from_head(t_string *list);
 void 	print_list_string_from_head_command(t_string *list);
 
