@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 11:51:24 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/18 12:31:09 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/21 17:18:19 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	clean_list_command(t_command **list)
         clean_list_string(&(*list)->command);
         clean_list_string(&(*list)->input);
         clean_list_string(&(*list)->output);
-        clean_list_string(&(*list)->delimiters);
 		free(*list);
 		*list = next;
 	}

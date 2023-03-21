@@ -6,7 +6,7 @@
 #    By: amouly <amouly@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 15:27:43 by llion             #+#    #+#              #
-#    Updated: 2023/03/21 11:13:08 by llion            ###   ########.fr        #
+#    Updated: 2023/03/21 17:34:31 by amouly           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ HEADERS = -I include -I libft
 
 SOURCES = 	memory_utils.c	\
 			unset.c		\
-			main_lucas.c \
+			main_antoine.c \
 			verif_line.c \
 			split_ms.c \
 			echo.c			\
@@ -35,7 +35,8 @@ SOURCES = 	memory_utils.c	\
 			exec_command.c \
 			list_to_tab.c \
 			pipe.c \
-			tab_utils.c 
+			tab_utils.c \
+			redir.c
 
 OBJS = ${addprefix objs/,${notdir ${SOURCES:.c=.o}}}
 

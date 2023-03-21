@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 15:03:31 by event             #+#    #+#             */
-/*   Updated: 2023/03/20 10:31:01 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/21 17:15:08 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,15 @@ void handle_chevrons(char **tab, int index, t_command *new)
     if (tab[index][0] == '<')
     {
         if (tab[index][1] == '<')
-        {
-            fill_list_string(tab[index + 1], &(new->delimiters));  
-            new->delimiter = 1;
-        } 
+            fill_list_string_append_or_heredoc(tab[index + 1], &(new->input));  
         else
-        {
             fill_list_string(tab[index + 1], &(new->input));
-            new->redir_input = 1;
-        }   
+        new->redir_input = 1;   
     }
     else
     {
         if (tab[index][1] == '>')
-            fill_list_string_append(tab[index + 1], &(new->output));
+            fill_list_string_append_or_heredoc(tab[index + 1], &(new->output));
         else
             fill_list_string(tab[index + 1], &(new->output));
         new->redir_output = 1;

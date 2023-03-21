@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 11:19:41 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/20 11:17:27 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/21 17:16:23 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,7 @@ void    init_struct_command(t_command *list_of_command)
     list_of_command->redir_input = 0;
 	list_of_command->redir_output = 0;
     list_of_command->order = 0;
-    list_of_command->delimiter = 0;
     list_of_command->pipe_after = 0;
-	list_of_command->delimiters = NULL;
 	list_of_command->command = NULL;
     list_of_command->input = NULL;
     list_of_command->output = NULL; 
@@ -72,11 +70,6 @@ void print_list_command_from_head(t_command *list)
         {
             printf("LIST DES OUTPUT : \n");
             print_list_string_from_head(head->output);
-        }
-        if (head->delimiter == 1)
-        {
-            printf("LIST DES DELIMITEURS :\n");
-            print_list_string_from_head(head->delimiters);
         }
         if (head->pipe_after == 1)
             printf("---PIPE NUM %d----\n", head->order);

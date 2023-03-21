@@ -3,3 +3,5 @@ src/*.o
 libft/*.o
 minishell
 .idea/
+.vscode/
+.DS_Store

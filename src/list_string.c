@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 11:19:41 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/20 10:39:46 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/21 17:16:50 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int fill_list_string(char *str, t_string **list)
         i++;
     }
     new->string[i] = '\0';
-    new->append = 0;
+    new->append_or_heredoc = 0;
     new->next = NULL;
     if (!lstadd_back_list_string(list, new ))
             return (0);
@@ -64,7 +64,7 @@ int fill_list_string(char *str, t_string **list)
     return (1);
 }
 
-int fill_list_string_append(char *str, t_string **list)
+int fill_list_string_append_or_heredoc(char *str, t_string **list)
 {
     t_string *new;
     int i;
@@ -82,7 +82,7 @@ int fill_list_string_append(char *str, t_string **list)
         i++;
     }
     new->string[i] = '\0';
-    new->append = 1;
+    new->append_or_heredoc = 1;
     new->next = NULL;
     if (!lstadd_back_list_string(list, new ))
             return (0);
@@ -103,8 +103,8 @@ void print_list_string_from_head(t_string *list)
     }
     while (head)
     {
-        if (head->append == 1)
-            printf("mode append : %s\n", head->string);
+        if (head->append_or_heredoc == 1)
+            printf("append or Heredoc: %s\n", head->string);
         else 
             printf("%s\n", head->string);
         head = head->next;
@@ -125,7 +125,7 @@ void print_list_string_from_head_command(t_string *list)
     }
     while (head)
     {
-        if (head->append == 1)
+        if (head->append_or_heredoc == 1)
             printf("mode append : %s\n", head->string);
         else
         {

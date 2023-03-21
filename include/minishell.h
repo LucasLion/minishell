@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/21 10:53:07 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/21 17:33:37 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ typedef struct s_env
 typedef struct s_string
 {
 	char				*string;
-	int					append;
+	int					append_or_heredoc;
 	struct s_string		*next;
     struct s_string		*previous;
 }					t_string;
@@ -78,8 +78,6 @@ typedef struct s_command
 	int					redir_input;
 	t_string			*output;
 	int					redir_output;
-	t_string			*delimiters;
-	int					delimiter;
 	int					order;
 	int					pipe_after;
     struct s_command	*next;
@@ -147,7 +145,7 @@ void    insert_space_everywhere(t_char **list);
 
 int		lstadd_back_list_string(t_string **list, t_string *new);
 int 	fill_list_string(char *str, t_string **list);
-int 	fill_list_string_append(char *str, t_string **list);
+int 	fill_list_string_append_or_heredoc(char *str, t_string **list);
 void 	print_list_string_from_head(t_string *list);
 void 	print_list_string_from_head_command(t_string *list);
 
@@ -204,8 +202,19 @@ char    **copy_tab(char **tab);
 
 /* -------------- PIPE.c -------------- */
 
-int 	managing_pipes(t_command *list, char **envp);
+int 	**create_pipes(int nb_of_pipes, int **fd);
+void 	close_fd_everyhing(int **fd, int nbr_of_pipes);
+void 	close_fd_everyhing_but_one(int **fd, int nbr_of_pipes, int a, int b);
+void 	close_fd_everyhing_but_two(int **fd, int nbr_of_pipes, int read, int write);
+void 	wait_all_pid(int *pid, int nbr_of_command);
+int 	child_process(t_pipe *pipe_info, int **fd);
+int 	managing_fork(int **fd, int nb_of_pipes, t_command *list, char **envp, int nbr_of_commands );
 int 	managing_pipe(t_command *list , char **envp);
+
+
+/* -------------- REDIR.c -------------- */
+
+void    init_fd(t_pipe *pipe_info, t_command *list);
 
 
 
