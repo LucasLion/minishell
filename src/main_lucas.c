@@ -6,13 +6,13 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 14:55:57 by llion             #+#    #+#             */
-/*   Updated: 2023/03/20 14:46:44 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/20 17:52:04 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int main(int argc, char **argv, char **env) 
+/*int main(int argc, char **argv, char **env) 
 {
 	(void)argc;
 	(void)argv;
@@ -35,4 +35,4 @@ int main(int argc, char **argv, char **env)
 		envp = exec_command(command, tab_argv, envp);
 	}	
 	return (exit_status);
-}
+}*/

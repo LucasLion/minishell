@@ -6,7 +6,7 @@
 #    By: amouly <amouly@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 15:27:43 by llion             #+#    #+#              #
-#    Updated: 2023/03/20 17:45:12 by amouly           ###   ########.fr        #
+#    Updated: 2023/03/20 17:52:44 by amouly           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ HEADERS = -I include -I libft
 
 SOURCES = 	memory_utils.c	\
 			unset.c		\
-			main_lucas.c \
+			main_antoine.c \
 			verif_line.c \
 			split_ms.c \
 			echo.c			\
