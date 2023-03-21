@@ -6,7 +6,7 @@
 /*   By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 16:12:49 by llion             #+#    #+#             */
-/*   Updated: 2023/03/21 17:29:58 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/21 18:57:45 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,52 +132,25 @@ char *extract_var(char *arg)
 char *extract_val(char *arg)
 {
    int   i;
+   int   j;
    char  *var;
 
    i = 0;
-   while (arg[i] && arg[i] != '=')
+   j = 0;
+   while (arg[i] != '\0' && arg[i] != '=')
       i++;
    var = ft_calloc(ft_strlen(arg) - i + 1, sizeof(char));
-   i = 0;
-   while (arg[i] && arg[i] != '=')
+   i++;
+   if (arg[i] == '\0')
+      return (NULL);
+   while (arg[i])
    {
-      var[i] = arg[i];
+      var[j] = arg[i];
       i++;
+      j++;
    }
-   var[i] = '\0';
+   var[j] = '\0';
    return (var);
-}
-
-char  **add_new_variable(char *arg, char **envp)
-{
-   int   i;
-   int   env_size;
-   int   line_size;
-   char  **nenvp;
-   char  *var_arg;
-   char  *val_arg;
-
-   i = 0;
-   var_arg = extract_var(arg);
-   val_arg = extract_val(arg);
-   printf("val: %s\n", val_arg);
-   env_size = tab_len(envp);
-   nenvp = ft_calloc((env_size + 2), sizeof(char *));
-   line_size = (int)ft_strlen(var_arg) + (int)ft_strlen(val_arg) + 2;
-   while (i < env_size)
-   {
-      nenvp[i] = ft_strdup(envp[i]);
-      i++;
-   }
-   nenvp[i] = ft_calloc(line_size + 1, sizeof(char)); 
-   ft_strlcat(nenvp[i], var_arg, ft_strlen(var_arg) + 1); 
-   ft_strlcat(nenvp[i], "=", ft_strlen(var_arg) + 2); 
-   ft_strlcat(nenvp[i], val_arg, ft_strlen(var_arg) + ft_strlen(val_arg) + 2); 
-   nenvp[env_size + 1] = 0;
-   free_tab2(envp);
-   free(var_arg);
-   free(val_arg);
-   return (nenvp);
 }
 
 int   check_if_variable(char *arg, char **envp)
@@ -204,6 +177,80 @@ int   check_if_variable(char *arg, char **envp)
    return (flag);
 }
 
+char  **add_new_variable(char *arg, char **envp)
+{
+   int   i;
+   int   env_size;
+   int   line_size;
+   char  **nenvp;
+   char  *var_arg;
+   char  *val_arg;
+
+   i = 0;
+   var_arg = extract_var(arg);
+   val_arg = extract_val(arg);
+   env_size = tab_len(envp);
+   nenvp = ft_calloc((env_size + 2), sizeof(char *));
+   while (i < env_size)
+   {
+      nenvp[i] = ft_strdup(envp[i]);
+      i++;
+   }
+   if (val_arg == NULL)
+   {
+      line_size = (int)ft_strlen(var_arg) + 1;
+      nenvp[i] = ft_calloc(line_size + 1, sizeof(char)); 
+      ft_strlcat(nenvp[i], var_arg, ft_strlen(var_arg) + 1); 
+   }
+   else
+   {
+      line_size = (int)ft_strlen(var_arg) + (int)ft_strlen(val_arg) + 2;
+      nenvp[i] = ft_calloc(line_size + 1, sizeof(char)); 
+      ft_strlcat(nenvp[i], var_arg, ft_strlen(var_arg) + 1); 
+      ft_strlcat(nenvp[i], "=", ft_strlen(var_arg) + 2); 
+      ft_strlcat(nenvp[i], val_arg, ft_strlen(var_arg) + ft_strlen(val_arg) + 2); 
+   }
+   nenvp[env_size + 1] = 0;
+   free_tab2(envp);
+   free(var_arg);
+   free(val_arg);
+   return (nenvp);
+}
+
+char  **edit_variable(char *arg, char **envp)
+{
+   int   i;
+   int   env_size;
+   char  **nenvp;
+   char  *var_arg;
+   char  *val_arg;
+
+   i = 0;
+   var_arg = extract_var(arg);
+   val_arg = extract_val(arg);
+   env_size = tab_len(envp);
+   nenvp = ft_calloc((env_size + 2), sizeof(char *));
+   while (i < env_size && ft_strncmp(extract_var(envp[i]), var_arg, ft_strlen(var_arg)) <= 0)
+   {
+      nenvp[i] = ft_strdup(envp[i]);
+      i++;
+   }
+   // TODO la variable se rajoute mais ecrase la suivante et la taille du tableau n'augmente pas
+   nenvp[i] = ft_calloc(ft_strlen(var_arg) + ft_strlen(extract_var(envp[i])) + 2, sizeof(char));
+   ft_strlcat(nenvp[i], var_arg, ft_strlen(var_arg) + 1); 
+   ft_strlcat(nenvp[i], "=", ft_strlen(var_arg) + 2); 
+   ft_strlcat(nenvp[i], val_arg, ft_strlen(var_arg) + ft_strlen(val_arg) + 2); 
+   i++;
+   while (i < env_size)
+   {
+      nenvp[i] = ft_strdup(envp[i]);
+      i++;
+   }
+   nenvp[i] = 0;
+   free_tab2(envp);
+   return (nenvp);
+}
+
 char   **ms_export(char **argv, char **envp, int env_len)
 {
    (void)env_len;
@@ -222,8 +269,7 @@ char   **ms_export(char **argv, char **envp, int env_len)
          if (flag == 0)
             envp = add_new_variable(argv[i], envp);
          else
-            printf("edit variable\n");
-            //envp = edit_variable(argv[i], envp);
+            envp = edit_variable(argv[i], envp);
          i++;
       }
       flag = 0;

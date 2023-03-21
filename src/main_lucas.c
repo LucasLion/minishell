@@ -6,13 +6,21 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 14:55:57 by llion             #+#    #+#             */
-/*   Updated: 2023/03/21 17:34:24 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/21 18:29:28 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-/*int main(int argc, char **argv, char **env) 
+#define R "\033[0;31m"
+#define G "\033[0;32m"
+#define Y "\033[0;33m"
+#define B "\033[0;34m"
+#define P "\033[0;35m"
+#define C "\033[0;36m"
+#define N "\033[0m"
+
+int main(int argc, char **argv, char **env) 
 {
 	(void)argc;
 	(void)argv;
@@ -27,7 +35,7 @@
 	while (1)
 	{
 		list_of_command = NULL;
-		input = readline("Minishell$ ");
+		input = readline(C"M"G"i"Y"n"B"i"P"s"C"h"R"e"G"l"Y"l"B" $ " N);
         add_history(input);
         parse_input(input, &list_of_command);
 		tab_argv = list_to_tab(list_of_command->command, envp);
@@ -35,4 +43,4 @@
 		envp = exec_command(command, tab_argv, envp);
 	}	
 	return (exit_status);
-}*/
+}
