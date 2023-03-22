@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:22:46 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/21 14:34:32 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/22 10:17:20 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,21 @@ int child_process(t_pipe *pipe_info, int **fd)
 {
     if (pipe_info->i == pipe_info->nbr_of_commands - 1 && pipe_info->i == 0)
     {
+        printf("Child Process\n");
         if (pipe_info->fd_input != 0)
+        {
             dup2(pipe_info->fd_input, STDIN_FILENO);
+            close(pipe_info->fd_input);
+        }
         if (pipe_info->fd_output != 1)
+        {
             dup2(pipe_info->fd_output, STDOUT_FILENO);
-        exec_command(pipe_info->cmd, pipe_info->tab_arg, pipe_info->envp);
-        close (fd[0][0]);
-        close (fd[0][1]);
+            close(pipe_info->fd_output);
+        }
+        pipe_info->envp = exec_command(pipe_info->cmd, pipe_info->tab_arg, pipe_info->envp);
+        print_tab((pipe_info->envp));
+        //close (fd[0][0]);
+        //close (fd[0][1]);
         exit (0); 
     }   
     if (pipe_info->i == 0)
@@ -134,14 +142,14 @@ int child_process(t_pipe *pipe_info, int **fd)
 }
 
 
-int managing_fork(int **fd, int nb_of_pipes, t_command *list, char **envp, int nbr_of_commands )
+char **managing_fork(int **fd, int nb_of_pipes, t_command *list, char **envp, int nbr_of_commands )
 {
     t_pipe pipe_info;
     t_command *temp = list;
 
     pipe_info.nbr_of_pipes = nb_of_pipes;
     pipe_info.nbr_of_commands = nbr_of_commands;
-    pipe_info.envp = envp;    
+    pipe_info.envp = envp;   
     pipe_info.i = 0;
     int pid[pipe_info.nbr_of_commands];
     while (pipe_info.i <= nb_of_pipes)
@@ -160,12 +168,12 @@ int managing_fork(int **fd, int nb_of_pipes, t_command *list, char **envp, int n
     }   
     close_fd_everyhing(fd,nb_of_pipes);
     wait_all_pid(pid,nbr_of_commands);
-    return (0);
+    return (pipe_info.envp);
 }
 
 
 
-int managing_pipe(t_command *list , char **envp)
+char  **managing_pipe(t_command *list , char **envp)
 {
     int nb_of_command;
     int nb_of_pipes;
@@ -177,6 +185,6 @@ int managing_pipe(t_command *list , char **envp)
     int **fd;
     fd = malloc(sizeof (int *) * nb_of_pipes);
     fd = create_pipes(nb_of_pipes, fd);
-    managing_fork(fd, nb_of_pipes, list, envp, nb_of_command);
+    envp = managing_fork(fd, nb_of_pipes, list, envp, nb_of_command);
     return (0);
 }

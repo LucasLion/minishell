@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/21 17:33:37 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/22 10:14:29 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,8 @@ typedef struct s_command
 
 char	**get_path_split(char **envp);
 char    *get_path(char **envp, char *cmd);
+//char	**exec_command(char *command, char **argv, char **envp);
 char	**exec_command(char *command, char **argv, char **envp);
-//int	exec_command(char **argv, char **envp, t_command *list, char *line);
 
 /* -------------- FREE -------------- */
 
@@ -208,8 +208,8 @@ void 	close_fd_everyhing_but_one(int **fd, int nbr_of_pipes, int a, int b);
 void 	close_fd_everyhing_but_two(int **fd, int nbr_of_pipes, int read, int write);
 void 	wait_all_pid(int *pid, int nbr_of_command);
 int 	child_process(t_pipe *pipe_info, int **fd);
-int 	managing_fork(int **fd, int nb_of_pipes, t_command *list, char **envp, int nbr_of_commands );
-int 	managing_pipe(t_command *list , char **envp);
+char 	**managing_fork(int **fd, int nb_of_pipes, t_command *list, char **envp, int nbr_of_commands);
+char 	**managing_pipe(t_command *list , char **envp);
 
 
 /* -------------- REDIR.c -------------- */

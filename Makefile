@@ -6,7 +6,7 @@
 #    By: amouly <amouly@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 15:27:43 by llion             #+#    #+#              #
-#    Updated: 2023/03/21 17:48:35 by llion            ###   ########.fr        #
+#    Updated: 2023/03/22 12:10:32 by llion            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,12 +29,12 @@ SOURCES = 	memory_utils.c	\
 			format_line.c \
 			format_list.c \
 			parse.c \
+			pipe.c			\
 			list_string.c \
 			list_command.c \
 			clean_list.c \
 			exec_command.c \
 			list_to_tab.c \
-			pipe.c \
 			tab_utils.c \
 			redir.c
 
