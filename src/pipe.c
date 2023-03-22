@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:22:46 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/21 14:34:32 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/22 08:44:00 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,15 @@ int child_process(t_pipe *pipe_info, int **fd)
     if (pipe_info->i == pipe_info->nbr_of_commands - 1 && pipe_info->i == 0)
     {
         if (pipe_info->fd_input != 0)
+        {    
             dup2(pipe_info->fd_input, STDIN_FILENO);
+            close (pipe_info->fd_input);
+        }
         if (pipe_info->fd_output != 1)
+        {
             dup2(pipe_info->fd_output, STDOUT_FILENO);
+            close (pipe_info->fd_output);
+        }
         exec_command(pipe_info->cmd, pipe_info->tab_arg, pipe_info->envp);
         close (fd[0][0]);
         close (fd[0][1]);
@@ -99,7 +105,10 @@ int child_process(t_pipe *pipe_info, int **fd)
     if (pipe_info->i == 0)
     {
         if (pipe_info->fd_input != 0)
+        {    
             dup2(pipe_info->fd_input, STDIN_FILENO);
+            close (pipe_info->fd_input);
+        }
         close_fd_everyhing_but_one(fd,pipe_info->nbr_of_pipes,pipe_info->i,1);
         dup2(fd[pipe_info->i][1], pipe_info->fd_output);
         exec_command(pipe_info->cmd, pipe_info->tab_arg, pipe_info->envp);
@@ -109,7 +118,10 @@ int child_process(t_pipe *pipe_info, int **fd)
     if (pipe_info->i == pipe_info->nbr_of_commands - 1 )
     {
         if (pipe_info->fd_output != 1)
+        {    
             dup2(pipe_info->fd_output,STDOUT_FILENO);
+            close (pipe_info->fd_output);
+        }
         close_fd_everyhing_but_one(fd,pipe_info->nbr_of_pipes,pipe_info->i-1,0);
         dup2(fd[pipe_info->i -1][0], pipe_info->fd_input);
         exec_command(pipe_info->cmd, pipe_info->tab_arg, pipe_info->envp);
