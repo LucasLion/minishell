@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   memory_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llion <llion@student.42mulhouse.fr>        +#+  +:+       +#+        */
+/*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:07:46 by llion             #+#    #+#             */
-/*   Updated: 2023/03/13 15:17:49 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/23 10:46:22 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	free_tab2(char **tab)
 		tab[i] = NULL;
 		i++;
 	}
-	free(tab);
+	//free(tab);
 	tab = NULL;
 }
 void	free_tab3(char ***tab)

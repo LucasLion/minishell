@@ -6,7 +6,7 @@
 #    By: amouly <amouly@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 15:27:43 by llion             #+#    #+#              #
-#    Updated: 2023/03/21 17:34:31 by amouly           ###   ########.fr        #
+#    Updated: 2023/03/23 10:55:38 by amouly           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SOURCES = 	memory_utils.c	\
 			split_ms.c \
 			echo.c			\
 			pwd.c			\
-			export.c		\
+			1export.c		\
 			list_char.c \
 			format_line.c \
 			format_list.c \
@@ -32,7 +32,7 @@ SOURCES = 	memory_utils.c	\
 			list_string.c \
 			list_command.c \
 			clean_list.c \
-			exec_command.c \
+			1exec_command.c \
 			list_to_tab.c \
 			pipe.c \
 			tab_utils.c \

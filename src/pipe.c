@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:22:46 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/22 08:44:00 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/23 11:35:45 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,11 @@ void wait_all_pid(int *pid, int nbr_of_command)
     }
 }
 
-int child_process(t_pipe *pipe_info, int **fd)
+int child_process(t_pipe *pipe_info, int **fd, char ***envp)
 {
     if (pipe_info->i == pipe_info->nbr_of_commands - 1 && pipe_info->i == 0)
     {
+        
         if (pipe_info->fd_input != 0)
         {    
             dup2(pipe_info->fd_input, STDIN_FILENO);
@@ -96,10 +97,11 @@ int child_process(t_pipe *pipe_info, int **fd)
         {
             dup2(pipe_info->fd_output, STDOUT_FILENO);
             close (pipe_info->fd_output);
-        }
-        exec_command(pipe_info->cmd, pipe_info->tab_arg, pipe_info->envp);
+        } 
+        exec_command(pipe_info->cmd, pipe_info->tab_arg, envp);
         close (fd[0][0]);
         close (fd[0][1]);
+    
         exit (0); 
     }   
     if (pipe_info->i == 0)
@@ -111,7 +113,7 @@ int child_process(t_pipe *pipe_info, int **fd)
         }
         close_fd_everyhing_but_one(fd,pipe_info->nbr_of_pipes,pipe_info->i,1);
         dup2(fd[pipe_info->i][1], pipe_info->fd_output);
-        exec_command(pipe_info->cmd, pipe_info->tab_arg, pipe_info->envp);
+        exec_command(pipe_info->cmd, pipe_info->tab_arg, envp);
         close(fd[pipe_info->i][1]);
         exit (0);
     }
@@ -124,7 +126,7 @@ int child_process(t_pipe *pipe_info, int **fd)
         }
         close_fd_everyhing_but_one(fd,pipe_info->nbr_of_pipes,pipe_info->i-1,0);
         dup2(fd[pipe_info->i -1][0], pipe_info->fd_input);
-        exec_command(pipe_info->cmd, pipe_info->tab_arg, pipe_info->envp);
+        exec_command(pipe_info->cmd, pipe_info->tab_arg, envp);
         close(fd[pipe_info->i - 1][0]);
         exit (0);
     }
@@ -137,7 +139,7 @@ int child_process(t_pipe *pipe_info, int **fd)
         close_fd_everyhing_but_two(fd,pipe_info->nbr_of_pipes,pipe_info->i-1,pipe_info->i);
         dup2(fd[pipe_info->i -1][0], pipe_info->fd_input);
         dup2(fd[pipe_info->i][1], pipe_info->fd_output);
-        exec_command(pipe_info->cmd, pipe_info->tab_arg, pipe_info->envp);
+        exec_command(pipe_info->cmd, pipe_info->tab_arg, envp);
         close(fd[pipe_info->i][1]);
         close(fd[pipe_info->i - 1][0]);
         exit (0);
@@ -152,8 +154,7 @@ int managing_fork(int **fd, int nb_of_pipes, t_command *list, char **envp, int n
     t_command *temp = list;
 
     pipe_info.nbr_of_pipes = nb_of_pipes;
-    pipe_info.nbr_of_commands = nbr_of_commands;
-    pipe_info.envp = envp;    
+    pipe_info.nbr_of_commands = nbr_of_commands; 
     pipe_info.i = 0;
     int pid[pipe_info.nbr_of_commands];
     while (pipe_info.i <= nb_of_pipes)
@@ -165,11 +166,14 @@ int managing_fork(int **fd, int nb_of_pipes, t_command *list, char **envp, int n
         if (pid[pipe_info.i] < 0)
             printf("error\n");
         else if(pid[pipe_info.i] == 0)
-            child_process(&pipe_info, fd);
+        {
+            child_process(&pipe_info, fd, &envp);
+            
+        }
         if (pipe_info.i < pipe_info.nbr_of_commands)
             temp = temp->next; 
         pipe_info.i++;  
-    }   
+    }
     close_fd_everyhing(fd,nb_of_pipes);
     wait_all_pid(pid,nbr_of_commands);
     return (0);
@@ -186,9 +190,18 @@ int managing_pipe(t_command *list , char **envp)
     i = 0;
     nb_of_pipes = 0;
     nb_of_command = length_list_command(list, &nb_of_pipes);
-    int **fd;
-    fd = malloc(sizeof (int *) * nb_of_pipes);
-    fd = create_pipes(nb_of_pipes, fd);
-    managing_fork(fd, nb_of_pipes, list, envp, nb_of_command);
+    if (nb_of_command == 1 && is_builtin(copy_string(list->command->string, envp)) != NULL)
+    {
+        exec_command(copy_string(list->command->string, envp), list_to_tab(list->command, envp), &envp);
+        printf("yo\n");
+    }
+    else 
+    {
+        int **fd;
+        fd = malloc(sizeof (int *) * nb_of_pipes);
+        fd = create_pipes(nb_of_pipes, fd);
+        managing_fork(fd, nb_of_pipes, list, envp, nb_of_command);
+        //print_tab(envp);
+    }
     return (0);
 }

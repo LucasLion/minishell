@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   1export.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 16:12:49 by llion             #+#    #+#             */
-/*   Updated: 2023/03/23 09:36:25 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/23 10:52:02 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ char  **add_new_variable(char *arg, char **envp)
    //line_size = (int)ft_strlen(var_arg) + (int)ft_strlen(val_arg) + 2;
    while (i < env_size)
    {
-      nenvp[i] = ft_strdup(envp[i]);
+      nenvp[i] = ft_strdup((envp)[i]);
       i++;
    }
    if (val_arg == NULL)
@@ -190,7 +190,8 @@ char  **add_new_variable(char *arg, char **envp)
    free_tab2(envp);
    free(var_arg);
    free(val_arg);
-   return (nenvp);
+   //envp = &nenvp;
+   return (nenvp) ;
 }
 
 int   check_if_variable(char *arg, char **envp)
@@ -217,7 +218,7 @@ int   check_if_variable(char *arg, char **envp)
    return (flag);
 }
 
-char   **ms_export(char **argv, char **envp, int env_len)
+void  ms_export(char **argv, char ***envp, int env_len)
 {
    (void)env_len;
    int   flag;
@@ -226,14 +227,14 @@ char   **ms_export(char **argv, char **envp, int env_len)
    i = 1; 
    flag = 0;
    if (tab_len(argv) == 1)
-      display_export(envp);
+      display_export(*envp);
    else
    {
       while (argv[i])
       {
-         flag = check_if_variable(argv[i], envp);
+         flag = check_if_variable(argv[i], *envp);
          if (flag == 0)
-            envp = add_new_variable(argv[i], envp);
+            *envp = add_new_variable(argv[i], *envp);
          else
             printf("edit variable\n");
             //envp = edit_variable(argv[i], envp);
@@ -242,5 +243,5 @@ char   **ms_export(char **argv, char **envp, int env_len)
       flag = 0;
       i++;
    }
-   return (envp);
+   return ;
 }
