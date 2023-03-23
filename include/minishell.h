@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/23 11:28:38 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/23 13:06:30 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,14 +209,15 @@ void 	close_fd_everyhing(int **fd, int nbr_of_pipes);
 void 	close_fd_everyhing_but_one(int **fd, int nbr_of_pipes, int a, int b);
 void 	close_fd_everyhing_but_two(int **fd, int nbr_of_pipes, int read, int write);
 void 	wait_all_pid(int *pid, int nbr_of_command);
-int 	child_process(t_pipe *pipe_info, int **fd, char ***envp);
+int 	child_process(t_pipe *pipe_info, int **fd, char **envp);
 int 	managing_fork(int **fd, int nb_of_pipes, t_command *list, char **envp, int nbr_of_commands );
-int 	managing_pipe(t_command *list , char **envp);
+int 	managing_pipe(t_command *list , char ***envp);
 
 
 /* -------------- REDIR.c -------------- */
 
-void    init_fd(t_pipe *pipe_info, t_command *list);
+void    init_fd(t_command *list, t_pipe *pipe_info);
+void    init_fd_one(t_command *list, int fd_input, int fd_output);
 
 
 
