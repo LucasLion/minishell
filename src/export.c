@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 16:12:49 by llion             #+#    #+#             */
-/*   Updated: 2023/03/24 14:43:06 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/24 16:01:38 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,6 +268,7 @@ char  **edit_variable(char *arg, char **envp)
 
 void   ms_export(char **argv, char ***envp, int env_len)
 {
+   // TODO probleme avec les assignassions de variable d'environnement (: / etc)
    (void)env_len;
    int   flag;
    int   i;
