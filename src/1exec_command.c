@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/23 10:34:32 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/24 10:37:31 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ char	*get_path(char **envp, char *cmd)
 
 	i = 0;
 	split_path = get_path_split(envp);
+	if (access(cmd, X_OK) == 0)
+		return (cmd);
 	while(split_path[i])
 	{
 		temp = ft_strjoin(split_path[i], "/");
@@ -103,24 +105,24 @@ void	exec_command(char *command, char **argv, char ***envp)
 	char	*builtin;
 	
 	path = get_path(*envp, command);
-	pid = fork();
-	if (pid == 0)
+	builtin = is_builtin(command);
+    if (builtin)
+		exec_builtin(builtin, argv, envp);
+	else 
 	{
-        builtin = is_builtin(command);
-        if (builtin)
-			exec_builtin(builtin, argv, envp);
-        else
-            execve(path, argv, *envp);
+		pid = fork();
+		if (pid == 0)
+			execve(path, argv, *envp);
+		if (pid < 0)
+			return ; 
+		else
+		{
+			wait(&status);
+			return ;
+		}
+		waitpid(pid, NULL, 0);
 	}
-	else if (pid < 0)
-	{
-		exit(0);
-	} 
-	else
-	{
-		wait(&status);
-		exit (0);
-	}
+	
 	return ;
 }
 

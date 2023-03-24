@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/23 13:06:30 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/23 14:00:19 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,7 +217,7 @@ int 	managing_pipe(t_command *list , char ***envp);
 /* -------------- REDIR.c -------------- */
 
 void    init_fd(t_command *list, t_pipe *pipe_info);
-void    init_fd_one(t_command *list, int fd_input, int fd_output);
+void    init_fd_one(t_command *list, int *fd_input, int *fd_output);
 
 
 
