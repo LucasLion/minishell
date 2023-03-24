@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/24 15:45:44 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/24 16:16:10 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,13 @@ void	exec_command(char *command, char **argv, char ***envp)
 	{
 		pid = fork();
 		if (pid == 0)
-			execve(path, argv, *envp);
+		{
+			if (execve(path, argv, *envp) == -1)
+			{
+				printf("Minishell : command not found\n");
+				exit(0);
+			}	
+		}
 		else if (pid < 0)
 			return ;
 		else
