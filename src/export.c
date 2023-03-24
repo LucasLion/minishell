@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+        */
+/*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 16:12:49 by llion             #+#    #+#             */
-/*   Updated: 2023/03/24 14:20:53 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/24 14:43:06 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,7 +202,7 @@ char  **add_new_variable(char *arg, char **envp)
    nenvp = ft_calloc((env_size + 2), sizeof(char *));
    while (i < env_size)
    {
-      nenvp[i] = ft_strdup(envp[i]);
+      nenvp[i] = ft_strdup((envp)[i]);
       i++;
    }
    var_arg = extract_var(arg);
@@ -225,7 +225,7 @@ char  **add_new_variable(char *arg, char **envp)
    free_tab2(envp);
    free(var_arg);
    free(val_arg);
-   return (nenvp);
+   return (nenvp) ;
 }
 
 char  **edit_variable(char *arg, char **envp)

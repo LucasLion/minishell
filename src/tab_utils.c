@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 09:45:36 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/20 16:36:30 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/23 09:57:02 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void print_tab(char **tab)
     int i = 0;
       
     if (tab == NULL)
-        return ;
+        printf("TAB NULL");
     while (tab[i])
 	{
 		printf("tab[%d] : %s\n", i, tab[i]);

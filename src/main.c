@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 14:55:57 by llion             #+#    #+#             */
-/*   Updated: 2023/03/24 11:33:28 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/24 14:50:00 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,13 @@
 
 int main(int argc, char **argv, char **env) 
 {
-	(void)argc;
 	(void)argv;
 	char		*input;
 	t_command	*list_of_command;
-	int			exit_status;
 	char		**envp;
-	char		**tab_argv;
-	char		*command;
-
+	
+	if (argc != 1)
+        return (0);
 	envp = copy_tab(env);
 	while (1)
 	{
@@ -38,9 +36,8 @@ int main(int argc, char **argv, char **env)
 		input = readline(C"M"G"i"Y"n"B"i"P"s"C"h"R"e"G"l"Y"l"B" $ " N);
         add_history(input);
         parse_input(input, &list_of_command);
-		tab_argv = list_to_tab(list_of_command->command, envp);
-        command = copy_string(list_of_command->command->string, envp);
-		exec_command(command, tab_argv, &envp);
+		managing_pipe(list_of_command, &envp);
+        clean_list_command(&list_of_command);
+	
 	}	
-	return (exit_status);
 }

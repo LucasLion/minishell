@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/24 13:55:54 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/24 14:37:33 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ typedef struct s_pipe
 	int			i;
 	char		*cmd;
 	char		**tab_arg;
-	char		**envp;
 	int			fd_input;
 	int			fd_output;
 	
@@ -102,6 +101,7 @@ int		ms_exit();
 void	pwd();
 void    unset(char **argv, char ***envp);
 void    env(char **envp);
+char 	*is_builtin(char *cmd);
 void	exec_builtin(char *builtin, char **argv, char ***envp);
 
 /* -------------- VERIF_LINE -------------- */
@@ -199,22 +199,31 @@ void 	print_tab(char **tab);
 int 	len_tab(char **tab);
 char    **copy_tab(char **tab);
 
-/* -------------- PIPE.c -------------- */
+/* -------------- PIPE_UTILS.c -------------- */
 
 int 	**create_pipes(int nb_of_pipes, int **fd);
 void 	close_fd_everyhing(int **fd, int nbr_of_pipes);
 void 	close_fd_everyhing_but_one(int **fd, int nbr_of_pipes, int a, int b);
 void 	close_fd_everyhing_but_two(int **fd, int nbr_of_pipes, int read, int write);
 void 	wait_all_pid(int *pid, int nbr_of_command);
-int 	child_process(t_pipe *pipe_info, int **fd);
-char 	**managing_fork(int **fd, int nb_of_pipes, t_command *list, char **envp, int nbr_of_commands);
-char 	**managing_pipe(t_command *list , char **envp);
+
+/* -------------- PIPE.c -------------- */
+
+void    child_first_pipe(t_pipe *pipe_info, int **fd, char **envp);
+void    child_last_pipe(t_pipe *pipe_info, int **fd, char **envp);
+void    child_middle_pipe(t_pipe *pipe_info, int **fd, char **envp);
+int 	child_process(t_pipe *pipe_info, int **fd, char **envp);
+int 	managing_fork(t_command *list, t_pipe *pipe_info, int **fd, char **envp );
+void 	execute_one_command(t_command *list, t_pipe *pipe_info, char ***envp);
+int 	managing_pipe(t_command *list , char ***envp);
 
 
 /* -------------- REDIR.c -------------- */
 
-void    init_fd(t_pipe *pipe_info, t_command *list);
-
+int 	handle_del(t_string *list, t_pipe *pipe_info);
+int 	find_input(t_string *input, t_pipe *pipe_info);
+int 	find_output(t_string *output);
+void    init_fd(t_command *list, t_pipe *pipe_info);
 
 
 #endif

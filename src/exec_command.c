@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/24 14:20:54 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/24 14:39:45 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char *is_builtin(char *cmd)
         return (NULL);
 }
 
-void    exec_builtin(char *builtin, char **argv, char ***envp)
+void	exec_builtin(char *builtin, char **argv, char ***envp)
 {
     if (ft_strncmp(builtin, "pwd", ft_strlen(builtin)) == 0)
         pwd();
