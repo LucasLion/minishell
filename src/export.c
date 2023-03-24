@@ -6,7 +6,7 @@
 /*   By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 16:12:49 by llion             #+#    #+#             */
-/*   Updated: 2023/03/22 10:11:19 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/24 14:20:53 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,22 @@ int   tab_len(char **tab)
       i++;
    }
    return (i);
+}
+
+int  parse_arg(char *arg)
+{
+   int   i;
+
+   i = 0;
+   while (arg[i] && arg[i] != '=')
+      i++;
+   if (arg[i] == '=' && i == 0)
+   {
+      printf("export: %s: not a valid identifier\n", arg);
+      return (0);
+   }
+   else
+      return (1);
 }
 
 char **sort_tab(char **tab, int size)
@@ -54,7 +70,6 @@ char **sort_tab(char **tab, int size)
     return (sorted_tab);
 }
 
-/*
 char  *add_double_quotes(char *str)
 {
    int   i;
@@ -63,35 +78,26 @@ char  *add_double_quotes(char *str)
 
    i = 0;
    j = 0;
-   printf("str: %s\n", str);
    ret = ft_calloc(ft_strlen(str) + 3, sizeof(char));
    while (str[i] && str[i] != '=')
+      ret[j++] = str[i++];
+   if (str[i] == '=')
    {
-      ret[j] = str[i];
       i++;
-      j++;
+      ret[j++] = '=';
+      ret[j++] = '"';
+      while (str[i])
+         ret[j++] = str[i++];
+      ret[j] = '"';
    }
-   i++;
-   ret[j] = '=';
-   j++;
-   ret[j] = '"';
-   j++;
-   while (str[i])
-   {
-      ret[j] = str[i];
-      i++;
-      j++;
-   }
-   ret[j] = '"';
    return (ret);
 }
-*/
 
 void  display_export(char **envp)
 {
    int   i;
    char  **sorted;
-   //char  *formatted;
+   char  *formatted;
 
    i = 0;
    sorted = sort_tab(envp, tab_len(envp));
@@ -101,9 +107,9 @@ void  display_export(char **envp)
          i++;
       else
       {
-         //formatted = add_double_quotes(sorted[i]);
-         printf("declare -x %s\n", sorted[i]);
-         //free(formatted);
+         formatted = add_double_quotes(sorted[i]);
+         printf("declare -x %s\n", formatted);
+         free(formatted);
          i++;
       }
    }
@@ -119,6 +125,11 @@ char *extract_var(char *arg)
    end = 0;
    while (arg[end] && arg[end] != '=')
       end++;
+   if (end == 0 && arg[end] == '=')
+   {
+      printf("export: %s: not a valid identifier\n", arg);
+      return (NULL);
+   }
    var = ft_calloc(end + 1, sizeof(char));
    while (arg[i] && arg[i] != '=')
    {
@@ -139,10 +150,10 @@ char *extract_val(char *arg)
    j = 0;
    while (arg[i] != '\0' && arg[i] != '=')
       i++;
-   var = ft_calloc(ft_strlen(arg) - i + 1, sizeof(char));
-   i++;
    if (arg[i] == '\0')
       return (NULL);
+   var = ft_calloc(ft_strlen(arg) - i + 1, sizeof(char));
+   i++;
    while (arg[i])
    {
       var[j] = arg[i];
@@ -187,8 +198,6 @@ char  **add_new_variable(char *arg, char **envp)
    char  *val_arg;
 
    i = 0;
-   var_arg = extract_var(arg);
-   val_arg = extract_val(arg);
    env_size = tab_len(envp);
    nenvp = ft_calloc((env_size + 2), sizeof(char *));
    while (i < env_size)
@@ -196,7 +205,9 @@ char  **add_new_variable(char *arg, char **envp)
       nenvp[i] = ft_strdup(envp[i]);
       i++;
    }
-   if (val_arg == NULL)
+   var_arg = extract_var(arg);
+   val_arg = extract_val(arg);
+   if (val_arg == 0)
    {
       line_size = (int)ft_strlen(var_arg) + 1;
       nenvp[i] = ft_calloc(line_size + 1, sizeof(char)); 
@@ -228,30 +239,34 @@ char  **edit_variable(char *arg, char **envp)
    i = 0;
    var_arg = extract_var(arg);
    val_arg = extract_val(arg);
-   env_size = tab_len(envp);
-   nenvp = ft_calloc((env_size + 2), sizeof(char *));
-   while (i < env_size && ft_strncmp(extract_var(envp[i]), var_arg, ft_strlen(var_arg)) <= 0)
+   if (val_arg != NULL)
    {
-      nenvp[i] = ft_strdup(envp[i]);
+      env_size = tab_len(envp);
+      nenvp = ft_calloc((env_size + 2), sizeof(char *));
+      while (i < env_size && ft_strncmp(extract_var(envp[i]), var_arg, ft_strlen(var_arg)) != 0)
+      {
+         nenvp[i] = ft_strdup(envp[i]);
+         i++;
+      }
+      nenvp[i] = ft_calloc(ft_strlen(var_arg) + ft_strlen(extract_var(envp[i])) + 2, sizeof(char));
+      ft_strlcat(nenvp[i], var_arg, ft_strlen(var_arg) + 1); 
+      ft_strlcat(nenvp[i], "=", ft_strlen(var_arg) + 2); 
+      ft_strlcat(nenvp[i], val_arg, ft_strlen(var_arg) + ft_strlen(val_arg) + 2); 
       i++;
+      while (i < env_size)
+      {
+         nenvp[i] = ft_strdup(envp[i]);
+         i++;
+      }
+      nenvp[i] = 0;
+      free_tab2(envp);
+      return (nenvp);
    }
-   // TODO la variable se rajoute mais ecrase la suivante et la taille du tableau n'augmente pas
-   nenvp[i] = ft_calloc(ft_strlen(var_arg) + ft_strlen(extract_var(envp[i])) + 2, sizeof(char));
-   ft_strlcat(nenvp[i], var_arg, ft_strlen(var_arg) + 1); 
-   ft_strlcat(nenvp[i], "=", ft_strlen(var_arg) + 2); 
-   ft_strlcat(nenvp[i], val_arg, ft_strlen(var_arg) + ft_strlen(val_arg) + 2); 
-   i++;
-   while (i < env_size)
-   {
-      nenvp[i] = ft_strdup(envp[i]);
-      i++;
-   }
-   nenvp[i] = 0;
-   free_tab2(envp);
-   return (nenvp);
+   else
+      return (envp);
 }
 
-char   **ms_export(char **argv, char **envp, int env_len)
+void   ms_export(char **argv, char ***envp, int env_len)
 {
    (void)env_len;
    int   flag;
@@ -260,20 +275,27 @@ char   **ms_export(char **argv, char **envp, int env_len)
    i = 1; 
    flag = 0;
    if (tab_len(argv) == 1)
-      display_export(envp);
+      display_export(*envp);
    else
    {
       while (argv[i])
       {
-         flag = check_if_variable(argv[i], envp);
-         if (flag == 0)
-            envp = add_new_variable(argv[i], envp);
-         else
-            envp = edit_variable(argv[i], envp);
+        if (!parse_arg(argv[i]))
+        {
+            i++;
+            continue ;
+        }
+         if (ft_strlen(argv[i]) > 0 && !(ft_strlen(argv[i]) == 1 && argv[i][0] == '='))
+         {
+            flag = check_if_variable(argv[i], *envp);
+            if (flag == 0)
+               *envp = add_new_variable(argv[i], *envp);
+            else
+               *envp = edit_variable(argv[i], *envp);
+         }
          i++;
       }
       flag = 0;
       i++;
    }
-   return (envp);
 }

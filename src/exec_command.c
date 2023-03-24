@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/22 10:14:32 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/24 14:20:54 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ char	*get_path(char **envp, char *cmd)
 
 	i = 0;
 	split_path = get_path_split(envp);
+	if (access(cmd, X_OK) == 0)
+		return (cmd);
 	while(split_path[i])
 	{
 		temp = ft_strjoin(split_path[i], "/");
@@ -50,8 +52,6 @@ char	*get_path(char **envp, char *cmd)
 		i++;
 	}
 	return (NULL);
-	
-	//print_tab(split_path);
 }
 
 
@@ -76,50 +76,51 @@ char *is_builtin(char *cmd)
         return (NULL);
 }
 
-char    **exec_builtin(char *builtin, char **argv, char **envp)
+void    exec_builtin(char *builtin, char **argv, char ***envp)
 {
     if (ft_strncmp(builtin, "pwd", ft_strlen(builtin)) == 0)
         pwd();
     else if (ft_strncmp(builtin, "export", ft_strlen(builtin)) == 0)
-		envp = ms_export(argv, envp, tab_len(envp));
+		ms_export(argv, envp, tab_len(*envp));
     else if (ft_strncmp(builtin, "unset", ft_strlen(builtin)) == 0)
-        envp = unset(argv, envp);
+        unset(argv, envp);
     else if (ft_strncmp(builtin, "env", ft_strlen(builtin)) == 0)
-        env(envp);
+        env(*envp);
     else if (ft_strncmp(builtin, "exit", ft_strlen(builtin)) == 0)
         ms_exit();
-    else if (ft_strncmp(builtin, "echo", ft_strlen(builtin)) == 0)
-        echo(argv);
+    //else if (ft_strncmp(builtin, "echo", ft_strlen(builtin)) == 0)
+		//on a besoin du file descriptor
+     //   echo(argv);
 	//else if (ft_strncmp(builtin, "cd", ft_strlen(builtin)) == 0)
 	//   cd(list, envp);
-    return (envp);
 }
 
-char	**exec_command(char *command, char **argv, char **envp)
+void	exec_command(char *command, char **argv, char ***envp)
 {
 	char	*path;
 	int		status;
 	pid_t	pid;
 	char	*builtin;
 	
-	path = get_path(envp, command);
-	pid = fork();
-	if (pid == 0)
-	{
-        builtin = is_builtin(command);
-        if (builtin)
-			envp = exec_builtin(builtin, argv, envp);
-        else
-            execve(path, argv, envp);
-	}
-	else if (pid < 0)
-		return (NULL);
+	builtin = is_builtin(command);
+	path = get_path(*envp, command);
+	if (builtin)
+		exec_builtin(builtin, argv, envp);
 	else
 	{
-		wait(&status);
-		return (envp);
+		pid = fork();
+		if (pid == 0)
+			execve(path, argv, *envp);
+		else if (pid < 0)
+			return ;
+		else
+		{
+			wait(&status);
+			return ;
+		}
+		waitpid(pid, NULL, 0);
 	}
-	return (envp);
+	return ;
 }
 
 

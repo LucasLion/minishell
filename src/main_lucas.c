@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 14:55:57 by llion             #+#    #+#             */
-/*   Updated: 2023/03/22 09:16:34 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/24 11:33:28 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int main(int argc, char **argv, char **env)
         parse_input(input, &list_of_command);
 		tab_argv = list_to_tab(list_of_command->command, envp);
         command = copy_string(list_of_command->command->string, envp);
-		envp = exec_command(command, tab_argv, envp);
+		exec_command(command, tab_argv, &envp);
 	}	
 	return (exit_status);
 }

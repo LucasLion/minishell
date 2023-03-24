@@ -6,7 +6,7 @@
 /*   By: llion <llion@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+ #+#+   +#+          */
 /*   Created: 2023/03/10 18:39:28 by llion             #+#    #+#             */
-/*   Updated: 2023/03/20 13:57:16 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/24 13:49:15 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,28 +63,27 @@ int	compare_args(char *str, char **args)
 	return (1);
 }
 
-char	**unset(char **argv, char **envp)
+void	unset(char **argv, char ***envp)
 {
 	int		i;
 	int		j;
 	char	**new_envp;
 	int		new_len;
 
-	new_len = tab_len(envp) - tab_len(argv) + 1;
+	new_len = tab_len(*envp) - tab_len(argv);
 	new_envp = ft_calloc(new_len + 1, sizeof(char *));
 	new_envp[new_len] = 0;
 	i = 0;
 	j = 0;
 	while(i < new_len + 1) 
 	{
-		if (compare_args(envp[i], argv))
+		if (compare_args((*envp)[i], argv))
 		{
-			new_envp[j] = ft_strdup(envp[i]);	
+			new_envp[j] = ft_strdup((*envp)[i]);	
 			j++;
 		}
 		i++;
 	}
-	free_tab2(envp);
-	return (new_envp);
+	*envp = new_envp;
 }
 

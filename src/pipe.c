@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:22:46 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/22 10:17:20 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/24 11:33:33 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int child_process(t_pipe *pipe_info, int **fd)
             dup2(pipe_info->fd_output, STDOUT_FILENO);
             close(pipe_info->fd_output);
         }
-        pipe_info->envp = exec_command(pipe_info->cmd, pipe_info->tab_arg, pipe_info->envp);
+        exec_command(pipe_info->cmd, pipe_info->tab_arg, &pipe_info->envp);
         print_tab((pipe_info->envp));
         //close (fd[0][0]);
         //close (fd[0][1]);
@@ -110,7 +110,7 @@ int child_process(t_pipe *pipe_info, int **fd)
             dup2(pipe_info->fd_input, STDIN_FILENO);
         close_fd_everyhing_but_one(fd,pipe_info->nbr_of_pipes,pipe_info->i,1);
         dup2(fd[pipe_info->i][1], pipe_info->fd_output);
-        exec_command(pipe_info->cmd, pipe_info->tab_arg, pipe_info->envp);
+        exec_command(pipe_info->cmd, pipe_info->tab_arg, &pipe_info->envp);
         close(fd[pipe_info->i][1]);
         exit (0);
     }
@@ -120,7 +120,7 @@ int child_process(t_pipe *pipe_info, int **fd)
             dup2(pipe_info->fd_output,STDOUT_FILENO);
         close_fd_everyhing_but_one(fd,pipe_info->nbr_of_pipes,pipe_info->i-1,0);
         dup2(fd[pipe_info->i -1][0], pipe_info->fd_input);
-        exec_command(pipe_info->cmd, pipe_info->tab_arg, pipe_info->envp);
+        exec_command(pipe_info->cmd, pipe_info->tab_arg, &pipe_info->envp);
         close(fd[pipe_info->i - 1][0]);
         exit (0);
     }
@@ -133,7 +133,7 @@ int child_process(t_pipe *pipe_info, int **fd)
         close_fd_everyhing_but_two(fd,pipe_info->nbr_of_pipes,pipe_info->i-1,pipe_info->i);
         dup2(fd[pipe_info->i -1][0], pipe_info->fd_input);
         dup2(fd[pipe_info->i][1], pipe_info->fd_output);
-        exec_command(pipe_info->cmd, pipe_info->tab_arg, pipe_info->envp);
+        exec_command(pipe_info->cmd, pipe_info->tab_arg, &pipe_info->envp);
         close(fd[pipe_info->i][1]);
         close(fd[pipe_info->i - 1][0]);
         exit (0);

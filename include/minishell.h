@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/22 10:14:29 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/24 13:55:54 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,7 @@ typedef struct s_command
 
 char	**get_path_split(char **envp);
 char    *get_path(char **envp, char *cmd);
-//char	**exec_command(char *command, char **argv, char **envp);
-char	**exec_command(char *command, char **argv, char **envp);
+void	exec_command(char *command, char **argv, char ***envp);
 
 /* -------------- FREE -------------- */
 
@@ -98,12 +97,12 @@ void	free_tab3(char ***tab);
 
 /* -------------- BUILTINS -------------- */
 
-void	echo(char **argv);
+void	echo(char **argv, int fd_out);
 int		ms_exit();
 void	pwd();
-char     **unset(char **argv, char **envp);
+void    unset(char **argv, char ***envp);
 void    env(char **envp);
-char	**exec_builtin(char *builtin, char **argv, char **envp);
+void	exec_builtin(char *builtin, char **argv, char ***envp);
 
 /* -------------- VERIF_LINE -------------- */
 
@@ -123,7 +122,7 @@ void    split_and_print(char *line);
 
 /* -------------- EXPORT -------------- */
 
-char     **ms_export(char **argv, char **envp, int env_len);
+void     ms_export(char **argv, char ***envp, int env_len);
 t_env    *create_var_list(char **envp);
 char     ***create_args_list(char **argv);
 char     ***create_env_list(char **envp, int env_len);
