@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/24 14:39:45 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/24 16:16:10 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,10 @@ void	exec_builtin(char *builtin, char **argv, char ***envp)
         env(*envp);
     else if (ft_strncmp(builtin, "exit", ft_strlen(builtin)) == 0)
         ms_exit();
-    //else if (ft_strncmp(builtin, "echo", ft_strlen(builtin)) == 0)
-		//on a besoin du file descriptor
-     //   echo(argv);
+    else if (ft_strncmp(builtin, "echo", ft_strlen(builtin)) == 0)
+       echo(argv);
 	//else if (ft_strncmp(builtin, "cd", ft_strlen(builtin)) == 0)
-	//   cd(list, envp);
+	 //  cd(list, envp);
 }
 
 void	exec_command(char *command, char **argv, char ***envp)
@@ -110,7 +109,13 @@ void	exec_command(char *command, char **argv, char ***envp)
 	{
 		pid = fork();
 		if (pid == 0)
-			execve(path, argv, *envp);
+		{
+			if (execve(path, argv, *envp) == -1)
+			{
+				printf("Minishell : command not found\n");
+				exit(0);
+			}	
+		}
 		else if (pid < 0)
 			return ;
 		else
