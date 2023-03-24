@@ -6,7 +6,7 @@
 #    By: amouly <amouly@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 15:27:43 by llion             #+#    #+#              #
-#    Updated: 2023/03/24 14:50:24 by amouly           ###   ########.fr        #
+#    Updated: 2023/03/24 18:43:11 by llion            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,25 +18,26 @@ LIBFT = ./libft/libft.a
 HEADERS = -I include -I libft 
 
 SOURCES = 	memory_utils.c	\
-			unset.c		\
-			main.c \
-			verif_line.c \
-			split_ms.c \
+			unset.c			\
+			main.c			\
+			verif_line.c	\
+			split_ms.c 		\
 			echo.c			\
 			pwd.c			\
+			cd.c			\
 			export.c		\
-			list_char.c \
-			format_line.c \
-			format_list.c \
-			parse.c \
+			list_char.c		\
+			format_line.c	\
+			format_list.c	\
+			parse.c			\
 			pipe.c			\
-			list_string.c \
-			list_command.c \
-			clean_list.c \
-			exec_command.c \
-			list_to_tab.c \
-			tab_utils.c \
-			redir.c \
+			list_string.c	\
+			list_command.c	\
+			clean_list.c	\
+			exec_command.c	\
+			list_to_tab.c	\
+			tab_utils.c		\
+			redir.c			\
 			pipe_utils.c
 
 OBJS = ${addprefix objs/,${notdir ${SOURCES:.c=.o}}}

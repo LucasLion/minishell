@@ -6,7 +6,7 @@
 #    By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/24 16:04:33 by llion             #+#    #+#              #
-#    Updated: 2023/03/24 16:09:43 by llion            ###   ########.fr        #
+#    Updated: 2023/03/24 17:34:05 by llion            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,6 @@
 
 # Problemes
 
-	- le changement de la variable d'environnement PATH
 	- Gerer le pipe a la fin d'un input
 	- Gerer la commande vide ou avec espaces
 	- Implementer le "command not found"
-	- 
