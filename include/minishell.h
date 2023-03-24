@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/23 14:00:19 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/24 14:29:58 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,23 +202,31 @@ void 	print_tab(char **tab);
 int 	len_tab(char **tab);
 char    **copy_tab(char **tab);
 
-/* -------------- PIPE.c -------------- */
+/* -------------- PIPE_UTILS.c -------------- */
 
 int 	**create_pipes(int nb_of_pipes, int **fd);
 void 	close_fd_everyhing(int **fd, int nbr_of_pipes);
 void 	close_fd_everyhing_but_one(int **fd, int nbr_of_pipes, int a, int b);
 void 	close_fd_everyhing_but_two(int **fd, int nbr_of_pipes, int read, int write);
 void 	wait_all_pid(int *pid, int nbr_of_command);
+
+/* -------------- PIPE.c -------------- */
+
+void    child_first_pipe(t_pipe *pipe_info, int **fd, char **envp);
+void    child_last_pipe(t_pipe *pipe_info, int **fd, char **envp);
+void    child_middle_pipe(t_pipe *pipe_info, int **fd, char **envp);
 int 	child_process(t_pipe *pipe_info, int **fd, char **envp);
-int 	managing_fork(int **fd, int nb_of_pipes, t_command *list, char **envp, int nbr_of_commands );
+int 	managing_fork(t_command *list, t_pipe *pipe_info, int **fd, char **envp );
+void 	execute_one_command(t_command *list, t_pipe *pipe_info, char ***envp);
 int 	managing_pipe(t_command *list , char ***envp);
 
 
 /* -------------- REDIR.c -------------- */
 
+int 	handle_del(t_string *list, t_pipe *pipe_info);
+int 	find_input(t_string *input, t_pipe *pipe_info);
+int 	find_output(t_string *output);
 void    init_fd(t_command *list, t_pipe *pipe_info);
-void    init_fd_one(t_command *list, int *fd_input, int *fd_output);
-
 
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:23:30 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/24 10:47:47 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/24 14:08:21 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,27 +40,6 @@ int handle_del(t_string *list, t_pipe *pipe_info)
     return (fd[0]);
 }
 
-void handle_del_one(t_string *list)
-{
-    char *input;
-    //int fd_ret;
-    
-    //fd_ret = 0;
-    input = readline(">");
-    //close(fd_del[0])
-    while (ft_strncmp(list->string, input, ft_strlen(input) + 1) != 0)
-    {
-        //fd_ret = open("heredoc", O_RDWR | O_CREAT | O_APPEND);
-        //write(fd_ret, input, ft_strlen(input));
-        input = readline(">");
-    }    
-    //exit(0);
-    //}
-    //return (fd_ret);
-}
-
-
-
 int find_input(t_string *input, t_pipe *pipe_info)
 {
     t_string *temp;
@@ -78,23 +57,6 @@ int find_input(t_string *input, t_pipe *pipe_info)
     }
     return (fd);
 }
-int find_input_one(t_string *input)
-{
-    t_string *temp;
-    int fd;
-    
-    temp = input;
-    while (temp)
-    {
-        if (temp->append_or_heredoc == 1)
-            handle_del_one(temp);
-        else
-                fd = open(temp->string, O_RDONLY);
-        temp = temp->next;
-    }
-    return (fd);
-}
-
 
 int find_output(t_string *output)
 {
@@ -134,22 +96,3 @@ void    init_fd(t_command *list, t_pipe *pipe_info)
     }
 }
 
-void    init_fd_one(t_command *list, int *fd_input, int *fd_output)
-{
-    if (list->input == NULL)
-        *fd_input = STDIN_FILENO ;
-    else
-    {
-        *fd_input = find_input_one(list->input);
-        //if (fd_input == -1)
-        // gerer l'erreur    
-    }
-    if (list->output == NULL)
-        *fd_output = STDOUT_FILENO;
-     else
-    {
-       *fd_output = find_output(list->output);
-        //if (fd_output == -1)
-        // gerer l'erreur  
-    }
-}
