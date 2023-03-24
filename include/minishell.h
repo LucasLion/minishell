@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/24 14:37:33 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/24 15:34:42 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	free_tab3(char ***tab);
 
 /* -------------- BUILTINS -------------- */
 
-void	echo(char **argv, int fd_out);
+void	echo(char **argv);
 int		ms_exit();
 void	pwd();
 void    unset(char **argv, char ***envp);
