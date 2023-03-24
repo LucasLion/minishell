@@ -1,4 +1,3 @@
-src/main.c
 src/*.o
 libft/*.o
 minishell
