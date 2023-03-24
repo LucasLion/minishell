@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/21 17:33:37 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/24 13:55:54 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,7 @@ typedef struct s_command
 
 char	**get_path_split(char **envp);
 char    *get_path(char **envp, char *cmd);
-char	**exec_command(char *command, char **argv, char **envp);
-//int	exec_command(char **argv, char **envp, t_command *list, char *line);
+void	exec_command(char *command, char **argv, char ***envp);
 
 /* -------------- FREE -------------- */
 
@@ -98,12 +97,12 @@ void	free_tab3(char ***tab);
 
 /* -------------- BUILTINS -------------- */
 
-void	echo(char **argv);
+void	echo(char **argv, int fd_out);
 int		ms_exit();
 void	pwd();
-char     **unset(char **argv, char **envp);
+void    unset(char **argv, char ***envp);
 void    env(char **envp);
-char	**exec_builtin(char *builtin, char **argv, char **envp);
+void	exec_builtin(char *builtin, char **argv, char ***envp);
 
 /* -------------- VERIF_LINE -------------- */
 
@@ -123,7 +122,7 @@ void    split_and_print(char *line);
 
 /* -------------- EXPORT -------------- */
 
-char     **ms_export(char **argv, char **envp, int env_len);
+void     ms_export(char **argv, char ***envp, int env_len);
 t_env    *create_var_list(char **envp);
 char     ***create_args_list(char **argv);
 char     ***create_env_list(char **envp, int env_len);
@@ -208,8 +207,8 @@ void 	close_fd_everyhing_but_one(int **fd, int nbr_of_pipes, int a, int b);
 void 	close_fd_everyhing_but_two(int **fd, int nbr_of_pipes, int read, int write);
 void 	wait_all_pid(int *pid, int nbr_of_command);
 int 	child_process(t_pipe *pipe_info, int **fd);
-int 	managing_fork(int **fd, int nb_of_pipes, t_command *list, char **envp, int nbr_of_commands );
-int 	managing_pipe(t_command *list , char **envp);
+char 	**managing_fork(int **fd, int nb_of_pipes, t_command *list, char **envp, int nbr_of_commands);
+char 	**managing_pipe(t_command *list , char **envp);
 
 
 /* -------------- REDIR.c -------------- */
