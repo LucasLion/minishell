@@ -6,43 +6,65 @@
 /*   By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 18:33:35 by llion             #+#    #+#             */
-/*   Updated: 2023/03/24 18:58:12 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/25 13:49:02 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-// TODO EN CHANTIER
-
-char *get_user(char **envp)
+char *get_env_variable(char **envp, char *variable)
 {
 	int		i;
-	//char	*user;
+	char	*user;
 
 	i = 0;
 	while (envp[i])
 	{
-		if (ft_strncmp(extract_var(envp[i]), "USER", 5) == 0)
-			printf("env: %s\n", envp[i]);
-			//user = extract_val(envp[i]);
+		if (ft_strncmp(extract_var(envp[i]), variable, ft_strlen(variable)) == 0)
+		{
+			user = extract_val(envp[i]);
+			return (user);
+		}
+		i++;
 	}
 	return (NULL);
 }
 
-int	cd(char *path, char **envp)
+char	*create_absolute_path(char *input, char **envp)
 {
-	(void)path;
-	//int	id;
-	char	*user;
+	char	*tilde;
+	char	*parsed;
 
-	user = get_user(envp);
-	printf("User Baby! %s\n", user);
-	//id = chdir(path);
-	//if (id != 0)
-	//{
-	//	printf("Erreur lors du changement de répertoire de travail\n");
-	//	return (1);
-	//}
-	//printf("Répertoire de travail modifié\n");
+	tilde = get_env_variable(envp, "HOME");
+	parsed = ft_calloc(ft_strlen(tilde) + ft_strlen(input) - 2 + 1, sizeof(char));
+	if (input[0] == '~' && input[1] == '/')
+		parsed = ft_strjoin(tilde, input + 1);
+	else if (input[0] == '~' && input[1] != '/' && input[1] != '\0')
+	{
+		ft_strlcat(parsed, tilde, ft_strlen(tilde) + 1);
+		ft_strlcat(parsed, "/", ft_strlen(tilde) + 2);
+		ft_strlcat(parsed, input + 1, ft_strlen(parsed) + ft_strlen(tilde) + 1);
+	}
+	else if (input[0] == '~' && input[1] == '\0')
+		parsed = tilde;
+	else if (input[0] == '-' && input[1] == '\0')
+		return (get_env_variable(envp, "OLDPWD"));
+	return (parsed);
+}
+
+int	cd(char *input, char **envp)
+{
+	int		id;
+	char	*abs_path;
+
+	if (input[0] == '~' || input[0] == '-')
+	{
+		abs_path = create_absolute_path(input, envp);
+		id = chdir(abs_path);
+	}
+	else 
+		id = chdir(input);
+	if (id != 0)
+		return (1);
 	return (0);
 }
