@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 09:45:36 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/27 18:42:20 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/27 18:49:39 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,10 +212,10 @@ char **list_to_tab(t_command *list, char **envp, int status )
     int i;
     t_string *tmp;
 
-    tmp = list;
-    len = length_list_string(list);
-    //temp = list->command;
-    //len = length_list_string(temp);
+    //tmp = list;
+    //len = length_list_string(list);
+    tmp = list->command;
+    len = length_list_string(tmp);
     i = 0;
     ret = malloc(sizeof(char *) * (len + 1));
     // HANDLE ERROR
@@ -223,8 +223,8 @@ char **list_to_tab(t_command *list, char **envp, int status )
         return (NULL); 
     while (i < len)
     {
-        ret[i] = copy_string(tmp->string, envp);
-        //ret[i] = copy_string(temp->string, envp, status);
+        //ret[i] = copy_string(tmp->string, envp);
+        ret[i] = copy_string(tmp->string, envp, status);
         i++;
         tmp = tmp->next;
     }
