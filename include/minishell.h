@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/24 15:34:42 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/25 12:47:00 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ void	free_tab3(char ***tab);
 void	echo(char **argv);
 int		ms_exit();
 void	pwd();
+int		cd(char *input, char **envp);
 void    unset(char **argv, char ***envp);
 void    env(char **envp);
 char 	*is_builtin(char *cmd);
@@ -122,13 +123,16 @@ void    split_and_print(char *line);
 
 /* -------------- EXPORT -------------- */
 
-void     ms_export(char **argv, char ***envp, int env_len);
+void     ms_export(char **argv, char ***envp);
 t_env    *create_var_list(char **envp);
 char     ***create_args_list(char **argv);
 char     ***create_env_list(char **envp, int env_len);
 int      tab_len(char **envp);
 char     **sort_envp(char **envp);
-char	**sort_tab(char **tab, int size);
+char	 **sort_tab(char **tab, int size);
+char	 *extract_var(char *arg);
+char	 *extract_val(char *arg);
+
 
 /* -------------- LIST_CHAR.c -------------- */
 

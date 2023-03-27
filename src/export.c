@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 16:12:49 by llion             #+#    #+#             */
-/*   Updated: 2023/03/24 14:43:06 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/24 19:04:20 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,7 +184,11 @@ int   check_if_variable(char *arg, char **envp)
       if (ft_strncmp(var_env, var_arg, ft_strlen(var_arg) + 1) == 0)
          flag = 1;
       i++;
+      free(var_env);
+      free(val_env);
    }
+   free(val_arg);
+   free(var_arg);
    return (flag);
 }
 
@@ -221,7 +225,6 @@ char  **add_new_variable(char *arg, char **envp)
       ft_strlcat(nenvp[i], "=", ft_strlen(var_arg) + 2); 
       ft_strlcat(nenvp[i], val_arg, ft_strlen(var_arg) + ft_strlen(val_arg) + 2); 
    }
-   nenvp[env_size + 1] = 0;
    free_tab2(envp);
    free(var_arg);
    free(val_arg);
@@ -248,7 +251,7 @@ char  **edit_variable(char *arg, char **envp)
          nenvp[i] = ft_strdup(envp[i]);
          i++;
       }
-      nenvp[i] = ft_calloc(ft_strlen(var_arg) + ft_strlen(extract_var(envp[i])) + 2, sizeof(char));
+      nenvp[i] = ft_calloc(ft_strlen(var_arg) + ft_strlen(arg) + 2, sizeof(char));
       ft_strlcat(nenvp[i], var_arg, ft_strlen(var_arg) + 1); 
       ft_strlcat(nenvp[i], "=", ft_strlen(var_arg) + 2); 
       ft_strlcat(nenvp[i], val_arg, ft_strlen(var_arg) + ft_strlen(val_arg) + 2); 
@@ -266,9 +269,8 @@ char  **edit_variable(char *arg, char **envp)
       return (envp);
 }
 
-void   ms_export(char **argv, char ***envp, int env_len)
+void   ms_export(char **argv, char ***envp)
 {
-   (void)env_len;
    int   flag;
    int   i;
 

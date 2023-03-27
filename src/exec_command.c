@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/24 16:16:10 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/25 13:49:06 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	exec_builtin(char *builtin, char **argv, char ***envp)
     if (ft_strncmp(builtin, "pwd", ft_strlen(builtin)) == 0)
         pwd();
     else if (ft_strncmp(builtin, "export", ft_strlen(builtin)) == 0)
-		ms_export(argv, envp, tab_len(*envp));
+		ms_export(argv, envp);
     else if (ft_strncmp(builtin, "unset", ft_strlen(builtin)) == 0)
         unset(argv, envp);
     else if (ft_strncmp(builtin, "env", ft_strlen(builtin)) == 0)
@@ -90,8 +90,8 @@ void	exec_builtin(char *builtin, char **argv, char ***envp)
         ms_exit();
     else if (ft_strncmp(builtin, "echo", ft_strlen(builtin)) == 0)
        echo(argv);
-	//else if (ft_strncmp(builtin, "cd", ft_strlen(builtin)) == 0)
-	 //  cd(list, envp);
+	else if (ft_strncmp(builtin, "cd", ft_strlen(builtin)) == 0)
+		cd(argv[1], *envp);
 }
 
 void	exec_command(char *command, char **argv, char ***envp)
