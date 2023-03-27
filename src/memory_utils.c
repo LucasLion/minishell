@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:07:46 by llion             #+#    #+#             */
-/*   Updated: 2023/03/23 10:46:22 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/27 11:04:23 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	free_tab2(char **tab)
 		tab[i] = NULL;
 		i++;
 	}
-	//free(tab);
 	tab = NULL;
 }
 void	free_tab3(char ***tab)

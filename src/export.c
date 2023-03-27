@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 16:12:49 by llion             #+#    #+#             */
-/*   Updated: 2023/03/24 19:04:20 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/27 13:32:39 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int  parse_arg(char *arg)
       i++;
    if (arg[i] == '=' && i == 0)
    {
+      ms_exit(arg, NULL, 1);
       printf("export: %s: not a valid identifier\n", arg);
       return (0);
    }
@@ -127,7 +128,9 @@ char *extract_var(char *arg)
       end++;
    if (end == 0 && arg[end] == '=')
    {
+      //ms_exit(arg, NULL, errno);
       printf("export: %s: not a valid identifier\n", arg);
+      printf("hello\n");
       return (NULL);
    }
    var = ft_calloc(end + 1, sizeof(char));
@@ -204,6 +207,8 @@ char  **add_new_variable(char *arg, char **envp)
    i = 0;
    env_size = tab_len(envp);
    nenvp = ft_calloc((env_size + 2), sizeof(char *));
+   if (nenvp == NULL)
+      return (NULL);
    while (i < env_size)
    {
       nenvp[i] = ft_strdup((envp)[i]);
@@ -221,6 +226,11 @@ char  **add_new_variable(char *arg, char **envp)
    {
       line_size = (int)ft_strlen(var_arg) + (int)ft_strlen(val_arg) + 2;
       nenvp[i] = ft_calloc(line_size + 1, sizeof(char)); 
+      if (nenvp[i] == NULL)
+      {
+         free_tab2(nenvp);
+         return (NULL);
+      }
       ft_strlcat(nenvp[i], var_arg, ft_strlen(var_arg) + 1); 
       ft_strlcat(nenvp[i], "=", ft_strlen(var_arg) + 2); 
       ft_strlcat(nenvp[i], val_arg, ft_strlen(var_arg) + ft_strlen(val_arg) + 2); 
@@ -246,12 +256,19 @@ char  **edit_variable(char *arg, char **envp)
    {
       env_size = tab_len(envp);
       nenvp = ft_calloc((env_size + 2), sizeof(char *));
+      if (nenvp == NULL)
+         return (NULL);
       while (i < env_size && ft_strncmp(extract_var(envp[i]), var_arg, ft_strlen(var_arg)) != 0)
       {
          nenvp[i] = ft_strdup(envp[i]);
          i++;
       }
       nenvp[i] = ft_calloc(ft_strlen(var_arg) + ft_strlen(arg) + 2, sizeof(char));
+      if (nenvp[i] == NULL)
+      {
+         free_tab2(nenvp);
+         return (NULL);
+      }
       ft_strlcat(nenvp[i], var_arg, ft_strlen(var_arg) + 1); 
       ft_strlcat(nenvp[i], "=", ft_strlen(var_arg) + 2); 
       ft_strlcat(nenvp[i], val_arg, ft_strlen(var_arg) + ft_strlen(val_arg) + 2); 
@@ -293,7 +310,11 @@ void   ms_export(char **argv, char ***envp)
             if (flag == 0)
                *envp = add_new_variable(argv[i], *envp);
             else
+            {
                *envp = edit_variable(argv[i], *envp);
+               if (*envp == NULL)
+                  return ;
+            }
          }
          i++;
       }

@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 15:03:31 by event             #+#    #+#             */
-/*   Updated: 2023/03/24 13:59:21 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/27 13:16:56 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int fill_list_command(char **tab, int *i, t_command **list, int *count)
     t_command   *new;
 
     new = malloc(sizeof(t_command));
+    // HANDLE ERROR
     if (new == NULL)
         return (0);
     init_struct_command(new);
@@ -64,6 +65,7 @@ int fill_list_command(char **tab, int *i, t_command **list, int *count)
         }
     new->order = *count;
     new->next = NULL;
+    // HANDLE ERROR
     if (!lstadd_back_list_command(list, new ))
         return (0);
     return (1);
@@ -77,12 +79,14 @@ void parse_input(char *input, t_command **list)
     
     i = 0;
     tab = ft_split_ms(format_line(input));
+    // HANDLE ERROR
     if (tab == NULL)
         return ;
     count = 0;
     while(tab[i])
     {
         count++;
+        // HANDLE ERROR
         if (!fill_list_command(tab, &i, list, &count))
           return ;
     }

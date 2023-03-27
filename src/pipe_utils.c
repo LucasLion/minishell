@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:22:46 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/24 14:21:08 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/27 11:06:52 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int **create_pipes(int nb_of_pipes, int **fd)
     while (i < nb_of_pipes)
     {
         fd[i] = malloc(sizeof(int) * 2);
+        // HANDLE ERROR
         if (pipe(fd[i]) < 0)
             return NULL;
         i++;

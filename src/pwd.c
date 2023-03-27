@@ -6,32 +6,66 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 14:21:07 by llion             #+#    #+#             */
-/*   Updated: 2023/03/20 13:59:03 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/27 13:32:40 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	ms_exit()
+void	write_error(char *cmd, char *input, int error_no)
 {
-	int	status;
+	int len;
+	char *err_str;
 
+	write(STDERR_FILENO, "Minishell: ", 11);
+	if (cmd != NULL)
+	{
+		len = ft_strlen(cmd);
+		write(STDERR_FILENO, cmd, len);
+		write(STDERR_FILENO, ": ", 2);
+	}
+	if (input != NULL)
+	{
+		len = ft_strlen(input);
+		write(STDERR_FILENO, input, len);
+		write(STDERR_FILENO, ": ", 2);
+	}
+	err_str = strerror(error_no);
+	len = ft_strlen(err_str);
+	write(STDERR_FILENO, err_str, len);
+	write(STDERR_FILENO, "\n", 2);
+}
+
+int	ms_exit(char *cmd, char *input, int status)
+{
+	char *error;
+
+	printf("io\n");
+	error = strerror(status);
+	if (status == 14)
+		printf("Minishell : command not found\n");
+	else if (status == 1)
+		printf("export: %s: not a valid identifier\n", cmd);
+	else
+		write_error(cmd, input, status);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	else if (WIFSIGNALED(status))
 		return (WTERMSIG(status));
-	return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
 void	pwd()
 {
 	char buffer[1024];
 
-	if (getcwd(buffer, sizeof(buffer)) == NULL)
-	{
-		printf("Error");
-		exit(EXIT_FAILURE);
-	}
+	//if (getcwd(buffer, sizeof(buffer)) == NULL)
+	//{
+		//printf("Error");
+        // HANDLE ERROR
+		//int i = ms_exit(errno);
+		//printf("%d\n", i);
+	//}
 	printf("%s\n", buffer);
 }
 
