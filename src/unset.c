@@ -6,7 +6,7 @@
 /*   By: llion <llion@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+ #+#+   +#+          */
 /*   Created: 2023/03/10 18:39:28 by llion             #+#    #+#             */
-/*   Updated: 2023/03/24 13:49:15 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/27 11:09:08 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	unset(char **argv, char ***envp)
 	int		new_len;
 
 	new_len = tab_len(*envp) - tab_len(argv);
+	// HANDLE ERROR
 	new_envp = ft_calloc(new_len + 1, sizeof(char *));
 	new_envp[new_len] = 0;
 	i = 0;

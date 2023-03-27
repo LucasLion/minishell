@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/27 11:29:30 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/27 13:35:55 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,9 @@ void	free_tab3(char ***tab);
 /* -------------- BUILTINS -------------- */
 
 void	echo(char **argv);
-int		ms_exit();
+int		ms_exit(char *cmd, char *input, int status);
 void	pwd();
-int		cd(char *input, char **envp);
+void	cd(char *input, char **envp);
 void    unset(char **argv, char ***envp);
 void    env(char **envp);
 char 	*is_builtin(char *cmd);

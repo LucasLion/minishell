@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:22:46 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/27 11:41:02 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/27 13:36:02 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void    child_middle_pipe(t_pipe *pipe_info, int **fd, char **envp)
 
 int child_process(t_pipe *pipe_info, int **fd, char **envp)
 {
+    // HANDLE EXITS
     if (pipe_info->i == 0)
     {
         child_first_pipe(pipe_info, fd, envp);
@@ -86,6 +87,7 @@ int managing_fork(t_command *list, t_pipe *pipe_info, int **fd, char **envp )
         pipe_info->tab_arg = list_to_tab(temp->command, envp);
         init_fd(temp, pipe_info);
         pid[pipe_info->i] = fork();
+        // HANDLE ERROR
         if (pid[pipe_info->i] < 0)
             printf("error\n");
         else if(pid[pipe_info->i] == 0)
@@ -122,12 +124,13 @@ void execute_one_command(t_command *list, t_pipe *pipe_info, char ***envp)
                 close (pipe_info->fd_output);
             } 
             exec_command(pipe_info->cmd, pipe_info->tab_arg, envp);
-            exit (0);
+            ms_exit(pipe_info->cmd, NULL, errno);
         }
         waitpid(pid, NULL, 0);
     }
     else
         exec_builtin(is_builtin(pipe_info->cmd), pipe_info->tab_arg, envp);
+    // CHANGE RETURN
     return ;
 }
 
@@ -143,6 +146,7 @@ int managing_pipe(t_command *list , char ***envp)
     else 
     {
         int **fd;
+        // HANDLE MALLOC ERROR
         fd = malloc(sizeof (int *) * pipe_info.nbr_of_pipes);
         fd = create_pipes(pipe_info.nbr_of_pipes, fd);
         managing_fork(list, &pipe_info, fd, *envp);

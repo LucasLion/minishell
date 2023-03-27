@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 09:45:36 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/20 12:51:14 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/27 11:04:06 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int length_list_string(t_string *list)
 		}
 		return (i);
 	}
+    // HANDLE ERROR
 	else
 		return (0);
 }
@@ -67,6 +68,7 @@ int count_size_env(char *string_list, int *i, char **envp)
         }
         b++;
     }
+    // HANDLE ERROR
     return (0) ;
     
 }
@@ -113,7 +115,7 @@ int count_char(char *string_list, char **envp)
         flag1 = put_flag(string_list[i], flag);
         if (string_list[i] == '$' && flag1 != 2)
         { 
-            if (string_list[i+1] == '\0' || string_list[i+1] == ' ' || string_list[i+1] == '$')
+            if (string_list[i + 1] == '\0' || string_list[i + 1] == ' ' || string_list[i + 1] == '$')
             {
                 count++;
                 i++;
@@ -181,6 +183,7 @@ char **list_to_tab(t_string *list, char **envp)
     len = length_list_string(list);
     i = 0;
     ret = malloc(sizeof(char *) * (len + 1));
+    // HANDLE ERROR
     if (ret == NULL)
         return (NULL); 
     while (i < len)

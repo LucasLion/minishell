@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:23:30 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/27 11:42:09 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/27 13:36:10 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ int handle_del(t_string *list, t_pipe *pipe_info)
         close (fd[1]);
         exit (0);
     }
+    else
+        // HANDLE ERROR
+        return 0;
     close (fd[1]);
     waitpid(pid, NULL, 0);
     return (fd[0]);
