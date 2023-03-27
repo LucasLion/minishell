@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 14:55:57 by llion             #+#    #+#             */
-/*   Updated: 2023/03/27 11:04:12 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/27 16:25:01 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,15 @@ int main(int argc, char **argv, char **env)
     // HANDLE ERROR
 	if (argc != 1)
         return (0);
+	rl_readline_name = "minishell";
 	envp = copy_tab(env);
 	while (1)
 	{
 		list_of_command = NULL;
-		input = readline(C"M"G"i"Y"n"B"i"P"s"C"h"RO"e"G"l"Y"l"B" $ " N);
+		//input = readline(C"M"G"i"Y"n"B"i"P"s"C"h"RO"e"G"l"Y"l"B" $ " N);
+		input = readline("Minishell$ " );
         add_history(input);
+		signals();
         parse_input(input, &list_of_command);
 		managing_pipe(list_of_command, &envp);
         clean_list_command(&list_of_command);	

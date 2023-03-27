@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 16:12:49 by llion             #+#    #+#             */
-/*   Updated: 2023/03/27 13:32:39 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/27 14:15:00 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int  parse_arg(char *arg)
    if (arg[i] == '=' && i == 0)
    {
       ms_exit(arg, NULL, 1);
-      printf("export: %s: not a valid identifier\n", arg);
+      //printf("export: %s: not a valid identifier\n", arg);
       return (0);
    }
    else
@@ -130,7 +130,6 @@ char *extract_var(char *arg)
    {
       //ms_exit(arg, NULL, errno);
       printf("export: %s: not a valid identifier\n", arg);
-      printf("hello\n");
       return (NULL);
    }
    var = ft_calloc(end + 1, sizeof(char));

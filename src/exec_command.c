@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/27 13:12:23 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/27 14:47:13 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ void	exec_command(char *command, char **argv, char ***envp)
 	path = get_path(*envp, command);
 	if (execve(path, argv, *envp) == -1)
 		ms_exit(command, NULL, errno);
-	ms_exit(command, NULL, errno);
 }
 
 

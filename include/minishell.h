@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/27 13:35:55 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/27 16:30:38 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,16 @@ typedef struct s_command
 	int					redir_output;
 	int					order;
 	int					pipe_after;
+	int					status;
+	int					last_status;
     struct s_command	*next;
 	struct s_command	*previous;
 }					t_command;
+
+/* -------------- SIGNALS -------------- */
+
+void	signals();
+void	handle_sigint();
 
 /* -------------- EXEC -------------- */
 
@@ -96,8 +103,10 @@ void	free_tab3(char ***tab);
 
 /* -------------- BUILTINS -------------- */
 
+
 void	echo(char **argv);
 int		ms_exit(char *cmd, char *input, int status);
+void	write_error(char *cmd, char *input, int error_no);
 void	pwd();
 void	cd(char *input, char **envp);
 void    unset(char **argv, char ***envp);

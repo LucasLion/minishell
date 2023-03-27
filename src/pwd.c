@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 14:21:07 by llion             #+#    #+#             */
-/*   Updated: 2023/03/27 13:32:40 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/27 14:45:41 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	ms_exit(char *cmd, char *input, int status)
 {
 	char *error;
 
-	printf("io\n");
 	error = strerror(status);
 	if (status == 14)
 		printf("Minishell : command not found\n");
@@ -59,13 +58,13 @@ void	pwd()
 {
 	char buffer[1024];
 
-	//if (getcwd(buffer, sizeof(buffer)) == NULL)
-	//{
-		//printf("Error");
-        // HANDLE ERROR
-		//int i = ms_exit(errno);
-		//printf("%d\n", i);
-	//}
+	if (getcwd(buffer, sizeof(buffer)) == NULL)
+	{
+		printf("Error");
+        //HANDLE ERROR
+		int i = ms_exit(NULL, NULL, errno);
+		printf("%d\n", i);
+	}
 	printf("%s\n", buffer);
 }
 

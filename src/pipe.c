@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:22:46 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/27 13:36:02 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/27 16:36:10 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,8 @@ int managing_fork(t_command *list, t_pipe *pipe_info, int **fd, char **envp )
 
 void execute_one_command(t_command *list, t_pipe *pipe_info, char ***envp)
 {
+    if (list == NULL || list->command == NULL)
+        return ;
     pipe_info->cmd = copy_string(list->command->string, *envp); 
     pipe_info->tab_arg = list_to_tab(list->command, *envp);
     if (init_fd(list, pipe_info) != 0)
@@ -124,7 +126,6 @@ void execute_one_command(t_command *list, t_pipe *pipe_info, char ***envp)
                 close (pipe_info->fd_output);
             } 
             exec_command(pipe_info->cmd, pipe_info->tab_arg, envp);
-            ms_exit(pipe_info->cmd, NULL, errno);
         }
         waitpid(pid, NULL, 0);
     }

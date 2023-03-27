@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:23:30 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/27 13:36:10 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/27 14:13:37 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,23 +81,6 @@ int find_output(t_string *output)
     return (fd);
 }
 
-void write_error(char *str, int error_no)
-{
-    int len;
-    char *err_str;
-    
-    if (str != NULL)
-    {
-        len = ft_strlen(str);
-        write(STDERR_FILENO, "Minishell: ", 11);
-        write(STDERR_FILENO, str, len);
-        err_str = strerror(error_no);
-        len = ft_strlen(err_str);
-        write(STDERR_FILENO, ": ", 2);
-        write(STDERR_FILENO, err_str, len);
-        write(STDERR_FILENO, "\n", 2);
-    }
-}
 int init_fd(t_command *list, t_pipe *pipe_info)
 {
     if (list->input == NULL)
@@ -107,7 +90,7 @@ int init_fd(t_command *list, t_pipe *pipe_info)
         pipe_info->fd_input = find_input(list->input, pipe_info);
         if (pipe_info->fd_input == -1)
         {
-            write_error(list->input->string, errno);
+            write_error(NULL, list->input->string, errno);
             return (1);
         }    
     }

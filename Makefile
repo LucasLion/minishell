@@ -6,21 +6,22 @@
 #    By: amouly <amouly@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 15:27:43 by llion             #+#    #+#              #
-#    Updated: 2023/03/24 18:43:11 by llion            ###   ########.fr        #
+#    Updated: 2023/03/27 15:45:18 by llion            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell 
 CC = gcc
 FLAGS = -Wall -Werror -Wextra -ggdb3
-READLINE = -lreadline
+READLINE = -lreadline -L ~/.brew/opt/readline/lib
 LIBFT = ./libft/libft.a
-HEADERS = -I include -I libft 
+HEADERS = -I include -I libft -I ~/.brew/opt/readline/include
 
 SOURCES = 	memory_utils.c	\
 			unset.c			\
 			main.c			\
 			verif_line.c	\
+			signals.c		\
 			split_ms.c 		\
 			echo.c			\
 			pwd.c			\
@@ -52,7 +53,7 @@ objs/%.o : src/%.c
 ${NAME} : ${OBJS} 
 	@make -sC libft
 	@echo "----> libft COMPILED"
-	@gcc  ${FLAGS} ${OBJS} ${LIBFT} ${HEADERS} -o ${NAME} ${READLINE}
+	@gcc  ${FLAGS} ${OBJS} ${LIBFT} ${READLINE} ${HEADERS} -o ${NAME}	
 	@echo "----> minishell COMPILED"
 	
 

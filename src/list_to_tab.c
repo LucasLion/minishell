@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 09:45:36 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/27 11:04:06 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/27 16:36:12 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,8 @@ char *copy_string(char *string_list, char **envp)
     j = 0;
     flag = 0;
     ret = ft_calloc(count_char(string_list, envp) + 1, sizeof(char));
+    if (ret == NULL)
+        return (NULL);
     while(string_list[i])
     {    
         flag1 = put_flag(string_list[i], flag);
@@ -177,9 +179,9 @@ char **list_to_tab(t_string *list, char **envp)
     int len;
     char **ret;
     int i;
-    t_string *temp;
+    t_string *tmp;
 
-    temp = list;
+    tmp = list;
     len = length_list_string(list);
     i = 0;
     ret = malloc(sizeof(char *) * (len + 1));
@@ -188,9 +190,9 @@ char **list_to_tab(t_string *list, char **envp)
         return (NULL); 
     while (i < len)
     {
-        ret[i] = copy_string(temp->string, envp);
+        ret[i] = copy_string(tmp->string, envp);
         i++;
-        temp = temp->next;
+        tmp = tmp->next;
     }
     ret[i] = 0;
     return (ret);
