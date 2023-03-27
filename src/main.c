@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 14:55:57 by llion             #+#    #+#             */
-/*   Updated: 2023/03/27 14:33:05 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/27 18:22:55 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #define C "\033[0;36m"
 #define N "\033[0m"
 
-int main(int argc, char **argv, char **env) 
+/*int main(int argc, char **argv, char **env) 
 {
 	(void)argv;
 	char		*input;
@@ -40,5 +40,38 @@ int main(int argc, char **argv, char **env)
 		managing_pipe(list_of_command, &envp);
         clean_list_command(&list_of_command);	
 	}	
+}*/
+
+void init_core(t_core *minishell)
+{
+	minishell->list_of_command = NULL;
+	//minishell->input = readline(C"M"G"i"Y"n"B"i"P"s"C"h"RO"e"G"l"Y"l"B" $ " N);
+	minishell->input = readline("Minishell> ");
+	//int i = 0;
+	//while (minishell->input[i])
+	//{
+	//	printf("%c ", minishell->input[i]);
+	//	i++;
+	//}
+	add_history(minishell->input);
 }
 
+
+int main(int argc, char **argv, char **env) 
+{
+	(void)argv;
+	t_core	minishell;
+	if (argc != 1)
+        return (0);
+	minishell.envp = copy_tab(env);
+	minishell.last_status = 127;
+	minishell.pid = 0;
+	while (1)
+	{
+		init_core(&minishell);
+        parse_input(&minishell);
+		managing_pipe(&minishell);
+        clean_list_command(&(minishell.list_of_command));
+
+	}	
+}

@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/27 13:35:55 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/27 18:06:08 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,17 @@
 # include <sys/wait.h>
 # include <fcntl.h>
 
-typedef struct s_number
+
+typedef struct s_copy_string
 {
-	int			        nbr;
-	struct s_number	    *next;
-    struct s_number	    *previous;
-}					t_number;
+ 	char   *ret;
+    int 	i;
+    int 	j;
+	int		flag;
+	int		flag1;
+	
+}					t_copy_string;
+
 
 typedef struct s_pipe
 {
@@ -81,7 +86,20 @@ typedef struct s_command
 	int					pipe_after;
     struct s_command	*next;
 	struct s_command	*previous;
+	
 }					t_command;
+
+
+typedef struct s_core
+{
+	t_command 		*list_of_command;
+	int 			last_status;
+	int				pid;
+	char			*input;
+	char			**envp;
+	
+	
+}					t_core;
 
 /* -------------- EXEC -------------- */
 
@@ -179,7 +197,7 @@ void    print_input_after_formating(char *line_input);
 void 	handle_chevrons(char **tab, int index, t_command *new);
 void 	find_command_until_pipe(char **tab, int *i,t_command *new);
 int 	fill_list_command(char **tab, int *i, t_command **list, int *count);
-void    parse_input(char *input, t_command **list);
+int 	parse_input(t_core *minishell);
 
 /* -------------- CLEAN_LIST.c -------------- */
 
@@ -191,11 +209,16 @@ void	clean_list_command(t_command **list);
 
 int 	length_list_string(t_string *list);
 int 	size_var(char *string_list, int *i);
-int 	count_size_env(char *string_list, int *i, char **envp);
-void 	copy_env_var(char *string_list, int *i, char **envp, char *ret, int *j);
-int 	count_char(char *string_list, char **envp);
-char 	*copy_string(char *string_list, char **envp);
-char 	**list_to_tab(t_string *list, char **envp);
+//int 	count_size_env(char *string_list, int *i, char **envp);
+int 	count_size_env(char *string_list, int *i, char **envp, int status);
+//void 	copy_env_var(char *string_list, int *i, char **envp, char *ret, int *j);
+void 	copy_env_var(char *string_list, char **envp, int status, t_copy_string *cs);
+//int 	count_char(char *string_list, char **envp);
+int 	count_char(char *string_list, char **envp, int status);
+//char 	*copy_string(char *string_list, char **envp);
+char 	*copy_string(char *string_list, char **envp, int status);
+//char 	**list_to_tab(t_command *list, char **envp);
+char 	**list_to_tab(t_command *list, char **envp, int status );
 
 /* -------------- TAB_UTILS.c -------------- */
 
@@ -217,9 +240,10 @@ void    child_first_pipe(t_pipe *pipe_info, int **fd, char **envp);
 void    child_last_pipe(t_pipe *pipe_info, int **fd, char **envp);
 void    child_middle_pipe(t_pipe *pipe_info, int **fd, char **envp);
 int 	child_process(t_pipe *pipe_info, int **fd, char **envp);
-int 	managing_fork(t_command *list, t_pipe *pipe_info, int **fd, char **envp );
-void 	execute_one_command(t_command *list, t_pipe *pipe_info, char ***envp);
-int 	managing_pipe(t_command *list , char ***envp);
+int 	managing_fork(t_core *minishell, t_pipe *pipe_info, int **fd);
+//void 	execute_one_command(t_command *list, t_pipe *pipe_info, char ***envp);
+void 	execute_one_command(t_core *minishell, t_pipe *pipe_info);
+int 	managing_pipe(t_core *minishell);
 
 
 /* -------------- REDIR.c -------------- */
