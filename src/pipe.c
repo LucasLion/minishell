@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:22:46 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/27 13:36:02 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/27 14:47:34 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void execute_one_command(t_command *list, t_pipe *pipe_info, char ***envp)
                 close (pipe_info->fd_output);
             } 
             exec_command(pipe_info->cmd, pipe_info->tab_arg, envp);
-            ms_exit(pipe_info->cmd, NULL, errno);
+            //ms_exit(pipe_info->cmd, NULL, errno);
         }
         waitpid(pid, NULL, 0);
     }

@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 14:55:57 by llion             #+#    #+#             */
-/*   Updated: 2023/03/27 11:04:12 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/27 14:33:05 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,3 +41,4 @@ int main(int argc, char **argv, char **env)
         clean_list_command(&list_of_command);	
 	}	
 }
+

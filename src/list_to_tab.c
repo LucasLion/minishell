@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 09:45:36 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/27 11:04:06 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/27 14:40:45 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,25 @@ int count_size_env(char *string_list, int *i, char **envp)
     return (0) ;
     
 }
+// A MODIFIER
+
+void last_error(char *ret, int *j)
+{
+    char *err_itoa;
+    int len;
+    int b;
+    
+    err_itoa = ft_itoa(errno);
+    len = ft_strlen(err_itoa);
+    b = 0;
+    while(err_itoa[b])
+    {
+        ret[*j] = err_itoa[b];
+        (*j)++;
+        b++;
+    }
+    
+}
 
 void copy_env_var(char *string_list, int *i, char **envp, char *ret, int *j)
 {
@@ -80,22 +99,30 @@ void copy_env_var(char *string_list, int *i, char **envp, char *ret, int *j)
     int b;
 
     (*i)++;
-    debut = (*i);
-    count = size_var(string_list, i);
-    b = 0;
-    while(envp[b])
+    if (string_list[*i] == '?')
     {
-        if (!ft_strncmp(envp[b], &string_list[debut], (size_t) count) && envp[b][count] == '=')
+        last_error(ret, j);
+        (*i)++;
+    }
+    else
+    {
+        debut = (*i);
+        count = size_var(string_list, i);
+        b = 0;
+        while(envp[b])
         {
-           count ++;
-           while (envp[b][count])
-           {
-                ret[*j] = envp[b][count];
-                (*j)++;
-                count++;
-           }
+            if (!ft_strncmp(envp[b], &string_list[debut], (size_t) count) && envp[b][count] == '=')
+            {
+            count ++;
+            while (envp[b][count])
+            {
+                    ret[*j] = envp[b][count];
+                    (*j)++;
+                    count++;
+            }
+            }
+            b++;
         }
-        b++;
     }
 }
 
@@ -154,7 +181,7 @@ char *copy_string(char *string_list, char **envp)
         flag1 = put_flag(string_list[i], flag);
         if (string_list[i] == '$' && flag1 != 2 && string_list[i+1] != '\0' 
             && string_list[i+1] != ' ' && string_list[i+1] != '$' )
-                copy_env_var(string_list, &i, envp, ret, &j);
+                    copy_env_var(string_list, &i, envp, ret, &j);
         else if (string_list[i] == '"' && (flag1 == 1 || (flag1 == 0 && flag == 1)))
             i++;
         else if (string_list[i] == '\'' && (flag1 == 2 || (flag1 == 0 && flag == 2)))
