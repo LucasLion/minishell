@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/25 12:47:00 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/27 11:29:30 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,7 +227,7 @@ int 	managing_pipe(t_command *list , char ***envp);
 int 	handle_del(t_string *list, t_pipe *pipe_info);
 int 	find_input(t_string *input, t_pipe *pipe_info);
 int 	find_output(t_string *output);
-void    init_fd(t_command *list, t_pipe *pipe_info);
+int		init_fd(t_command *list, t_pipe *pipe_info);
 
 
 #endif
