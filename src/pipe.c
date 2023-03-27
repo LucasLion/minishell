@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:22:46 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/27 13:25:56 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/27 13:36:02 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,11 +103,10 @@ int managing_fork(t_command *list, t_pipe *pipe_info, int **fd, char **envp )
 
 void execute_one_command(t_command *list, t_pipe *pipe_info, char ***envp)
 {
-    (void) pipe_info;
-
     pipe_info->cmd = copy_string(list->command->string, *envp); 
-    pipe_info->tab_arg = list_to_tab(list->command, *envp); 
-    init_fd(list, pipe_info);
+    pipe_info->tab_arg = list_to_tab(list->command, *envp);
+    if (init_fd(list, pipe_info) != 0)
+        return ; 
     if (is_builtin(pipe_info->cmd) == NULL || ft_strncmp(is_builtin(pipe_info->cmd), "echo",5) == 0)
     {
         int pid;
