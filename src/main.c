@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 14:55:57 by llion             #+#    #+#             */
-/*   Updated: 2023/03/24 19:07:00 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/27 11:04:12 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int main(int argc, char **argv, char **env)
 	t_command	*list_of_command;
 	char		**envp;
 	
+    // HANDLE ERROR
 	if (argc != 1)
         return (0);
 	envp = copy_tab(env);

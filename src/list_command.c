@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 11:19:41 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/21 17:16:23 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/27 11:02:28 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	lstadd_back_list_command(t_command **list, t_command *new)
 {
 	t_command      *temp;
 
+    // HANDLE ERROR
 	if (list == NULL && new == NULL)
 		return (0);
 	if ((*list) == NULL)
@@ -51,6 +52,7 @@ void print_list_command_from_head(t_command *list)
     t_command *head;
     
     head = list;
+    // HANDLE ERROR
     if (head == NULL)
     {
         printf("NULL\n");
@@ -84,6 +86,7 @@ int length_list_command(t_command *list, int *nb_of_pipes)
     
     count = 0;
     temp = list;
+    // HANDLE ERROR
     if (temp == NULL)
         return (0); 
     while (temp)

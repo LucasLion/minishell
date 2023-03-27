@@ -6,7 +6,7 @@
 /*   By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 18:33:35 by llion             #+#    #+#             */
-/*   Updated: 2023/03/25 13:49:02 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/27 12:50:02 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,11 @@ char	*create_absolute_path(char *input, char **envp)
 
 	tilde = get_env_variable(envp, "HOME");
 	parsed = ft_calloc(ft_strlen(tilde) + ft_strlen(input) - 2 + 1, sizeof(char));
+	if (parsed == NULL)
+	{
+		free(tilde);
+		return (NULL);
+	}
 	if (input[0] == '~' && input[1] == '/')
 		parsed = ft_strjoin(tilde, input + 1);
 	else if (input[0] == '~' && input[1] != '/' && input[1] != '\0')
@@ -47,12 +52,11 @@ char	*create_absolute_path(char *input, char **envp)
 	}
 	else if (input[0] == '~' && input[1] == '\0')
 		parsed = tilde;
-	else if (input[0] == '-' && input[1] == '\0')
-		return (get_env_variable(envp, "OLDPWD"));
+	free(tilde);
 	return (parsed);
 }
 
-int	cd(char *input, char **envp)
+void	cd(char *input, char **envp)
 {
 	int		id;
 	char	*abs_path;
@@ -60,11 +64,13 @@ int	cd(char *input, char **envp)
 	if (input[0] == '~' || input[0] == '-')
 	{
 		abs_path = create_absolute_path(input, envp);
+		if (abs_path == NULL)
+			return ;
 		id = chdir(abs_path);
+		free(abs_path);
 	}
 	else 
 		id = chdir(input);
 	if (id != 0)
-		return (1);
-	return (0);
+		ms_exit("cd", input, errno);
 }

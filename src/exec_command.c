@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/25 13:49:06 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/27 13:12:23 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,12 @@ char	**get_path_split(char **envp)
 	return (split_path);
 }
 
+// ICI LEAKS
 char	*get_path(char **envp, char *cmd)
 {
 	char	**split_path;
 	char	*ret;
-	char	*temp;
+	char	*tmp;
 	int		i;
 
 	i = 0;
@@ -43,9 +44,10 @@ char	*get_path(char **envp, char *cmd)
 		return (cmd);
 	while(split_path[i])
 	{
-		temp = ft_strjoin(split_path[i], "/");
-		ret = ft_strjoin(temp, cmd);
-		free(temp);
+		tmp = ft_calloc(ft_strlen(split_path[i]) + 1, sizeof(char));
+		tmp = ft_strjoin(split_path[i], "/");
+		ret = ft_strjoin(tmp, cmd);
+		free(tmp);
 		if (access(ret, X_OK) == 0)
 			return (ret);
 		free (ret);
@@ -86,8 +88,6 @@ void	exec_builtin(char *builtin, char **argv, char ***envp)
         unset(argv, envp);
     else if (ft_strncmp(builtin, "env", ft_strlen(builtin)) == 0)
         env(*envp);
-    else if (ft_strncmp(builtin, "exit", ft_strlen(builtin)) == 0)
-        ms_exit();
     else if (ft_strncmp(builtin, "echo", ft_strlen(builtin)) == 0)
        echo(argv);
 	else if (ft_strncmp(builtin, "cd", ft_strlen(builtin)) == 0)
@@ -97,35 +97,11 @@ void	exec_builtin(char *builtin, char **argv, char ***envp)
 void	exec_command(char *command, char **argv, char ***envp)
 {
 	char	*path;
-	int		status;
-	pid_t	pid;
-	char	*builtin;
 	
-	builtin = is_builtin(command);
 	path = get_path(*envp, command);
-	if (builtin)
-		exec_builtin(builtin, argv, envp);
-	else
-	{
-		pid = fork();
-		if (pid == 0)
-		{
-			if (execve(path, argv, *envp) == -1)
-			{
-				printf("Minishell : command not found\n");
-				exit(0);
-			}	
-		}
-		else if (pid < 0)
-			return ;
-		else
-		{
-			wait(&status);
-			return ;
-		}
-		waitpid(pid, NULL, 0);
-	}
-	return ;
+	if (execve(path, argv, *envp) == -1)
+		ms_exit(command, NULL, errno);
+	ms_exit(command, NULL, errno);
 }
 
 

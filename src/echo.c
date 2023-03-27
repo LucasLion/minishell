@@ -6,13 +6,14 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 14:59:28 by llion             #+#    #+#             */
-/*   Updated: 2023/03/24 18:59:01 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/27 12:53:05 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 // TODO gerer le cas particulier du blackslash
+// PARSING A FAIRE
 
 void	print_tab_echo(char **tab, int i)
 {

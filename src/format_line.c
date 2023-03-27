@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 15:50:37 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/20 09:56:53 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/27 11:00:11 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int length_list(t_char *list)
 		}
 		return (i);
 	}
+    // HANDLE ERROR
 	else
 		return (0);
 }
@@ -43,6 +44,7 @@ char    *list_to_string(t_char *list)
     len = length_list(list);
     i = 0;
     ret = malloc(sizeof(char) * (len + 1));
+    // HANDLE ERROR
     if (ret == NULL)
         return (NULL); 
     while (i < len)
@@ -59,15 +61,18 @@ char    *format_line(char *line)
 {
     t_char *list;
     char *line_formated;
-    
+
+    // HANDLE ERROR
     if (verif_line(line))
         return (NULL);
     list = NULL;
+    // HANDLE ERROR
     if (!fill_list(line, &list))
     {
         clean_list_char(&list);
         return (NULL);
     }
+    // HANDLE ERROR
     if (!format_list(list))
     {
         clean_list_char(&list);
