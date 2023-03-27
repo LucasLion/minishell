@@ -136,9 +136,7 @@ void execute_one_command(t_command *list, t_pipe *pipe_info, char ***envp)
 int managing_pipe(t_command *list , char ***envp)
 {
     t_pipe pipe_info;
-    int i;
 
-    i = 0;
     pipe_info.nbr_of_pipes = 0;
     pipe_info.nbr_of_commands = length_list_command(list, &pipe_info.nbr_of_pipes);
     if (pipe_info.nbr_of_commands == 1)
