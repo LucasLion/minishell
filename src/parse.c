@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 15:03:31 by event             #+#    #+#             */
-/*   Updated: 2023/03/27 18:01:37 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/27 18:42:41 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int fill_list_command(char **tab, int *i, t_command **list, int *count)
     new->order = *count;
     new->next = NULL;
     // HANDLE ERROR
-    if (!lstadd_back_list_command(list, new ))
+    if (!lstadd_back_list_command(list, new))
         return (0);
     return (1);
 }
