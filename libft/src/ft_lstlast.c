@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_numlen.c                                        :+:      :+:    :+:   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llion <llion@student.42mulhouse.fr>        +#+  +:+       +#+        */
+/*   By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/22 13:06:42 by llion             #+#    #+#             */
-/*   Updated: 2022/11/23 11:45:46 by llion            ###   ########.fr       */
+/*   Created: 2022/11/10 14:14:43 by llion             #+#    #+#             */
+/*   Updated: 2022/11/10 17:54:05 by noil             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_numlen(unsigned int n)
+t_list	*ft_lstlast(t_list *lst)
 {
-	int	count;
-
-	count = 0;
-	while (n > 0)
+	if (lst)
 	{
-		n /= 10;
-		count++;
+		while (lst->next)
+		{
+			lst = lst->next;
+		}
 	}
-	return (count);
+	return (lst);
 }

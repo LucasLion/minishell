@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/28 13:02:58 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/28 14:15:55 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "../libft/libft.h"
+# include "../libft/include/libft.h"
 # include <pthread.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -116,15 +116,15 @@ void	free_tab3(char ***tab);
 /* -------------- BUILTINS -------------- */
 
 
-void	echo(char **argv);
-void	ms_exit(char *cmd, char *input, int status);
+int		echo(char **argv);
+int		ms_error(char *cmd, char *input, int error);
 void	signals();
 void	handle_sigint();
 void	write_error(char *cmd, char *input, int error_no);
-void	pwd();
+int		pwd();
 int		cd(char *input, char **envp);
-void    unset(char **argv, char ***envp);
-void    env(char **envp);
+int    unset(char **argv, char ***envp);
+int    env(char **envp);
 char 	*is_builtin(char *cmd);
 int		exec_builtin(char *builtin, char **argv, char ***envp, int *status);
 
@@ -146,7 +146,7 @@ void    split_and_print(char *line);
 
 /* -------------- EXPORT -------------- */
 
-void     ms_export(char **argv, char ***envp);
+int	     ms_export(char **argv, char ***envp);
 t_env    *create_var_list(char **envp);
 char     ***create_args_list(char **argv);
 char     ***create_env_list(char **envp, int env_len);

@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 16:12:49 by llion             #+#    #+#             */
-/*   Updated: 2023/03/27 14:15:00 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/28 14:14:12 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,8 @@ int  parse_arg(char *arg)
       i++;
    if (arg[i] == '=' && i == 0)
    {
-      ms_exit(arg, NULL, 1);
       //printf("export: %s: not a valid identifier\n", arg);
-      return (0);
+      return (ms_error(arg, NULL, 1));
    }
    else
       return (1);
@@ -128,11 +127,12 @@ char *extract_var(char *arg)
       end++;
    if (end == 0 && arg[end] == '=')
    {
-      //ms_exit(arg, NULL, errno);
       printf("export: %s: not a valid identifier\n", arg);
       return (NULL);
    }
    var = ft_calloc(end + 1, sizeof(char));
+   if (var == NULL)
+      return (NULL);
    while (arg[i] && arg[i] != '=')
    {
       var[i] = arg[i];
@@ -146,7 +146,7 @@ char *extract_val(char *arg)
 {
    int   i;
    int   j;
-   char  *var;
+   char  *val;
 
    i = 0;
    j = 0;
@@ -154,16 +154,18 @@ char *extract_val(char *arg)
       i++;
    if (arg[i] == '\0')
       return (NULL);
-   var = ft_calloc(ft_strlen(arg) - i + 1, sizeof(char));
+   val = ft_calloc(ft_strlen(arg) - i + 1, sizeof(char));
+   if (val == NULL)
+      return (NULL);
    i++;
    while (arg[i])
    {
-      var[j] = arg[i];
+      val[j] = arg[i];
       i++;
       j++;
    }
-   var[j] = '\0';
-   return (var);
+   val[j] = '\0';
+   return (val);
 }
 
 int   check_if_variable(char *arg, char **envp)
@@ -285,7 +287,7 @@ char  **edit_variable(char *arg, char **envp)
       return (envp);
 }
 
-void   ms_export(char **argv, char ***envp)
+int   ms_export(char **argv, char ***envp)
 {
    int   flag;
    int   i;
@@ -312,7 +314,7 @@ void   ms_export(char **argv, char ***envp)
             {
                *envp = edit_variable(argv[i], *envp);
                if (*envp == NULL)
-                  return ;
+                  return (ms_error("export", NULL, errno));
             }
          }
          i++;
@@ -320,4 +322,5 @@ void   ms_export(char **argv, char ***envp)
       flag = 0;
       i++;
    }
+   return (0);
 }

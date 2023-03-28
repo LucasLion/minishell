@@ -6,7 +6,7 @@
 #    By: amouly <amouly@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 15:27:43 by llion             #+#    #+#              #
-#    Updated: 2023/03/27 15:45:18 by llion            ###   ########.fr        #
+#    Updated: 2023/03/28 13:54:08 by llion            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,24 +52,23 @@ objs/%.o : src/%.c
 
 ${NAME} : ${OBJS} 
 	@make -sC libft
-	@echo "----> libft COMPILED"
 	@gcc  ${FLAGS} ${OBJS} ${LIBFT} ${READLINE} ${HEADERS} -o ${NAME}	
-	@echo "----> minishell COMPILED"
+	@echo "-----> minishell        \033[32mCOMPILED\033[0m"
 	
 
 debug : ${OBJS} ${OBJBONUS} 
-	make -C libft
-	gcc ${FLAGS} ${OBJS} ${LIBFT} ${HEADERS} -fsanitize=address -o ${NAME}  ${READLINE}
+	@make -sC libft
+	@gcc ${FLAGS} ${OBJS} ${LIBFT} ${HEADERS} -fsanitize=address -o ${NAME}  ${READLINE}
+	@echo "-----> minishell \033[31m(DEBUG)\033[32mCOMPILED\033[0m"
 
 clean :
 	@rm -f ${OBJS} objs/%.o ${OBJBONUS} 
-	@echo "----> objects REMOVED"
+	@echo "-----> objects          \033[32mREMOVED\033[0m"
 	@make clean -sC libft
-	@echo "----> libft REMOVED"
 
 fclean : clean
 	@rm -rf ${NAME} *.dSYM
 	@make fclean -sC libft
-	@echo "----> Everything is GONE"
+	@echo "-----> minishell        \033[32mREMOVED\033[0m"
 
 re : fclean all

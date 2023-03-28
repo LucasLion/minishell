@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/28 13:07:49 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/28 14:16:44 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,17 +91,17 @@ int	exit_shell(int status)
 int	exec_builtin(char *builtin, char **argv, char ***envp, int *status)
 {
     if (ft_strncmp(builtin, "pwd", ft_strlen(builtin)) == 0)
-        pwd();
+        *status = pwd();
     else if (ft_strncmp(builtin, "export", ft_strlen(builtin)) == 0)
-		ms_export(argv, envp);
+		*status = ms_export(argv, envp);
     else if (ft_strncmp(builtin, "unset", ft_strlen(builtin)) == 0)
-        unset(argv, envp);
+        *status = unset(argv, envp);
     else if (ft_strncmp(builtin, "exit", ft_strlen(builtin)) == 0)
-        exit_shell(*status);
+        *status = exit_shell(*status);
     else if (ft_strncmp(builtin, "env", ft_strlen(builtin)) == 0)
-        env(*envp);
+        *status = env(*envp);
     else if (ft_strncmp(builtin, "echo", ft_strlen(builtin)) == 0)
-       echo(argv);
+		*status = echo(argv);
 	else if (ft_strncmp(builtin, "cd", ft_strlen(builtin)) == 0)
 		*status = cd(argv[1], *envp);
 	return (*status % 255);
@@ -113,7 +113,7 @@ void	exec_command(char *command, char **argv, char ***envp)
 	
 	path = get_path(*envp, command);
 	if (execve(path, argv, *envp) == -1)
-		ms_exit(command, NULL, errno);
+		ms_error(command, NULL, errno);
 	exit_shell(errno);
 }
 

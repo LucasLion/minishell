@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
+/*   By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 14:15:25 by llion             #+#    #+#             */
-/*   Updated: 2023/03/11 11:57:41 by amouly           ###   ########.fr       */
+/*   Updated: 2022/11/10 13:26:42 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
+#include <stdio.h>
 #include <string.h>
 #include "libft.h"
 

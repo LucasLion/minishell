@@ -6,7 +6,7 @@
 /*   By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 18:33:35 by llion             #+#    #+#             */
-/*   Updated: 2023/03/28 13:01:17 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/28 14:15:53 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,6 @@ int	cd(char *input, char **envp)
 	else 
 		id = chdir(input);
 	if (id != 0)
-	{
-		ms_exit("cd", input, errno);
-		return (errno);
-	}
+		return (ms_error("cd", input, errno));
 	return (0);
 }
