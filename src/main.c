@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 14:55:57 by llion             #+#    #+#             */
-/*   Updated: 2023/03/27 18:42:35 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/28 10:53:36 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
         parse_input(input, &list_of_command);
 		managing_pipe(list_of_command, &envp);
         clean_list_command(&list_of_command);	
-	}	
+	}	git
 }*/
 
 void init_core(t_core *minishell)
@@ -50,12 +50,6 @@ void init_core(t_core *minishell)
 	minishell->list_of_command = NULL;
 	//minishell->input = readline(C"M"G"i"Y"n"B"i"P"s"C"h"RO"e"G"l"Y"l"B" $ " N);
 	minishell->input = readline("Minishell> ");
-	//int i = 0;
-	//while (minishell->input[i])
-	//{
-	//	printf("%c ", minishell->input[i]);
-	//	i++;
-	//}
 	add_history(minishell->input);
 }
 
@@ -72,9 +66,8 @@ int main(int argc, char **argv, char **env)
 	while (1)
 	{
 		init_core(&minishell);
-        parse_input(&minishell);
-		managing_pipe(&minishell);
+        if ((parse_input(&minishell)))
+			managing_pipe(&minishell);
         clean_list_command(&(minishell.list_of_command));
-
 	}	
 }

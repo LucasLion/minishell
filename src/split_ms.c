@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 08:04:32 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/27 18:48:57 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/28 10:52:57 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,18 +144,19 @@ int	fill_tab_split_ms(char **tab, char const *s)
 char	**ft_split_ms(char const *s)
 {
 	char	**tab;
-	//int i;
-	//int b;
+	int i;
+	int b;
 
-	//i = 0;
-	//b = 0;
-	/*while (s[i])
+	i = 0;
+	b = 0;
+	while (s[i])
 	{
-		printf("%c ", s[i] );
+		if (s[i] != ' ' && s[i] != '\t' )
+			b = 1;
 		i++; 
 	}
 	if (s == NULL || b == 0) 
-		return (NULL);*/
+		return (NULL);
 	tab = malloc(sizeof( int*) * (count_word_ms(s) + 1));
 	if (tab == NULL)
 		return (NULL);
