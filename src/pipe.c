@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:22:46 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/27 18:44:40 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/28 13:03:12 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int child_process(t_pipe *pipe_info, int **fd, char **envp)
 }
 
 
-int managing_fork(t_core *minishell, t_pipe *pipe_info, int **fd )
+int managing_fork(t_core *minishell, t_pipe *pipe_info, int **fd)
 {
     t_command *temp = minishell->list_of_command;
 
@@ -101,13 +101,16 @@ int managing_fork(t_core *minishell, t_pipe *pipe_info, int **fd )
     return (0);
 }
 
+void    wait_proof(t_core *minishell)
+{
+    int status;
+    wait(&status);
+    if (WIFEXITED(status))
+        minishell->last_status = WEXITSTATUS(status) % 255;
+}
+
 void execute_one_command(t_core *minishell, t_pipe *pipe_info)
 {
-    //if (list == NULL || list->command == NULL)
-    //    return ;
-    //pipe_info->cmd = copy_string(list->command->string, *envp); 
-    //pipe_info->tab_arg = list_to_tab(list->command, *envp);
-    //if (init_fd(list, pipe_info) != 0)
     pipe_info->cmd = copy_string(minishell->list_of_command->command->string, minishell->envp, minishell->last_status); 
     pipe_info->tab_arg = list_to_tab(minishell->list_of_command, minishell->envp, minishell->last_status);
     if (init_fd(minishell->list_of_command, pipe_info) != 0)
@@ -128,16 +131,12 @@ void execute_one_command(t_core *minishell, t_pipe *pipe_info)
                 dup2(pipe_info->fd_output, STDOUT_FILENO);
                 close (pipe_info->fd_output);
             } 
-            //exec_command(pipe_info->cmd, pipe_info->tab_arg, envp);
             exec_command(pipe_info->cmd, pipe_info->tab_arg, &(minishell->envp));
-            //ms_exit(pipe_info->cmd, NULL, errno);
         }
-        waitpid(pid, NULL, 0);
+        wait_proof(minishell);
     }
     else
-        exec_builtin(is_builtin(pipe_info->cmd), pipe_info->tab_arg, &(minishell->envp));
-    // CHANGE RETURN
-    return ;
+        exec_builtin(is_builtin(pipe_info->cmd), pipe_info->tab_arg, &(minishell->envp), &minishell->last_status);
 }
 
 
