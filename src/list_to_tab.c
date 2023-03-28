@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 09:45:36 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/27 18:49:39 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/28 11:27:27 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,13 +171,6 @@ char *copy_string(char *string_list, char **envp, int status)
 {
     t_copy_string cs;
     
-    //i = 0;
-    //j = 0;
-    //flag = 0;
-    //ret = ft_calloc(count_char(string_list, envp) + 1, sizeof(char));
-    //if (ret == NULL)
-    //    return (NULL);
-    //while(string_list[i])
     cs.i = 0;
     cs.j = 0;
     cs.flag = 0;

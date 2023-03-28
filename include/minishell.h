@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/27 18:39:07 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/28 13:02:58 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ typedef struct s_command
 typedef struct s_core
 {
 	t_command 		*list_of_command;
-	int 			last_status;
+	int				last_status;
 	int				pid;
 	char			*input;
 	char			**envp;
@@ -117,16 +117,16 @@ void	free_tab3(char ***tab);
 
 
 void	echo(char **argv);
-int		ms_exit(char *cmd, char *input, int status);
+void	ms_exit(char *cmd, char *input, int status);
 void	signals();
 void	handle_sigint();
 void	write_error(char *cmd, char *input, int error_no);
 void	pwd();
-void	cd(char *input, char **envp);
+int		cd(char *input, char **envp);
 void    unset(char **argv, char ***envp);
 void    env(char **envp);
 char 	*is_builtin(char *cmd);
-void	exec_builtin(char *builtin, char **argv, char ***envp);
+int		exec_builtin(char *builtin, char **argv, char ***envp, int *status);
 
 /* -------------- VERIF_LINE -------------- */
 

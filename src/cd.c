@@ -6,7 +6,7 @@
 /*   By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 18:33:35 by llion             #+#    #+#             */
-/*   Updated: 2023/03/27 12:50:02 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/28 13:01:17 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*create_absolute_path(char *input, char **envp)
 	return (parsed);
 }
 
-void	cd(char *input, char **envp)
+int	cd(char *input, char **envp)
 {
 	int		id;
 	char	*abs_path;
@@ -65,12 +65,16 @@ void	cd(char *input, char **envp)
 	{
 		abs_path = create_absolute_path(input, envp);
 		if (abs_path == NULL)
-			return ;
+			return (errno);
 		id = chdir(abs_path);
 		free(abs_path);
 	}
 	else 
 		id = chdir(input);
 	if (id != 0)
+	{
 		ms_exit("cd", input, errno);
+		return (errno);
+	}
+	return (0);
 }
