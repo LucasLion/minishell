@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 16:12:49 by llion             #+#    #+#             */
-/*   Updated: 2023/03/28 14:14:12 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/28 16:48:50 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,8 @@ char **sort_tab(char **tab, int size)
 			j++;
         }
         tmp = sorted_tab[i];
-        sorted_tab[i] = sorted_tab[min];
+        sorted_tab[i++] = sorted_tab[min];
         sorted_tab[min] = tmp;
-		i++;
     }
     return (sorted_tab);
 }

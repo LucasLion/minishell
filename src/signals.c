@@ -6,7 +6,7 @@
 /*   By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 14:24:52 by llion             #+#    #+#             */
-/*   Updated: 2023/03/28 14:55:21 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/28 15:25:54 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,6 @@ void	sigint()
 
 void	signals()
 {
-	struct sigaction sa;
-
-	sa.sa_handler = &sigint; 
-	sa.sa_flags = SA_RESTART;
-	sigaction(SIGINT, &sa, NULL);
+	signal(SIGINT, sigint);
+	signal(SIGQUIT, SIG_IGN);
 }
