@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 14:55:57 by llion             #+#    #+#             */
-/*   Updated: 2023/03/27 18:22:55 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/28 10:49:45 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,6 @@ void init_core(t_core *minishell)
 	minishell->list_of_command = NULL;
 	//minishell->input = readline(C"M"G"i"Y"n"B"i"P"s"C"h"RO"e"G"l"Y"l"B" $ " N);
 	minishell->input = readline("Minishell> ");
-	//int i = 0;
-	//while (minishell->input[i])
-	//{
-	//	printf("%c ", minishell->input[i]);
-	//	i++;
-	//}
 	add_history(minishell->input);
 }
 
@@ -69,9 +63,8 @@ int main(int argc, char **argv, char **env)
 	while (1)
 	{
 		init_core(&minishell);
-        parse_input(&minishell);
-		managing_pipe(&minishell);
+        if ((parse_input(&minishell)))
+			managing_pipe(&minishell);
         clean_list_command(&(minishell.list_of_command));
-
 	}	
 }
