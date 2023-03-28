@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:23:30 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/28 14:17:20 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/28 14:23:01 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,3 +106,44 @@ int init_fd(t_command *list, t_pipe *pipe_info)
     return (0);
 }
 
+void redir_execve(t_core *minishell, t_pipe *pipe_info)
+{
+    int pid;
+    pid = fork();
+    if (pid == 0)
+    {
+        if (pipe_info->fd_input != 0)
+        {    
+            dup2(pipe_info->fd_input, STDIN_FILENO);
+            close (pipe_info->fd_input);
+        }
+        if (pipe_info->fd_output != 1)
+        {
+            dup2(pipe_info->fd_output, STDOUT_FILENO);
+            close (pipe_info->fd_output);
+        } 
+        exec_command(pipe_info->cmd, pipe_info->tab_arg, &(minishell->envp));
+    }
+    wait_proof(minishell);
+}
+
+void redir_builtin(t_core *minishell, t_pipe *pipe_info)
+{
+    int pid;
+    pid = fork();
+    if (pid == 0)
+    {
+        if (pipe_info->fd_input != 0)
+        {    
+            dup2(pipe_info->fd_input, STDIN_FILENO);
+            close (pipe_info->fd_input);
+        }
+        if (pipe_info->fd_output != 1)
+        {
+            dup2(pipe_info->fd_output, STDOUT_FILENO);
+            close (pipe_info->fd_output);
+        } 
+        exec_builtin(pipe_info->cmd, pipe_info->tab_arg, &(minishell->envp), &minishell->last_status);
+    }
+    wait_proof(minishell);
+}
