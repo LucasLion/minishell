@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_tablen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
+/*   By: llion <llion@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/01 13:20:00 by llion             #+#    #+#             */
-/*   Updated: 2023/03/14 12:36:34 by llion            ###   ########.fr       */
+/*   Created: 2023/03/27 23:23:40 by llion             #+#    #+#             */
+/*   Updated: 2023/03/28 00:33:04 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *s)
+int	ft_tablen(char **tab)
 {
-	int	count;
+	int	i;
 
-	count = 0;
-	while (*s != '\0')
-	{
-		s++;
-		count++;
-	}
-	return (count);
+	i = 0;
+	while (tab[i])
+		i++;
+	return (i);
 }

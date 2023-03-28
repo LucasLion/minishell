@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_numlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+        */
+/*   By: llion <llion@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/10 10:44:11 by llion             #+#    #+#             */
-/*   Updated: 2023/03/06 14:22:46 by llion            ###   ########.fr       */
+/*   Created: 2022/11/22 13:06:42 by llion             #+#    #+#             */
+/*   Updated: 2023/03/27 23:35:08 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstnew(void *content)
+int	ft_numlen(unsigned int n)
 {
-	t_list	*element;
+	int	count;
 
-	element = (malloc(sizeof(t_list)));
-	if (element == 0)
-		return (0);
-	element->content = content;
-	element->next = 0;
-	return (element);
+	count = 0;
+	while (n > 0)
+	{
+		n /= 10;
+		count++;
+	}
+	return (count);
 }

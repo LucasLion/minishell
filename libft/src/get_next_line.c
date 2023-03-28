@@ -6,7 +6,7 @@
 /*   By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 13:56:46 by llion             #+#    #+#             */
-/*   Updated: 2023/02/01 17:20:09 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/28 00:27:49 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,26 @@
 
 char	*get_next_line(int fd)
 {
-	static t_gnl_list		*tank = NULL;
-	char					*line;
+	static t_gnl_list	*tank[4096];
+	char				*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &line, 0) < 0)
 	{
-		free_tank(tank, 1);
-		tank = NULL;
+		free_tank(tank[fd], 1);
+		tank[fd] = NULL;
 		return (NULL);
 	}
 	line = NULL;
-	read_and_fill_tank(&(tank), fd);
-	if (tank == NULL)
+	read_and_fill_tank(&(tank[fd]), fd);
+	if (tank[fd] == NULL)
 		return (NULL);
-	line = extract_and_fill_line(tank);
-	clean_tank(&(tank));
+	line = extract_and_fill_line(tank[fd]);
+	clean_tank(&(tank[fd]));
 	if (!line)
 	{
-		free(tank->content);
-		free(tank);
-		tank = NULL;
+		free(tank[fd]->content);
+		free(tank[fd]);
+		tank[fd] = NULL;
 	}
 	return (line);
 }

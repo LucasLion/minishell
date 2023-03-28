@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 14:21:07 by llion             #+#    #+#             */
-/*   Updated: 2023/03/28 12:20:08 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/28 14:10:37 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,35 +36,41 @@ void	write_error(char *cmd, char *input, int error_no)
 	write(STDERR_FILENO, "\n", 2);
 }
 
-void	ms_exit(char *cmd, char *input, int status)
+int	ms_error(char *cmd, char *input, int error)
 {
-	char *error;
+	char *str_error;
 
 	printf("MS_EXIT\n");
-	error = strerror(status);
-	(void)error;
-	if (status == 14)
-		printf("Minishell : command not found hihi / erreur %d \n", status);
-	else if (status == 1)
+	str_error = strerror(error);
+	if (error == 14)
+		printf("Minishell : command not found hihi / erreur %d \n", error);
+	else if (error == 1)
 		printf("export: %s: not a valid identifier\n", cmd);
 	else
-		write_error(cmd, input, status);
+		write_error(cmd, input, error);
+	return (errno);
 }
 
-void	pwd()
+int	pwd()
 {
 	char buffer[1024];
 
 	if (getcwd(buffer, sizeof(buffer)) == NULL)
-		ms_exit(NULL, NULL, errno);
+		return (ms_error(NULL, NULL, errno));
 	printf("%s\n", buffer);
+	return (0);
 }
 
-void    env(char **envp)
+int env(char **envp)
 {
     int i;
 
     i = 0;
     while (envp[i])
+	{
+		if (envp[i] == NULL)
+			return (ms_error("env", NULL, errno));
         printf("%s\n", envp[i++]);
+	}
+	return (0);
 }
