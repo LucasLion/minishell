@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:22:46 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/28 13:03:12 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/28 14:19:55 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,28 +115,12 @@ void execute_one_command(t_core *minishell, t_pipe *pipe_info)
     pipe_info->tab_arg = list_to_tab(minishell->list_of_command, minishell->envp, minishell->last_status);
     if (init_fd(minishell->list_of_command, pipe_info) != 0)
         return ; 
-    if (is_builtin(pipe_info->cmd) == NULL || ft_strncmp(is_builtin(pipe_info->cmd), "echo",5) == 0)
-    {
-        int pid;
-        pid = fork();
-        if (pid == 0)
-        {
-            if (pipe_info->fd_input != 0)
-            {    
-                dup2(pipe_info->fd_input, STDIN_FILENO);
-                close (pipe_info->fd_input);
-            }
-            if (pipe_info->fd_output != 1)
-            {
-                dup2(pipe_info->fd_output, STDOUT_FILENO);
-                close (pipe_info->fd_output);
-            } 
-            exec_command(pipe_info->cmd, pipe_info->tab_arg, &(minishell->envp));
-        }
-        wait_proof(minishell);
-    }
+    if (is_builtin(pipe_info->cmd) == NULL)
+        redir_execve(minishell, pipe_info);
+    if ( ft_strncmp(pipe_info->cmd, "echo",5) == 0)
+        redir_builtin(minishell, pipe_info);
     else
-        exec_builtin(is_builtin(pipe_info->cmd), pipe_info->tab_arg, &(minishell->envp), &minishell->last_status);
+        exec_builtin(pipe_info->cmd, pipe_info->tab_arg, &(minishell->envp), &minishell->last_status);
 }
 
 

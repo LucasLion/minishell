@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/28 13:02:58 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/28 14:11:51 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,7 +246,7 @@ void    child_last_pipe(t_pipe *pipe_info, int **fd, char **envp);
 void    child_middle_pipe(t_pipe *pipe_info, int **fd, char **envp);
 int 	child_process(t_pipe *pipe_info, int **fd, char **envp);
 int 	managing_fork(t_core *minishell, t_pipe *pipe_info, int **fd);
-//void 	execute_one_command(t_command *list, t_pipe *pipe_info, char ***envp);
+void    wait_proof(t_core *minishell);
 void 	execute_one_command(t_core *minishell, t_pipe *pipe_info);
 int 	managing_pipe(t_core *minishell);
 
@@ -257,6 +257,8 @@ int 	handle_del(t_string *list, t_pipe *pipe_info);
 int 	find_input(t_string *input, t_pipe *pipe_info);
 int 	find_output(t_string *output);
 int		init_fd(t_command *list, t_pipe *pipe_info);
+void 	redir_execve(t_core *minishell, t_pipe *pipe_info);
+void 	redir_builtin(t_core *minishell, t_pipe *pipe_info);
 
 
 #endif
