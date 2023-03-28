@@ -6,7 +6,7 @@
 #    By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/27 19:07:53 by llion             #+#    #+#              #
-#    Updated: 2023/03/28 13:55:44 by llion            ###   ########.fr        #
+#    Updated: 2023/03/28 16:05:48 by llion            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -107,7 +107,6 @@ $(NAME):	$(OBJS)
 
 clean:		
 			@$(RM) $(OBJS) objs/%.o
-			#@echo "-----> librairy objects \033[32mREMOVED\033[0m"
 
 fclean:		clean
 			@$(RM) $(NAME)

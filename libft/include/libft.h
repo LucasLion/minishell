@@ -6,7 +6,7 @@
 /*   By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 10:14:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/28 00:25:19 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/28 16:20:09 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,5 +114,13 @@ void		ft_lst_add_back(t_gnl_list **lst, int lu, char *buff);
 void		free_tank(t_gnl_list *tank, int index);
 int			len(char *str);
 t_gnl_list	*ft_lstlast_gnl(t_gnl_list *tank);
+
+/*  --------- FREE ---------  */
+
+void		ft_freetab(char **tab);
+
+/*  --------- TABS ---------  */
+
+int			ft_tablen(char **tab);
 
 #endif

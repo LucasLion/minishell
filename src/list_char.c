@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 11:19:41 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/27 11:02:05 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/28 15:37:59 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int fill_list(char *line, t_char **list)
     t_char *new;
 
     i = 0;
-    while(line[i])
+    while(line && line[i])
     {
         new = malloc(sizeof(t_char));
         // HANDLE ERROR
