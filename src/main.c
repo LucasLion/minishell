@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 14:55:57 by llion             #+#    #+#             */
-/*   Updated: 2023/03/28 10:49:45 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/28 10:53:36 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,19 @@
     // HANDLE ERROR
 	if (argc != 1)
         return (0);
+	rl_readline_name = "minishell";
 	envp = copy_tab(env);
 	while (1)
 	{
 		list_of_command = NULL;
-		input = readline(C"M"G"i"Y"n"B"i"P"s"C"h"RO"e"G"l"Y"l"B" $ " N);
+		//input = readline(C"M"G"i"Y"n"B"i"P"s"C"h"RO"e"G"l"Y"l"B" $ " N);
+		input = readline("Minishell$ " );
         add_history(input);
+		signals();
         parse_input(input, &list_of_command);
 		managing_pipe(list_of_command, &envp);
         clean_list_command(&list_of_command);	
-	}	
+	}	git
 }*/
 
 void init_core(t_core *minishell)

@@ -6,11 +6,11 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:23:30 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/27 13:53:11 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/27 18:45:32 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 int handle_del(t_string *list, t_pipe *pipe_info)
 {
@@ -90,13 +90,14 @@ int init_fd(t_command *list, t_pipe *pipe_info)
         pipe_info->fd_input = find_input(list->input, pipe_info);
         if (pipe_info->fd_input == -1)
         {
+            //write_error(NULL, list->input->string, errno);
             ms_exit(list->input->string, NULL, errno);
             return (1);
         }    
     }
     if (list->output == NULL)
         pipe_info->fd_output = STDOUT_FILENO;
-     else
+    else
     {
         pipe_info->fd_output = find_output(list->output);
         //if (fd_output == -1)

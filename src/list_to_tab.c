@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 09:45:36 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/27 17:51:42 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/27 18:49:39 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,11 @@ int count_size_env(char *string_list, int *i, char **envp, int status)
 void last_error(char *ret, int *j, int status)
 {
     char *err_itoa;
-    int len;
+    //int len;
     int b;
     
     err_itoa = ft_itoa(status);
-    len = ft_strlen(err_itoa);
+    //len = ft_strlen(err_itoa);
     b = 0;
     while(err_itoa[b])
     {
@@ -171,6 +171,13 @@ char *copy_string(char *string_list, char **envp, int status)
 {
     t_copy_string cs;
     
+    //i = 0;
+    //j = 0;
+    //flag = 0;
+    //ret = ft_calloc(count_char(string_list, envp) + 1, sizeof(char));
+    //if (ret == NULL)
+    //    return (NULL);
+    //while(string_list[i])
     cs.i = 0;
     cs.j = 0;
     cs.flag = 0;
@@ -203,10 +210,12 @@ char **list_to_tab(t_command *list, char **envp, int status )
     int len;
     char **ret;
     int i;
-    t_string *temp;
+    t_string *tmp;
 
-    temp = list->command;
-    len = length_list_string(temp);
+    //tmp = list;
+    //len = length_list_string(list);
+    tmp = list->command;
+    len = length_list_string(tmp);
     i = 0;
     ret = malloc(sizeof(char *) * (len + 1));
     // HANDLE ERROR
@@ -214,9 +223,10 @@ char **list_to_tab(t_command *list, char **envp, int status )
         return (NULL); 
     while (i < len)
     {
-        ret[i] = copy_string(temp->string, envp, status);
+        //ret[i] = copy_string(tmp->string, envp);
+        ret[i] = copy_string(tmp->string, envp, status);
         i++;
-        temp = temp->next;
+        tmp = tmp->next;
     }
     ret[i] = 0;
     return (ret);
