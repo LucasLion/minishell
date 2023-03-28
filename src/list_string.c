@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 11:19:41 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/27 16:14:09 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/28 17:02:28 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	lstadd_back_list_string(t_string **list, t_string *new)
 {
 	t_string      *temp;
 
-    // HANDLE ERROR
 	if (list == NULL && new == NULL)
 		return (0);
 	if ((*list) == NULL)
@@ -37,8 +36,6 @@ int	lstadd_back_list_string(t_string **list, t_string *new)
 	return (1);
 }
 
-
-
 int fill_list_string(char *str, t_string **list)
 {
     t_string *new;
@@ -46,12 +43,11 @@ int fill_list_string(char *str, t_string **list)
 
     i = 0;    
     new = malloc(sizeof(t_string));
-    // HANDLE ERROR
     if (new == NULL)
         return (0);
-    // cleaan la liste si il y a un souci
     new->string = malloc(sizeof(char) * (ft_strlen(str) + 1));
-    // clean nul
+    if (new->string == NULL)
+        return (0);
     while(str[i])
     {    
         new->string[i] = str[i];
@@ -60,10 +56,8 @@ int fill_list_string(char *str, t_string **list)
     new->string[i] = '\0';
     new->append_or_heredoc = 0;
     new->next = NULL;
-    // HANDLE ERROR
     if (!lstadd_back_list_string(list, new ))
             return (0);
-    // cleaan la liste si il y a un souci
     return (1);
 }
 
@@ -74,12 +68,11 @@ int fill_list_string_append_or_heredoc(char *str, t_string **list)
 
     i = 0;    
     new = malloc(sizeof(t_string));
-    // HANDLE ERROR
     if (new == NULL)
         return (0);
-    // cleaan la liste si il y a un souci
     new->string = malloc(sizeof(char) * (ft_strlen(str) + 1));
-    // clean nul
+    if (new->string == NULL)
+        return (0);
     while(str[i])
     {    
         new->string[i] = str[i];
@@ -88,10 +81,8 @@ int fill_list_string_append_or_heredoc(char *str, t_string **list)
     new->string[i] = '\0';
     new->append_or_heredoc = 1;
     new->next = NULL;
-    // HANDLE ERROR
     if (!lstadd_back_list_string(list, new ))
             return (0);
-    // cleaan la liste si il y a un souci
     return (1);
 }
 
@@ -101,7 +92,6 @@ void print_list_string_from_head(t_string *list)
     t_string    *head;
     
     head = list;
-    // HANDLE ERROR
     if (head == NULL)
     {
         printf("NULL\n");
@@ -124,7 +114,6 @@ void print_list_string_from_head_command(t_string *list)
     
     head = list;
     command = 0;
-    // HANDLE ERROR
     if (head == NULL)
     {
         printf("NULL\n");

@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 11:19:41 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/27 18:40:18 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/28 16:15:58 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	lstadd_back_list_command(t_command **list, t_command *new)
 {
 	t_command      *temp;
 
-    // HANDLE ERROR
 	if (list == NULL && new == NULL)
 		return (0);
 	if ((*list) == NULL)
@@ -45,38 +44,6 @@ int	lstadd_back_list_command(t_command **list, t_command *new)
         new->previous = temp;
 	}
 	return (1);
-}
-
-void print_list_command_from_head(t_command *list)
-{
-    t_command *head;
-    
-    head = list;
-    // HANDLE ERROR
-    if (head == NULL)
-    {
-        printf("NULL\n");
-        return ;
-    }
-    while (head)
-    {
-        printf("Commande num %d\n", head->order);
-        printf("COMMANDE OPTIONS ET ARGUMENTS : \n");
-        print_list_string_from_head_command(head->command);
-        if (head->redir_input == 1)
-        {
-            printf("LIST DES INPUT : \n");    
-            print_list_string_from_head(head->input);
-        }
-        if (head->redir_output == 1)
-        {
-            printf("LIST DES OUTPUT : \n");
-            print_list_string_from_head(head->output);
-        }
-        if (head->pipe_after == 1)
-            printf("---PIPE NUM %d----\n", head->order);
-        head = head->next;
-    }
 }
 
 int length_list_command(t_command *list, int *nb_of_pipes)
