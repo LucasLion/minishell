@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/27 11:09:15 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/28 15:23:11 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		quotes_verif(char *str)
 	i = 0;
 	flag1 = 0;
 	flag2 = 0;
-	while (str[i])
+	while (str && str[i])
 	{
 		if (str[i] == '"' && flag1 == 0 && flag2 == 0)
 			flag1 = 1;

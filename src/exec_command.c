@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/28 14:16:44 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/28 16:02:45 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,16 +76,6 @@ char *is_builtin(char *cmd)
         return ("exit");
     else
         return (NULL);
-}
-
-int	exit_shell(int status)
-{
-	exit(status % 255);
-	if (WIFEXITED(status))
-		return (WEXITSTATUS(status));
-	else if (WIFSIGNALED(status))
-		return (WTERMSIG(status));
-	return (EXIT_SUCCESS);
 }
 
 int	exec_builtin(char *builtin, char **argv, char ***envp, int *status)

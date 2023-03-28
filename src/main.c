@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 14:55:57 by llion             #+#    #+#             */
-/*   Updated: 2023/03/28 13:07:48 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/28 16:30:24 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int main(int argc, char **argv, char **env)
 		signals();
 		init_core(&minishell);
         if ((parse_input(&minishell)))
-			managing_pipe(&minishell);
+			execute(&minishell);
         clean_list_command(&(minishell.list_of_command));
 	}	
 }

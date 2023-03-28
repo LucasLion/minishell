@@ -6,13 +6,12 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 11:51:24 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/27 12:51:32 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/28 16:00:06 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-// TODO PLUS TARD GERER LES RETURNS AVEC LES LEAKS
 void	clean_list_char(t_char **list)
 {
 	t_char	*next;
@@ -33,7 +32,6 @@ void	clean_list_string(t_string **list)
 	t_string	*next;
 
 	next = NULL;
-	// HANDLE ERROR
 	if (list == NULL)
 		return ;
 	while (*list)
@@ -50,7 +48,6 @@ void	clean_list_command(t_command **list)
 	t_command	*next;
 
 	next = NULL;
-	// HANDLE ERROR
 	if (list == NULL)
 		return ;
 	while (*list)

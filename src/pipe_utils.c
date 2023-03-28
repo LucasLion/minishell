@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:22:46 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/27 11:06:52 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/28 16:27:30 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int **create_pipes(int nb_of_pipes, int **fd)
     }
     return (fd);
 }
+
 void close_fd_everyhing(int **fd, int nbr_of_pipes)
 {
     int i;
@@ -40,6 +41,7 @@ void close_fd_everyhing(int **fd, int nbr_of_pipes)
         i++;
     }
 }
+
 void close_fd_everyhing_but_one(int **fd, int nbr_of_pipes, int a, int b)
 {
     int i;
@@ -54,6 +56,7 @@ void close_fd_everyhing_but_one(int **fd, int nbr_of_pipes, int a, int b)
         i++;
     }
 }
+
 void close_fd_everyhing_but_two(int **fd, int nbr_of_pipes, int read, int write)
 {
     int i;
@@ -68,9 +71,6 @@ void close_fd_everyhing_but_two(int **fd, int nbr_of_pipes, int read, int write)
         i++;
     }
 }
-
-
-
 
 void wait_all_pid(int *pid, int nbr_of_command)
 {

@@ -6,7 +6,7 @@
 #    By: amouly <amouly@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 15:27:43 by llion             #+#    #+#              #
-#    Updated: 2023/03/28 13:54:08 by llion            ###   ########.fr        #
+#    Updated: 2023/03/28 17:06:39 by amouly           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,29 +17,37 @@ READLINE = -lreadline -L ~/.brew/opt/readline/lib
 LIBFT = ./libft/libft.a
 HEADERS = -I include -I libft -I ~/.brew/opt/readline/include
 
-SOURCES = 	memory_utils.c	\
-			unset.c			\
-			main.c			\
-			verif_line.c	\
-			signals.c		\
-			split_ms.c 		\
+SOURCES = 	cd.c			\
+			clean_list.c	\
 			echo.c			\
-			pwd.c			\
-			cd.c			\
+			exec_command.c	\
+			execute.c		\
+			exit.c			\
 			export.c		\
-			list_char.c		\
+			export2.c		\
 			format_line.c	\
 			format_list.c	\
-			parse.c			\
-			pipe.c			\
-			list_string.c	\
+			list_char.c		\
 			list_command.c	\
-			clean_list.c	\
-			exec_command.c	\
+			list_string.c	\
 			list_to_tab.c	\
-			tab_utils.c		\
+			list_to_tab2.c	\
+			main.c			\
+			memory_utils.c	\
+			parse.c			\
+			pipe_utils.c	\
+			pipe.c			\
+			pwd_env.c		\
 			redir.c			\
-			pipe_utils.c
+			redir2.c		\
+			signals.c		\
+			split_ms.c 		\
+			split_ms2.c		\
+			tab_utils.c		\
+			unset.c			\
+			verif_line.c	\
+			
+			
 
 OBJS = ${addprefix objs/,${notdir ${SOURCES:.c=.o}}}
 

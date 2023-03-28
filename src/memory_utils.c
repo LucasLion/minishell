@@ -6,11 +6,12 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:07:46 by llion             #+#    #+#             */
-/*   Updated: 2023/03/27 11:04:23 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/28 17:06:16 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
 void	free_tab2(char **tab)
 {
 	int	i;
@@ -24,6 +25,7 @@ void	free_tab2(char **tab)
 	}
 	tab = NULL;
 }
+
 void	free_tab3(char ***tab)
 {
 	int	i;

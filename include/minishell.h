@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/28 14:22:39 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/28 17:01:51 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,85 +102,68 @@ typedef struct s_core
 	
 }					t_core;
 
-/* -------------- EXEC -------------- */
+/* -------------- CD.c -------------- */
+
+char 	*get_env_variable(char **envp, char *variable);
+char	*create_absolute_path(char *input, char **envp);
+int		cd(char *input, char **envp);
+
+/* -------------- CLEAN_LIST.c -------------- */
+
+void	clean_list_char(t_char **list);
+void	clean_list_string(t_string **list);
+void	clean_list_command(t_command **list);
+
+/* -------------- ECHO.c -------------- */
+
+int		print_tab_echo(char **tab, int i);
+int		echo(char **argv);
+
+/* -------------- EXEC_COMMAND.c -------------- */
 
 char	**get_path_split(char **envp);
-char    *get_path(char **envp, char *cmd);
-void	exec_command(char *command, char **argv, char ***envp);
-
-/* -------------- FREE -------------- */
-
-void	free_tab2(char **tab);
-void	free_tab3(char ***tab);
-
-/* -------------- BUILTINS -------------- */
-
-
-int		echo(char **argv);
-int		ms_error(char *cmd, char *input, int error);
-void	signals();
-void	handle_sigint();
-void	write_error(char *cmd, char *input, int error_no);
-int		pwd();
-int		cd(char *input, char **envp);
-int    unset(char **argv, char ***envp);
-int    env(char **envp);
+char	*get_path(char **envp, char *cmd);
 char 	*is_builtin(char *cmd);
 int		exec_builtin(char *builtin, char **argv, char ***envp, int *status);
+void	exec_command(char *command, char **argv, char ***envp);
 
-/* -------------- VERIF_LINE -------------- */
+/* -------------- EXECUTE.c -------------- */
 
-int		quotes_verif(char *str);
-int     verif_line(char *line);
+void 	execute_one_command(t_core *minishell, t_pipe *pipe_info);
+int 	execute(t_core *minishell);
 
-/* -------------- SPLIT_MS -------------- */
+/* -------------- EXIT.c -------------- */
 
-int     put_flag(char c, int flag);
-int	    count_word_ms(char const *str);
-int	    len_word(char const *str, int *pos);
-void	put_word(char const *str, int *pos, char *line_tab);
-int	    free_tab_ms_split(char **tab, int i);
-int	    fill_tab_split_ms(char **tab, char const *s);
-char    **ft_split_ms(char const *s);
-void    split_and_print(char *line);
+int		exit_shell(int status);
+void    wait_proof(t_core *minishell);
+void	write_error(char *cmd, char *input, int error_no);
+int		ms_error(char *cmd, char *input, int error);
 
-/* -------------- EXPORT -------------- */
+/* -------------- EXPORT.c -------------- */
 
-int	     ms_export(char **argv, char ***envp);
-t_env    *create_var_list(char **envp);
-char     ***create_args_list(char **argv);
-char     ***create_env_list(char **envp, int env_len);
-int      tab_len(char **envp);
-char     **sort_envp(char **envp);
-char	 **sort_tab(char **tab, int size);
-char	 *extract_var(char *arg);
-char	 *extract_val(char *arg);
+int  	parse_arg(char *arg);
+char 	**sort_tab(char **tab, int size);
+char  	*add_double_quotes(char *str);
+void  	display_export(char **envp);
+char 	*extract_var(char *arg);
 
+/* -------------- EXPORT2.c -------------- */
 
-/* -------------- LIST_CHAR.c -------------- */
+char 	*extract_val(char *arg);
+int   	check_if_variable(char *arg, char **envp);
+// TROP LONGUE
+char  	**add_new_variable(char *arg, char **envp);
+// TROP LONGUE
+char  	**edit_variable(char *arg, char **envp);
+// TROP LONGUE
+int   	ms_export(char **argv, char ***envp);
 
-int	    lstadd_back_ms(t_char **list, t_char *new);
-int     fill_list(char *line, t_char **list);
-void    print_list_from_head(t_char *list);
-void    print_list_from_bottom(t_char *list);
-int     insert_space_node(t_char *previous, t_char *next);
-int     insert_two_space(t_char *node);
-void    insert_space_everywhere(t_char **list);
+/* -------------- FORMAT_LINE.c -------------- */
 
-/* -------------- LIST_STRING.c -------------- */
-
-int		lstadd_back_list_string(t_string **list, t_string *new);
-int 	fill_list_string(char *str, t_string **list);
-int 	fill_list_string_append_or_heredoc(char *str, t_string **list);
-void 	print_list_string_from_head(t_string *list);
-void 	print_list_string_from_head_command(t_string *list);
-
-/* -------------- LIST_COMMAND.c -------------- */
-
-void    init_struct_command(t_command *list_of_command);
-int		lstadd_back_list_command(t_command **list, t_command *new);
-void 	print_list_command_from_head(t_command *list);
-int 	length_list_command(t_command *list, int *nb_of_pipes);
+int     length_list(t_char *list);
+char    *list_to_string(t_char *list);
+char    *format_line(char *line);
+void    print_input_after_formating(char *line_input);
 
 /* -------------- FORMAT_LIST.c -------------- */
 
@@ -190,12 +173,47 @@ int     format_chevron_inf(t_char *node);
 int     format_chevron_sup(t_char *node);
 int     format_list(t_char *list);
 
-/* -------------- FORMAT_LINE.c -------------- */
+ /* -------------- LIST_CHAR.c -------------- */
 
-int     length_list(t_char *list);
-char    *list_to_string(t_char *list);
-char    *format_line(char *line);
-void    print_input_after_formating(char *line_input);
+int	    lstadd_back_ms(t_char **list, t_char *new);
+int     fill_list(char *line, t_char **list);
+int     insert_space_node(t_char *previous, t_char *next);
+int     insert_two_space(t_char *node);
+
+/* -------------- LIST_COMMAND.c -------------- */
+
+void    init_struct_command(t_command *list_of_command);
+int		lstadd_back_list_command(t_command **list, t_command *new);
+int 	length_list_command(t_command *list, int *nb_of_pipes);
+
+/* -------------- LIST_STRING.c -------------- */
+
+int		lstadd_back_list_string(t_string **list, t_string *new);
+int 	fill_list_string(char *str, t_string **list);
+int 	fill_list_string_append_or_heredoc(char *str, t_string **list);
+void 	print_list_string_from_head(t_string *list);
+void 	print_list_string_from_head_command(t_string *list);
+
+/* -------------- LIST_TO_TAB.c -------------- */
+
+int 	length_list_string(t_string *list);
+int 	size_var(char *string_list, int *i);
+int 	count_size_env(char *string_list, int *i, char **envp, int status);
+void 	last_error(char *ret, int *j, int status);
+
+/* -------------- LIST_TO_TAB2.c -------------- */
+
+// TROP LONGUE
+void 	copy_env_var(char *string_list, char **envp, int status, t_copy_string *cs);
+// TROP LONGUE
+int 	count_char(char *string_list, char **envp, int status);
+char 	*copy_string(char *string_list, char **envp, int status);
+char 	**list_to_tab(t_command *list, char **envp, int status );
+
+/* -------------- MEMORY_UTILS.c -------------- */
+
+void	free_tab2(char **tab);
+void	free_tab3(char ***tab);
 
 /* -------------- PARSE.c -------------- */
 
@@ -203,33 +221,6 @@ void 	handle_chevrons(char **tab, int index, t_command *new);
 void 	find_command_until_pipe(char **tab, int *i,t_command *new);
 int 	fill_list_command(char **tab, int *i, t_command **list, int *count);
 int 	parse_input(t_core *minishell);
-
-/* -------------- CLEAN_LIST.c -------------- */
-
-void	clean_list_char(t_char **list);
-void	clean_list_string(t_string **list);
-void	clean_list_command(t_command **list);
-
-/* -------------- LIST_TO_TAB.c -------------- */
-
-int 	length_list_string(t_string *list);
-int 	size_var(char *string_list, int *i);
-//int 	count_size_env(char *string_list, int *i, char **envp);
-int 	count_size_env(char *string_list, int *i, char **envp, int status);
-//void 	copy_env_var(char *string_list, int *i, char **envp, char *ret, int *j);
-void 	copy_env_var(char *string_list, char **envp, int status, t_copy_string *cs);
-//int 	count_char(char *string_list, char **envp);
-int 	count_char(char *string_list, char **envp, int status);
-//char 	*copy_string(char *string_list, char **envp);
-char 	*copy_string(char *string_list, char **envp, int status);
-//char 	**list_to_tab(t_command *list, char **envp);
-char 	**list_to_tab(t_command *list, char **envp, int status );
-
-/* -------------- TAB_UTILS.c -------------- */
-
-void 	print_tab(char **tab);
-int 	len_tab(char **tab);
-char    **copy_tab(char **tab);
 
 /* -------------- PIPE_UTILS.c -------------- */
 
@@ -245,21 +236,62 @@ void    child_first_pipe(t_pipe *pipe_info, int **fd, char **envp);
 void    child_last_pipe(t_pipe *pipe_info, int **fd, char **envp);
 void    child_middle_pipe(t_pipe *pipe_info, int **fd, char **envp);
 int 	child_process(t_pipe *pipe_info, int **fd, char **envp);
-int 	managing_fork(t_core *minishell, t_pipe *pipe_info, int **fd);
-void    wait_proof(t_core *minishell);
-void 	execute_one_command(t_core *minishell, t_pipe *pipe_info);
-int 	managing_pipe(t_core *minishell);
+int 	managing_pipe(t_core *minishell, t_pipe *pipe_info, int **fd);
 
+/* -------------- PWD_ENV.c -------------- */
+
+int		pwd();
+int 	env(char **envp);
 
 /* -------------- REDIR.c -------------- */
 
+//TROP LONGUE
 int 	handle_del(t_string *list, t_pipe *pipe_info);
 int 	find_input(t_string *input, t_pipe *pipe_info);
 int 	find_output(t_string *output);
+
+/* -------------- REDIR2.c -------------- */
+
 int		init_fd(t_command *list, t_pipe *pipe_info);
 void 	redir_execve(t_core *minishell, t_pipe *pipe_info);
 void 	redir_builtin(t_core *minishell, t_pipe *pipe_info);
 
+/* -------------- SIGNALS.c -------------- */
+
+void	sigint();
+void	signals();
+
+/* -------------- SPLIT_MS -------------- */
+
+int     put_flag(char c, int flag);
+int	    count_word_ms(char const *str);
+int	    len_word(char const *str, int *pos);
+void	put_word(char const *str, int *pos, char *line_tab);
+
+/* -------------- SPLIT_MS_2 -------------- */
+
+int	    free_tab_ms_split(char **tab, int i);
+int	    fill_tab_split_ms(char **tab, char const *s);
+char    **ft_split_ms(char const *s);
+void    split_and_print(char *line);
+
+/* -------------- TAB_UTILS.c -------------- */
+
+void 	print_tab(char **tab);
+int   	tab_len(char **tab);
+char    **copy_tab(char **tab);
+
+/* -------------- UNSET.c -------------- */
+
+int		count_var_size(char *var);
+int 	check_args(char *line, char **envp);
+int		compare_args(char *str, char **args);
+int		unset(char **argv, char ***envp);
+
+/* -------------- VERIF_LINE -------------- */
+
+int		quotes_verif(char *str);
+int     verif_line(char *line);
 
 #endif
 

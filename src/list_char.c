@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 11:19:41 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/27 11:02:05 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/28 16:15:05 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	lstadd_back_ms(t_char **list, t_char *new)
 {
 	t_char      *temp;
 
-    // HANDLE ERROR
 	if (list == NULL && new == NULL)
 		return (0);
 	if ((*list) == NULL)
@@ -44,15 +43,13 @@ int fill_list(char *line, t_char **list)
     t_char *new;
 
     i = 0;
-    while(line[i])
+    while(line && line[i])
     {
         new = malloc(sizeof(t_char));
-        // HANDLE ERROR
         if (new == NULL)
             return (0);
         new->character = line[i];
         new->next = NULL;
-        // HANDLE ERROR
         if (!lstadd_back_ms(list, new ))
             return (0);
         i++;
@@ -60,38 +57,12 @@ int fill_list(char *line, t_char **list)
     return (1);
 }
 
-void print_list_from_head(t_char *list)
-{
-    t_char *head;
-    
-    head = list;
-    while (head)
-    {
-        printf("%c\n", head->character);
-        head = head->next;
-    }
-}
-
-void print_list_from_bottom(t_char *list)
-{
-    t_char *head;
-    
-    head = list;
-    while (head->next)
-        head = head->next;
-    while (head)
-    {
-        printf("%c\n", head->character);
-        head = head->previous;
-    }
-}
 
 int insert_space_node(t_char *previous, t_char *next)
 {
     t_char *node_space;
 
     node_space = malloc(sizeof(t_char));
-    // HANDLE ERROR
     if (node_space == NULL)
         return (0);
     node_space->character = ' '; 
@@ -107,31 +78,10 @@ int insert_space_node(t_char *previous, t_char *next)
 
 int insert_two_spaces(t_char *node)
 {
-    // HANDLE ERROR
     if (!insert_space_node(node->previous, node))
         return (0);
-    // HANDLE ERROR
     if (!insert_space_node(node, node->next))
         return (0);
     return (1);    
 }
 
-void insert_space_everywhere(t_char **list)
-{
-    t_char *temp;
-    
-    temp = (*list);
-    // HANDLE ERROR
-    if (list == NULL)
-        return ;
-    while(temp)
-    {
-        printf("list de space CHAR : %c\n", temp->character);
-        if (temp->character != ' ')
-        {
-            insert_two_spaces(temp);
-            printf("yo\n");
-        }
-        temp =temp->next;
-    }
-}
