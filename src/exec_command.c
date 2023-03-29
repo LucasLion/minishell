@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/29 16:15:54 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/29 17:19:46 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,13 +97,24 @@ int	exec_builtin(char *builtin, char **argv, char ***envp, int *status)
 	return (*status % 255);
 }
 
+void	exec_command_v2(char *command, char **argv, char ***envp, int *status)
+{
+	char	*path;
+	
+	
+	path = get_path(*envp, command);
+	if (execve(path, argv, *envp) == -1)
+		exit_shell(127);
+	exit_shell(*status);
+}
+
 void	exec_command(char *command, char **argv, char ***envp)
 {
 	char	*path;
 	
 	path = get_path(*envp, command);
 	if (execve(path, argv, *envp) == -1)
-		ms_error(command, NULL, errno);
+		exit_shell(127);
 	exit_shell(errno);
 }
 

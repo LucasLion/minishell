@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/29 14:37:34 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/29 17:21:07 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ char	**get_path_split(char **envp);
 char	*get_path(char **envp, char *cmd);
 char 	*is_builtin(char *cmd);
 int		exec_builtin(char *builtin, char **argv, char ***envp, int *status);
+void	exec_command_v2(char *command, char **argv, char ***envp, int *status);
 void	exec_command(char *command, char **argv, char ***envp);
 
 /* -------------- EXECUTE.c -------------- */

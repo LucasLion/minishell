@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:23:30 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/29 14:44:14 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/29 17:24:57 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 int init_fd(t_command *list, t_pipe *pipe_info)
 {
-    if (list->input == NULL)
+    if (list && list->input == NULL)
+    {
         pipe_info->fd_input = STDIN_FILENO ;
+    }
     else
     {
         pipe_info->fd_input = find_input(list->input, pipe_info);
@@ -25,7 +27,7 @@ int init_fd(t_command *list, t_pipe *pipe_info)
             return (1);
         }    
     }
-    if (list->output == NULL)
+    if (list && list->output == NULL)
         pipe_info->fd_output = STDOUT_FILENO;
     else
     {
@@ -55,10 +57,11 @@ void redir_execve(t_core *minishell, t_pipe *pipe_info)
             dup2(pipe_info->fd_output, STDOUT_FILENO);
             close (pipe_info->fd_output);
         } 
-        exec_command(pipe_info->cmd, pipe_info->tab_arg, &(minishell->envp));
-        exit(0);
+        if (pipe_info->cmd)
+            exec_command(pipe_info->cmd, pipe_info->tab_arg, &(minishell->envp));
     }
     wait_proof(minishell, pid);
+    ms_error(pipe_info->cmd, NULL, minishell->last_status);
 }
 
 void redir_builtin(t_core *minishell, t_pipe *pipe_info)

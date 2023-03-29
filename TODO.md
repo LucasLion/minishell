@@ -6,7 +6,7 @@
 #    By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/24 16:04:33 by llion             #+#    #+#              #
-#    Updated: 2023/03/29 17:13:30 by llion            ###   ########.fr        #
+#    Updated: 2023/03/29 17:25:00 by llion            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,4 +42,3 @@
 	-      \ doit quitter en mode bloque - lucas
 	-      il faut mettre un parametre a exit - lucas
 	-      exit sdkfjsdlf sdf doit renvoyer une erreur - lucas
-

@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 09:45:36 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/28 16:24:41 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/29 17:14:08 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ char *copy_string(char *string_list, char **envp, int status)
     cs.i = 0;
     cs.j = 0;
     cs.flag = 0;
-    cs.ret = ft_calloc(count_char(string_list, envp, status) + 1, sizeof(char));
-    while(string_list[cs.i])
+    cs.ret = ft_calloc(count_char(string_list, envp, status)+ 1, sizeof(char));
+    while(string_list && string_list[cs.i])
     {    
         cs.flag1 = put_flag(string_list[cs.i], cs.flag);
         if (string_list[cs.i] == '$' && cs.flag1 != 2 && string_list[cs.i+1] != '\0' 
