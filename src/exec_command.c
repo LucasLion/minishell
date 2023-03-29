@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/29 12:05:23 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/29 12:18:45 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*get_path(char **envp, char *cmd)
 
 	i = 0;
 	split_path = get_path_split(envp);
-	if (access(cmd, F_OK) == 0)
+	if (access(cmd, X_OK) == 0)
 		return (cmd);
 	while(split_path[i])
 	{
@@ -48,7 +48,7 @@ char	*get_path(char **envp, char *cmd)
 		tmp = ft_strjoin(split_path[i], "/");
 		ret = ft_strjoin(tmp, cmd);
 		free(tmp);
-		if (access(ret, F_OK) == 0)
+		if (access(ret, X_OK) == 0)
 			return (ret);
 		free (ret);
 		i++;
