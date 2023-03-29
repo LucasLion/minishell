@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/28 17:09:32 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/29 16:46:40 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ int	exit_shell(int status)
 	return (EXIT_SUCCESS);
 }
 
-void    wait_proof(t_core *minishell)
+void    wait_proof(t_core *minishell, int pid)
 {
     int status;
-    wait(&status);
+    waitpid(pid, &status, 0);
     if (WIFEXITED(status))
         minishell->last_status = WEXITSTATUS(status) % 255;
 }
@@ -61,10 +61,9 @@ int	ms_error(char *cmd, char *input, int error)
 	if (error == 0)
 		return (error);
 	str_error = strerror(error);
-	if (error == 14)
+	if (error == 127)
 	{
-		printf("erreur %d = %s\n", error, str_error);
-		printf("Minishell : command not found (erreur %d)\n", error);
+		printf("Minishell: %s: command not found \n", cmd);
 	}
 	else if (error == 1)
 		printf("export: %s: not a valid identifier\n", cmd);

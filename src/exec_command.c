@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/29 12:11:34 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/29 17:01:12 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,20 @@ char	*get_path(char **envp, char *cmd)
 
 	i = 0;
 	split_path = get_path_split(envp);
-	if (access(cmd, F_OK) == 0)
-		return (cmd);
 	while(split_path[i])
 	{
 		tmp = ft_calloc(ft_strlen(split_path[i]) + 1, sizeof(char));
 		tmp = ft_strjoin(split_path[i], "/");
 		ret = ft_strjoin(tmp, cmd);
 		free(tmp);
-		if (access(ret, F_OK) == 0)
+		if (access(ret, X_OK) == 0)
 			return (ret);
 		free (ret);
 		i++;
 	}
-	return (NULL);
+	if (access(cmd, X_OK) == 0)
+		return (cmd);
+	return (cmd);
 }
 
 
@@ -97,13 +97,32 @@ int	exec_builtin(char *builtin, char **argv, char ***envp, int *status)
 	return (*status % 255);
 }
 
+void    wait_proof_test(int *status)
+{
+    int stat;
+    wait(&stat);
+    if (WIFEXITED(stat))
+        *status = WEXITSTATUS(stat) % 255;
+}
+
+void	exec_command_v2(char *command, char **argv, char ***envp, int *status)
+{
+	char	*path;
+	
+	
+	path = get_path(*envp, command);
+	if (execve(path, argv, *envp) == -1)
+		exit_shell(127);
+	exit_shell(*status);
+}
+
 void	exec_command(char *command, char **argv, char ***envp)
 {
 	char	*path;
 	
 	path = get_path(*envp, command);
 	if (execve(path, argv, *envp) == -1)
-		ms_error(command, NULL, errno);
+		exit_shell(127);
 	exit_shell(errno);
 }
 

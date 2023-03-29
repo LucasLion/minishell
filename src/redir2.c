@@ -6,11 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:23:30 by amouly            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/03/29 10:01:11 by amouly           ###   ########.fr       */
-=======
-/*   Updated: 2023/03/29 12:08:05 by llion            ###   ########.fr       */
->>>>>>> b1731b7a959c2505ddbe16ff283f7860fe828252
+/*   Updated: 2023/03/29 17:01:39 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +14,10 @@
 
 int init_fd(t_command *list, t_pipe *pipe_info)
 {
-    if (list->input == NULL)
+    if (list && list->input == NULL)
+    {
         pipe_info->fd_input = STDIN_FILENO ;
+    }
     else
     {
         pipe_info->fd_input = find_input(list->input, pipe_info);
@@ -29,7 +27,7 @@ int init_fd(t_command *list, t_pipe *pipe_info)
             return (1);
         }    
     }
-    if (list->output == NULL)
+    if (list && list->output == NULL)
         pipe_info->fd_output = STDOUT_FILENO;
     else
     {
@@ -59,9 +57,11 @@ void redir_execve(t_core *minishell, t_pipe *pipe_info)
             dup2(pipe_info->fd_output, STDOUT_FILENO);
             close (pipe_info->fd_output);
         } 
-        exec_command(pipe_info->cmd, pipe_info->tab_arg, &(minishell->envp));
+        if (pipe_info->cmd)
+            exec_command(pipe_info->cmd, pipe_info->tab_arg, &(minishell->envp));
     }
-    wait_proof(minishell);
+    wait_proof(minishell, pid);
+    ms_error(pipe_info->cmd, NULL, minishell->last_status);
 }
 
 void redir_builtin(t_core *minishell, t_pipe *pipe_info)
@@ -83,5 +83,5 @@ void redir_builtin(t_core *minishell, t_pipe *pipe_info)
         exec_builtin(pipe_info->cmd, pipe_info->tab_arg, &(minishell->envp), &minishell->last_status);
         exit(ms_error(pipe_info->cmd, NULL, minishell->last_status));
     }
-    wait_proof(minishell);
+    wait_proof(minishell, pid);
 }
