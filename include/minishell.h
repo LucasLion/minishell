@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/29 11:40:56 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/29 16:21:27 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ char	**get_path_split(char **envp);
 char	*get_path(char **envp, char *cmd);
 char 	*is_builtin(char *cmd);
 int		exec_builtin(char *builtin, char **argv, char ***envp, int *status);
+void	exec_command_v2(char *command, char **argv, char ***envp, int *status);
 void	exec_command(char *command, char **argv, char ***envp);
 
 /* -------------- EXECUTE.c -------------- */
@@ -135,7 +136,7 @@ int 	execute(t_core *minishell);
 /* -------------- EXIT.c -------------- */
 
 int		exit_shell(int status);
-void    wait_proof(t_core *minishell);
+void    wait_proof(t_core *minishell, int pid);
 void	write_error(char *cmd, char *input, int error_no);
 int		ms_error(char *cmd, char *input, int error);
 
