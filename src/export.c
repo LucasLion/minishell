@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 16:12:49 by llion             #+#    #+#             */
-/*   Updated: 2023/03/28 17:09:37 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/29 13:30:42 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void  display_export(char **envp)
    char  *formatted;
 
    i = 0;
-   sorted = sort_tab(envp, tab_len(envp));
+   sorted = sort_tab(envp, ft_tablen(envp));
    while (sorted[i])
    {
       if (sorted[i][1] == '=' && sorted[i][0] == '_')

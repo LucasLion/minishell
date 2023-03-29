@@ -6,7 +6,7 @@
 /*   By: llion <llion@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+ #+#+   +#+          */
 /*   Created: 2023/03/10 18:39:28 by llion             #+#    #+#             */
-/*   Updated: 2023/03/28 14:15:50 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/29 13:30:18 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,11 @@ int	unset(char **argv, char ***envp)
 
 	i = 0;
 	j = 0;
-	new_len = tab_len(*envp) - tab_len(argv);
+	new_len = ft_tablen(*envp) - ft_tablen(argv);
 	new_envp = ft_calloc(new_len + 1, sizeof(char *));
 	if (new_envp == NULL)
 		return (ms_error("unset", NULL, errno));
-	while(i < new_len + 1) 
+	while(i < new_len + 1 && new_len > 0) 
 	{
 		if (compare_args((*envp)[i], argv))
 		{

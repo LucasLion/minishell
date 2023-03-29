@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 16:12:49 by llion             #+#    #+#             */
-/*   Updated: 2023/03/28 16:11:31 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/29 13:48:40 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char  **add_new_variable(char *arg, char **envp)
    char  *val_arg;
 
    i = 0;
-   env_size = tab_len(envp);
+   env_size = ft_tablen(envp);
    nenvp = ft_calloc((env_size + 2), sizeof(char *));
    if (nenvp == NULL)
       return (NULL);
@@ -125,7 +125,7 @@ char  **edit_variable(char *arg, char **envp)
    val_arg = extract_val(arg);
    if (val_arg != NULL)
    {
-      env_size = tab_len(envp);
+      env_size = ft_tablen(envp);
       nenvp = ft_calloc((env_size + 2), sizeof(char *));
       if (nenvp == NULL)
          return (NULL);
@@ -164,8 +164,12 @@ int   ms_export(char **argv, char ***envp)
 
    i = 1; 
    flag = 0;
-   if (tab_len(argv) == 1)
+   if (ft_tablen(argv) == 1)
+   {
       display_export(*envp);
+      printf("\n");
+      printf("len: %d\n", ft_tablen(*envp));
+   }
    else
    {
       while (argv[i])

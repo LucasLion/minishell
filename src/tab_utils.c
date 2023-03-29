@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 09:45:36 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/28 16:44:36 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/29 13:30:22 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,6 @@ void print_tab(char **tab)
     printf("tab[%d] : %s\n", i, tab[i]);
 }
 
-int   tab_len(char **tab)
-{
-   int i;
-
-   i = 0;
-   while (tab[i])
-   {
-      i++;
-   }
-   return (i);
-}
-
 char    **copy_tab(char **tab)
 {
     int     i;
@@ -45,7 +33,7 @@ char    **copy_tab(char **tab)
     int     len;
 
     i = 0;
-    len = tab_len(tab);
+    len = ft_tablen(tab);
     // HANDLE ERROR
     ret = malloc(sizeof(char *) * (len + 1));
     if (ret == NULL)
