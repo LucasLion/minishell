@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:23:30 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/29 14:46:40 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/29 17:24:28 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int handle_del(t_string *list, t_pipe *pipe_info)
     
     pipe (fd);
     pid = fork();
-    //if (pid < 0) erreur
     if (pid == 0)
     {
         close (fd[0]);

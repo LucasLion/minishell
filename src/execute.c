@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:22:46 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/29 16:35:31 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/29 17:25:15 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ int execute(t_core *minishell)
     t_command *list;
     
     list = minishell->list_of_command;
-    //pipe_info.nbr_of_pipes = 0;
-    //pipe_info.nbr_of_commands = length_list_command(list, &pipe_info.nbr_of_pipes);
     init_pipe_info(&pipe_info, list);
     if (pipe_info.nbr_of_commands == 1)
         execute_one_command(minishell, &pipe_info);

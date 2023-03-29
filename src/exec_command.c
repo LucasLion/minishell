@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/29 17:01:12 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/29 17:19:46 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,14 +95,6 @@ int	exec_builtin(char *builtin, char **argv, char ***envp, int *status)
 	else if (ft_strncmp(builtin, "cd", ft_strlen(builtin)) == 0)
 		*status = cd(argv[1], *envp);
 	return (*status % 255);
-}
-
-void    wait_proof_test(int *status)
-{
-    int stat;
-    wait(&stat);
-    if (WIFEXITED(stat))
-        *status = WEXITSTATUS(stat) % 255;
 }
 
 void	exec_command_v2(char *command, char **argv, char ***envp, int *status)

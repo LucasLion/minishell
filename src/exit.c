@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/29 16:46:40 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/29 17:24:16 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,14 @@ int	ms_error(char *cmd, char *input, int error)
 		return (error);
 	str_error = strerror(error);
 	if (error == 127)
-	{
 		printf("Minishell: %s: command not found \n", cmd);
-	}
 	else if (error == 1)
 		printf("export: %s: not a valid identifier\n", cmd);
 	else
+	{
+		printf("error: %d\n", error);
 		write_error(cmd, input, error);
+	}
 	return (errno);
 }
 

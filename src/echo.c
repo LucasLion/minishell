@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 14:59:28 by llion             #+#    #+#             */
-/*   Updated: 2023/03/28 16:44:41 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/29 16:09:41 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	new_strlen(char *str)
 	int	count;
 
 	i = 0;
-	j = 0;
 	count = 0;
 	j = ft_strlen(str);
 	while (str[i])
@@ -44,7 +43,7 @@ char *parse(char *str)
 	
 	i = 0;
 	j = 0;
-	ret = ft_calloc(new_strlen(str), sizeof(char));
+	ret = ft_calloc(new_strlen(str) + 1, sizeof(char));
 	if (ret == NULL)
 		return (NULL);
 	i = 0;
@@ -82,18 +81,42 @@ int	print_tab_echo(char **tab, int i)
 	return (0);
 }
 
+int	is_valid_arg(char *arg)
+{
+	int	i;
+
+	i = 0;
+	if (arg[0] != '-')
+		return (0);
+	while (arg[++i])
+	{
+		if (arg[i] != 'n')
+			return (0);
+	}
+	return (1);
+}
+
 int	echo(char **argv)
 {
+	int	i;
+	int	backline;
+
+	i = 1;
+	backline = 1;
 	if (argv == NULL)
 		return (ms_error("echo", NULL, -1));
-	if (argv[2] && ft_strncmp(argv[1], "-n", 2) == 0)
-		print_tab_echo(argv, 2);
-	else if (argv[1])
+	while (argv[i])
 	{
-		print_tab_echo(argv, 1);
-		printf("\n");
+		if (is_valid_arg(argv[i]))
+		{
+			backline = 0;
+			i++;
+		}
+		else
+			break ;
 	}
-	else
+	print_tab_echo(argv, i);
+	if (backline)
 		printf("\n");
 	return (0);
 }
