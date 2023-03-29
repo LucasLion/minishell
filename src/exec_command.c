@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/28 16:02:45 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/29 12:09:23 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ char	*get_path(char **envp, char *cmd)
 
 char *is_builtin(char *cmd)
 {
-    if (ft_strncmp(cmd, "echo", ft_strlen(cmd) + 1) == 0)
-        return ("echo");
+	if (ft_strncmp(cmd, "echo", ft_strlen(cmd) + 1) == 0)
+		return ("echo");
     else if (ft_strncmp(cmd, "cd", ft_strlen(cmd) + 1) == 0)
         return ("cd");
     else if (ft_strncmp(cmd, "pwd", ft_strlen(cmd) + 1) == 0)
@@ -72,8 +72,8 @@ char *is_builtin(char *cmd)
         return ("unset");
     else if (ft_strncmp(cmd, "env",	ft_strlen(cmd) + 1) == 0)
         return ("env");
-    else if (ft_strncmp(cmd, "exit", ft_strlen(cmd)) == 0)
-        return ("exit");
+    else if (ft_strncmp(cmd, "exit", ft_strlen(cmd) + 1) == 0)
+        return ("exit")
     else
         return (NULL);
 }

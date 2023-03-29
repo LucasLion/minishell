@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:23:30 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/28 16:41:24 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/29 10:01:11 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int init_fd(t_command *list, t_pipe *pipe_info)
         pipe_info->fd_input = find_input(list->input, pipe_info);
         if (pipe_info->fd_input == -1)
         {
-            //write_error(NULL, list->input->string, errno);
             ms_error(list->input->string, NULL, errno);
             return (1);
         }    
@@ -31,8 +30,11 @@ int init_fd(t_command *list, t_pipe *pipe_info)
     else
     {
         pipe_info->fd_output = find_output(list->output);
-        //if (fd_output == -1)
-        // gerer l'erreur  
+         if (pipe_info->fd_output == -1)
+        {
+            ms_error(list->output->string, NULL, errno);
+            return (1);
+        }  
     }
     return (0);
 }
