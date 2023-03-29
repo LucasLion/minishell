@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:22:46 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/28 17:04:10 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/29 12:08:05 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void execute_one_command(t_core *minishell, t_pipe *pipe_info)
         return ; 
     if (is_builtin(pipe_info->cmd) == NULL)
         redir_execve(minishell, pipe_info);
-    if ( ft_strncmp(pipe_info->cmd, "echo",5) == 0)
+    else if ( ft_strncmp(pipe_info->cmd, "echo",5) == 0)
         redir_builtin(minishell, pipe_info);
     else
         exec_builtin(pipe_info->cmd, pipe_info->tab_arg, &(minishell->envp), &minishell->last_status);

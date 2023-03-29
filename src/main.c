@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 14:55:57 by llion             #+#    #+#             */
-/*   Updated: 2023/03/28 17:10:10 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/29 11:05:29 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,12 @@ void init_core(t_core *minishell)
 
 int main(int argc, char **argv, char **env) 
 {
+	extern int rl_catch_signals;
 	(void)argv;
 	t_core	minishell;
 	if (argc != 1)
         return (0);
+	rl_catch_signals = 0;
 	minishell.envp = copy_tab(env);
 	minishell.last_status = 0;
 	minishell.pid = 0;
