@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/29 17:21:07 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/29 18:03:08 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,11 +251,13 @@ int 	env(char **envp);
 //TROP LONGUE
 int 	handle_del(t_string *list, t_pipe *pipe_info);
 int 	find_input(t_string *input, t_pipe *pipe_info);
-int 	find_output(t_string *output);
+//int 	find_output(t_string *output);
+int 	find_output(t_string *output, t_core *minishell);
 
 /* -------------- REDIR2.c -------------- */
 
-int		init_fd(t_command *list, t_pipe *pipe_info);
+//int		init_fd(t_command *list, t_pipe *pipe_info);
+int 	init_fd(t_core *minishell, t_pipe *pipe_info);
 void 	redir_execve(t_core *minishell, t_pipe *pipe_info);
 void 	redir_builtin(t_core *minishell, t_pipe *pipe_info);
 

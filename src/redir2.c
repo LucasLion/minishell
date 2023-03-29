@@ -6,18 +6,17 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:23:30 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/29 17:24:57 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/29 18:03:13 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int init_fd(t_command *list, t_pipe *pipe_info)
+int init_fd(t_core *minishell, t_pipe *pipe_info)
 {
+    t_command *list = minishell->list_of_command;
     if (list && list->input == NULL)
-    {
         pipe_info->fd_input = STDIN_FILENO ;
-    }
     else
     {
         pipe_info->fd_input = find_input(list->input, pipe_info);
@@ -31,7 +30,7 @@ int init_fd(t_command *list, t_pipe *pipe_info)
         pipe_info->fd_output = STDOUT_FILENO;
     else
     {
-        pipe_info->fd_output = find_output(list->output);
+        pipe_info->fd_output = find_output(list->output, minishell);
          if (pipe_info->fd_output == -1)
         {
             ms_error(list->output->string, NULL, errno);
@@ -40,6 +39,8 @@ int init_fd(t_command *list, t_pipe *pipe_info)
     }
     return (0);
 }
+
+
 
 void redir_execve(t_core *minishell, t_pipe *pipe_info)
 {

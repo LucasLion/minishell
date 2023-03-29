@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:23:30 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/29 17:24:28 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/29 18:10:35 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int handle_del(t_string *list, t_pipe *pipe_info)
 int find_input(t_string *input, t_pipe *pipe_info)
 {
     t_string *temp;
+
     int fd;
     
     temp = input;
@@ -62,18 +63,23 @@ int find_input(t_string *input, t_pipe *pipe_info)
     return (fd);
 }
 
-int find_output(t_string *output)
+int find_output(t_string *output, t_core *minishell)
 {
     t_string *temp;
+    char *new_str;
     int fd;
     
     temp = output;
     while (temp)
     {
+        new_str = copy_string(temp->string, minishell->envp, minishell->last_status);
+        
+        printf("la new str : %s\n", new_str);
         if (temp->append_or_heredoc == 1)
             fd = open(temp->string, O_WRONLY | O_CREAT | O_APPEND, S_IRWXU);
         else
-            fd = open(temp->string, O_WRONLY | O_CREAT | O_TRUNC, S_IRWXU);
+            fd = open(new_str, O_WRONLY | O_CREAT | O_TRUNC, S_IRWXU);
+            printf("fd = %d\n", fd);
         temp = temp->next;
     }
     return (fd);
