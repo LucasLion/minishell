@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/28 17:09:21 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/29 11:40:56 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,8 @@ int     insert_two_space(t_char *node);
 void    init_struct_command(t_command *list_of_command);
 int		lstadd_back_list_command(t_command **list, t_command *new);
 int 	length_list_command(t_command *list, int *nb_of_pipes);
+// A enlever
+void print_list_command_from_head(t_command *list);
 
 /* -------------- LIST_STRING.c -------------- */
 

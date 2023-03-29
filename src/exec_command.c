@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/29 12:18:45 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/29 12:39:45 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ char	*get_path(char **envp, char *cmd)
 
 	i = 0;
 	split_path = get_path_split(envp);
-	if (access(cmd, X_OK) == 0)
-		return (cmd);
 	while(split_path[i])
 	{
 		tmp = ft_calloc(ft_strlen(split_path[i]) + 1, sizeof(char));
@@ -53,6 +51,8 @@ char	*get_path(char **envp, char *cmd)
 		free (ret);
 		i++;
 	}
+	if (access(cmd, X_OK) == 0)
+		return (cmd);
 	return (NULL);
 }
 
@@ -60,8 +60,8 @@ char	*get_path(char **envp, char *cmd)
 
 char *is_builtin(char *cmd)
 {
-    if (ft_strncmp(cmd, "echo", ft_strlen(cmd) + 1) == 0)
-        return ("echo");
+	if (ft_strncmp(cmd, "echo", ft_strlen(cmd) + 1) == 0)
+		return ("echo");
     else if (ft_strncmp(cmd, "cd", ft_strlen(cmd) + 1) == 0)
         return ("cd");
     else if (ft_strncmp(cmd, "pwd", ft_strlen(cmd) + 1) == 0)
