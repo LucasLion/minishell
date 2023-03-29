@@ -6,11 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:23:30 by amouly            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/03/29 10:01:11 by amouly           ###   ########.fr       */
-=======
-/*   Updated: 2023/03/29 12:08:05 by llion            ###   ########.fr       */
->>>>>>> b1731b7a959c2505ddbe16ff283f7860fe828252
+/*   Updated: 2023/03/29 13:41:59 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +14,10 @@
 
 int init_fd(t_command *list, t_pipe *pipe_info)
 {
-    if (list->input == NULL)
+    if (list && list->input == NULL)
+    {
         pipe_info->fd_input = STDIN_FILENO ;
+    }
     else
     {
         pipe_info->fd_input = find_input(list->input, pipe_info);
@@ -29,7 +27,7 @@ int init_fd(t_command *list, t_pipe *pipe_info)
             return (1);
         }    
     }
-    if (list->output == NULL)
+    if (list && list->output == NULL)
         pipe_info->fd_output = STDOUT_FILENO;
     else
     {

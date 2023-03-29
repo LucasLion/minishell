@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:23:30 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/29 12:03:22 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/29 13:42:07 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,9 @@ int find_input(t_string *input, t_pipe *pipe_info)
     while (temp)
     {
         if (temp->append_or_heredoc == 1)
+        {
             fd = handle_del(temp, pipe_info);
+        }
         else
         {
             fd = open(temp->string, O_RDONLY);
