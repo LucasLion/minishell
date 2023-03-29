@@ -6,11 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 10:14:58 by llion             #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/03/28 16:09:03 by amouly           ###   ########.fr       */
-=======
-/*   Updated: 2023/03/28 16:20:09 by llion            ###   ########.fr       */
->>>>>>> 6c35d1aa38b86e23b54a2b674d0dd176aadf1db6
+/*   Updated: 2023/03/28 17:21:45 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,11 +115,6 @@ void		free_tank(t_gnl_list *tank, int index);
 int			len(char *str);
 t_gnl_list	*ft_lstlast_gnl(t_gnl_list *tank);
 
-<<<<<<< HEAD
-/*  --------- TABS ---------  */
-
-int 		ft_tablen(char **tab);
-=======
 /*  --------- FREE ---------  */
 
 void		ft_freetab(char **tab);
@@ -131,6 +122,5 @@ void		ft_freetab(char **tab);
 /*  --------- TABS ---------  */
 
 int			ft_tablen(char **tab);
->>>>>>> 6c35d1aa38b86e23b54a2b674d0dd176aadf1db6
 
 #endif
