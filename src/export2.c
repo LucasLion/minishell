@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 16:12:49 by llion             #+#    #+#             */
-/*   Updated: 2023/03/29 13:48:40 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/29 15:23:04 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,11 +165,7 @@ int   ms_export(char **argv, char ***envp)
    i = 1; 
    flag = 0;
    if (ft_tablen(argv) == 1)
-   {
       display_export(*envp);
-      printf("\n");
-      printf("len: %d\n", ft_tablen(*envp));
-   }
    else
    {
       while (argv[i])

@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/29 12:39:45 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/29 16:15:54 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*get_path(char **envp, char *cmd)
 	}
 	if (access(cmd, X_OK) == 0)
 		return (cmd);
-	return (NULL);
+	return (cmd);
 }
 
 

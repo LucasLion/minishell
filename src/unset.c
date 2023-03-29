@@ -6,7 +6,7 @@
 /*   By: llion <llion@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+ #+#+   +#+          */
 /*   Created: 2023/03/10 18:39:28 by llion             #+#    #+#             */
-/*   Updated: 2023/03/29 13:30:18 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/29 14:24:55 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int check_args(char *line, char **envp)
 		}
 		i++;
 	}
-	free_tab2(vars);
+	ft_freetab(vars);
 	return (count);
 }
 
@@ -72,7 +72,8 @@ int	unset(char **argv, char ***envp)
 
 	i = 0;
 	j = 0;
-	new_len = ft_tablen(*envp) - ft_tablen(argv);
+	// +1 car argv contient la commande
+	new_len = ft_tablen(*envp) - ft_tablen(argv) + 1;
 	new_envp = ft_calloc(new_len + 1, sizeof(char *));
 	if (new_envp == NULL)
 		return (ms_error("unset", NULL, errno));

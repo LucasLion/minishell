@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 16:12:49 by llion             #+#    #+#             */
-/*   Updated: 2023/03/29 13:30:42 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/29 15:31:34 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,18 @@ int  parse_arg(char *arg)
    int   i;
 
    i = 0;
-   while (arg[i] && arg[i] != '=')
-      i++;
-   if (arg[i] == '=' && i == 0)
-      return (ms_error(arg, NULL, 1));
+   if ((arg[0] >= 'a' && arg[0] <= 'z') || (arg[0] <= 'A' && arg[0] >= 'A') 
+         || arg[0] == '_')
+   {
+      while (arg[i] && arg[i] != '=')
+         i++;
+      if (arg[i] == '=' && i == 0)
+         return (ms_error(arg, NULL, 1));
+      else
+         return (1);
+   }
    else
-      return (1);
+      return (ms_error(arg, NULL, 1));
 }
 
 char **sort_tab(char **tab, int size)
@@ -110,10 +116,7 @@ char *extract_var(char *arg)
    while (arg[end] && arg[end] != '=')
       end++;
    if (end == 0 && arg[end] == '=')
-   {
-      printf("export: %s: not a valid identifier\n", arg);
       return (NULL);
-   }
    var = ft_calloc(end + 1, sizeof(char));
    if (var == NULL)
       return (NULL);
