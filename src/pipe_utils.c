@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:22:46 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/30 14:42:37 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/30 14:51:09 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void wait_all_pid(int *pid, int nbr_of_command, t_core *minishell)
     
     i = 0;
     temp = minishell->list_of_command;
+    minishell->last_status = 0;
     while(i < nbr_of_command)
     {
         cmd = copy_string(temp->command->string, minishell->envp, minishell->last_status);
