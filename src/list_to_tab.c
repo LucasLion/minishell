@@ -6,17 +6,17 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 09:45:36 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/29 17:13:57 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/30 17:42:08 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int length_list_string(t_string *list)
+int	length_list_string(t_string *list)
 {
-    int i;
+	int	i;
 
-    i = 0;
+	i = 0;
 	if (list)
 	{
 		i++;
@@ -31,56 +31,55 @@ int length_list_string(t_string *list)
 		return (0);
 }
 
-int size_var(char *string_list, int *i)
+int	size_var(char *string_list, int *i)
 {
-    int count;
+	int	count;
 
-    count = 0;
-    while (string_list[*i] && string_list[*i] != ' ' 
-        && string_list[*i] != '$' && string_list[*i] != '\'' 
-        && string_list[*i] != '"' )
-    {
-        count++;
-        (*i)++;
-    }
-    return(count);
+	count = 0;
+	while (string_list[*i] && string_list[*i] != ' ' && string_list[*i] != '$'
+		&& string_list[*i] != '\'' && string_list[*i] != '"')
+	{
+		count++;
+		(*i)++;
+	}
+	return (count);
 }
 
-int count_size_env(char *string_list, int *i, char **envp, int status)
+int	count_size_env(char *string_list, int *i, char **envp, int status)
 {
-    int count;
-    int debut;
-    int b;
+	int	count;
+	int	debut;
+	int	b;
 
-    
-    (*i)++;
-    if (string_list[*i] == '?')
-        return (ft_strlen(ft_itoa(status)));
-    debut = (*i);
-    count = size_var(string_list, i);
-    b = 0;
-    while(envp[b])
-    {
-        if (!ft_strncmp(envp[b], &string_list[debut], (size_t) count) && envp[b][count] == '=')
-        {
-            return ((int)(ft_strlen(envp[b] + count + 1)));
-        }
-        b++;
-    }
-    return (0) ;
+	(*i)++;
+	if (string_list[*i] == '?')
+		return (ft_strlen(ft_itoa(status)));
+	debut = (*i);
+	count = size_var(string_list, i);
+	b = 0;
+	while (envp[b])
+	{
+		if (!ft_strncmp(envp[b], &string_list[debut], (size_t)count)
+			&& envp[b][count] == '=')
+		{
+			return ((int)(ft_strlen(envp[b] + count + 1)));
+		}
+		b++;
+	}
+	return (0);
 }
 
-void last_error(char *ret, int *j, int status)
+void	last_error(char *ret, int *j, int status)
 {
-    char *err_itoa;
-    int b;
-    
-    err_itoa = ft_itoa(status);
-    b = 0;
-    while(err_itoa[b])
-    {
-        ret[*j] = err_itoa[b];
-        (*j)++;
-        b++;
-    }  
+	char	*err_itoa;
+	int		b;
+
+	err_itoa = ft_itoa(status);
+	b = 0;
+	while (err_itoa[b])
+	{
+		ret[*j] = err_itoa[b];
+		(*j)++;
+		b++;
+	}
 }
