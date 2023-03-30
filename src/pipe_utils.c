@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:22:46 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/28 16:27:30 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/30 14:42:37 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,20 @@ void close_fd_everyhing_but_two(int **fd, int nbr_of_pipes, int read, int write)
     }
 }
 
-void wait_all_pid(int *pid, int nbr_of_command)
+void wait_all_pid(int *pid, int nbr_of_command, t_core *minishell)
 {
     int i;
-
+    t_command *temp;
+    char    *cmd;
+    
     i = 0;
+    temp = minishell->list_of_command;
     while(i < nbr_of_command)
     {
-        waitpid(pid[i], NULL, 0);
+        cmd = copy_string(temp->command->string, minishell->envp, minishell->last_status);
+        wait_proof(minishell, pid[i]);
+        ms_error(cmd, NULL, minishell->last_status);
+        temp = temp->next;
         i++;
     }
 }
