@@ -6,15 +6,14 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:23:30 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/29 18:10:35 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/30 10:10:03 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int handle_del(t_string *list, t_pipe *pipe_info)
+int handle_del(char *str)
 {
-    (void) (pipe_info);
     char *input;
     int fd[2];
     int pid;
@@ -25,7 +24,7 @@ int handle_del(t_string *list, t_pipe *pipe_info)
     {
         close (fd[0]);
         input = readline(">");
-        while (ft_strncmp(list->string, input, ft_strlen(input) + 1) != 0)
+        while (ft_strncmp(str, input, ft_strlen(input) + 1) != 0)
         {
             write(fd[1], input, ft_strlen(input));
             write(fd[1], "\n", 1);
@@ -39,50 +38,70 @@ int handle_del(t_string *list, t_pipe *pipe_info)
     return (fd[0]);
 }
 
-int find_input(t_string *input, t_pipe *pipe_info)
-{
-    t_string *temp;
-
+ int ambiguous_redirect(char *str, t_core *minishell)
+ {
+    int i;
     int fd;
-    
-    temp = input;
-    while (temp)
+
+    fd = 0;
+    i = 0;
+    while(str[i])
     {
-        if (temp->append_or_heredoc == 1)
+        if (str[i] == ' ')
         {
-            fd = handle_del(temp, pipe_info);
-        }
-        else
-        {
-            fd = open(temp->string, O_RDONLY);
-            //exit (-1);
-        }
-        //if (fd == -1 gerer erreur) 
-        temp = temp->next;
+            fd = -1;
+            errno = -2;
+            minishell->last_status = 1;
+            return (fd);
+        }  
+        i++;  
     }
     return (fd);
-}
+ }
 
-int find_output(t_string *output, t_core *minishell)
+int find_input(t_string *input, t_core *minishell)
 {
     t_string *temp;
     char *new_str;
     int fd;
     
-    temp = output;
+    temp = input;
     while (temp)
     {
-        new_str = copy_string(temp->string, minishell->envp, minishell->last_status);
-        
-        printf("la new str : %s\n", new_str);
+        new_str = copy_string(input->string, minishell->envp, minishell->last_status);
+        fd = ambiguous_redirect(new_str, minishell);
+        if (fd == -1)
+            return (fd);
         if (temp->append_or_heredoc == 1)
-            fd = open(temp->string, O_WRONLY | O_CREAT | O_APPEND, S_IRWXU);
+            fd = handle_del(new_str);
         else
-            fd = open(new_str, O_WRONLY | O_CREAT | O_TRUNC, S_IRWXU);
-            printf("fd = %d\n", fd);
+            fd = open(new_str, O_RDONLY);
         temp = temp->next;
     }
     return (fd);
 }
 
 
+int find_output(t_string *output, t_core *minishell)
+{
+    t_string *temp;
+    int fd;
+    char *new_str;
+    
+    temp = output;
+    while (temp)
+    {
+        new_str = copy_string(output->string, minishell->envp, minishell->last_status);
+        fd = ambiguous_redirect(new_str, minishell);
+        if (fd == -1)
+            return (fd);
+        if (temp->append_or_heredoc == 1)
+            fd = open(new_str, O_WRONLY | O_CREAT | O_APPEND, S_IRWXU);
+        else
+            fd = open(new_str, O_WRONLY | O_CREAT | O_TRUNC, S_IRWXU);
+        temp = temp->next;
+    }
+    return (fd);
+}
+
+ 

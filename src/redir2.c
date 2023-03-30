@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:23:30 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/29 18:03:13 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/30 10:10:54 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int init_fd(t_core *minishell, t_pipe *pipe_info)
         pipe_info->fd_input = STDIN_FILENO ;
     else
     {
-        pipe_info->fd_input = find_input(list->input, pipe_info);
+        pipe_info->fd_input = find_input(list->input, minishell);
         if (pipe_info->fd_input == -1)
         {
             ms_error(list->input->string, NULL, errno);

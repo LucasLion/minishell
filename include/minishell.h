@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/29 18:03:08 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/30 10:08:55 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,9 +249,8 @@ int 	env(char **envp);
 /* -------------- REDIR.c -------------- */
 
 //TROP LONGUE
-int 	handle_del(t_string *list, t_pipe *pipe_info);
-int 	find_input(t_string *input, t_pipe *pipe_info);
-//int 	find_output(t_string *output);
+int 	handle_del(char *str);
+int 	find_input(t_string *input, t_core *minishell);
 int 	find_output(t_string *output, t_core *minishell);
 
 /* -------------- REDIR2.c -------------- */
