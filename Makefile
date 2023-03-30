@@ -6,7 +6,7 @@
 #    By: amouly <amouly@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 15:27:43 by llion             #+#    #+#              #
-#    Updated: 2023/03/29 12:04:28 by llion            ###   ########.fr        #
+#    Updated: 2023/03/30 12:06:17 by llion            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,7 @@ SOURCES = 	cd.c			\
 			
 			
 
+UNAME := $(shell uname)
 OBJS = ${addprefix objs/,${notdir ${SOURCES:.c=.o}}}
 
 all :  ${NAME}
@@ -58,25 +59,50 @@ objs/%.o : src/%.c
 	@${CC} ${FLAGS} ${HEADERS} -c $< -o $@
 
 
-${NAME} : ${OBJS} 
+$(NAME) : $(OBJS) 
 	@make -sC libft
-	@gcc  ${FLAGS} ${OBJS} ${LIBFT} ${READLINE} ${HEADERS} -o ${NAME}	
+	@gcc  $(FLAGS) $(OBJS) $(LIBFT) $(READLINE) $(HEADERS) -o $(NAME)	
+ifeq ($(UNAME),Linux)
+	@echo -e "-----> minishell        \033[32mCOMPILED\033[0m"
+endif
+ifeq ($(UNAME),Darwin)
 	@echo "-----> minishell        \033[32mCOMPILED\033[0m"
+endif
 	
 
-debug : ${OBJS} ${OBJBONUS} 
+debug : $(OBJS) $(OBJBONUS) 
 	@make -sC libft
 	@gcc ${FLAGS} ${OBJS} ${LIBFT} ${HEADERS} -fsanitize=address -o ${NAME}  ${READLINE}
+ifeq ($(UNAME),Linux)
+	@echo -e  "-----> minishell \033[31m(DEBUG)\033[32mCOMPILED\033[0m"
+endif
+ifeq ($(UNAME),Darwin)
 	@echo "-----> minishell \033[31m(DEBUG)\033[32mCOMPILED\033[0m"
+endif
 
 clean :
-	@rm -f ${OBJS} objs/%.o ${OBJBONUS} 
-	@echo "-----> objects          \033[32mREMOVED\033[0m"
 	@make clean -sC libft
+	@rm -f ${OBJS} objs/%.o ${OBJBONUS} 
+ifeq ($(UNAME),Linux)
+	@echo -e "-----> objects          \033[32mREMOVED\033[0m"
+endif
+ifeq ($(UNAME),Darwin)
+	@echo "-----> objects          \033[32mREMOVED\033[0m"
+endif
 
 fclean : clean
 	@rm -rf ${NAME} *.dSYM
 	@make fclean -sC libft
+ifeq ($(UNAME),Linux)
+	@echo -e "-----> minishell        \033[32mREMOVED\033[0m"
+endif
+ifeq ($(UNAME),Darwin)
 	@echo "-----> minishell        \033[32mREMOVED\033[0m"
+endif
 
 re : fclean all
+
+foo:
+
+
+
