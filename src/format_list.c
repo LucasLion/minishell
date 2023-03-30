@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 15:50:37 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/28 15:57:30 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/30 13:40:43 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,33 @@ int add_space_before (t_char *node)
     return (1);
 }
 
+int only_space_left(t_char *node)
+{
+    t_char *temp;
+
+    temp = node;
+    if (temp == NULL)
+        return (1);
+    while (temp)
+    {
+        if (temp->character != ' ' && temp->character != '\t' )
+            return (0);
+        temp = temp->next;
+    }
+    return (1);
+    
+}
+
+
 int format_pipe(t_char *node)
 {
-    if (node->character == '|'  && node->next != NULL) 
+    if (node->character == '|') 
     {
+        if (only_space_left(node->next))
+        {
+            printf("Syntax error, don't finish with a pipe\n");
+               return (0);
+        }
         if (node->next->character == '|')
         {
             printf("Syntax error, more than one pipe together\n");
