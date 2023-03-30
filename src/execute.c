@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:22:46 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/29 17:25:15 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/30 10:45:13 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void execute_one_command(t_core *minishell, t_pipe *pipe_info)
         pipe_info->cmd = copy_string(minishell->list_of_command->command->string, minishell->envp, minishell->last_status); 
     if (minishell->list_of_command->command)
         pipe_info->tab_arg = list_to_tab(minishell->list_of_command, minishell->envp, minishell->last_status);
-    if (init_fd(minishell->list_of_command, pipe_info) != 0)
+    if (init_fd(minishell, pipe_info) != 0)
         return ; 
     if (pipe_info->cmd)
     {

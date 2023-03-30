@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:22:46 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/29 15:25:12 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/30 13:29:43 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,12 @@ int managing_pipe(t_core *minishell, t_pipe *pipe_info, int **fd)
 {
     t_command *temp = minishell->list_of_command;
 
-    //pipe_info->i = 0;
     int pid[pipe_info->nbr_of_commands];
     while (pipe_info->i <= pipe_info->nbr_of_pipes)
     {
         pipe_info->cmd = copy_string(temp->command->string, minishell->envp, minishell->last_status);
         pipe_info->tab_arg = list_to_tab(temp, minishell->envp, minishell->last_status);
-        init_fd(temp, pipe_info);
+        init_fd(minishell, pipe_info);
         pid[pipe_info->i] = fork();
         // HANDLE ERROR
         if (pid[pipe_info->i] < 0)
