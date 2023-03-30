@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/30 13:46:14 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/30 13:52:23 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,25 @@ int	exit_shell(int status, char **argv)
 	int i;
 
 	i = 0;
-	while (argv[1][i])
+	if (argv[1])
 	{
-		if (argv[1][i] <= '0' || argv[1][i] >= '9')
+		while (argv[1][i])
 		{
-			ms_error("exit", argv[i], 2);
-			exit (2 % 255);
+			if (argv[1][i] <= '0' || argv[1][i] >= '9')
+			{
+				ms_error("exit", argv[i], 2);
+				exit (2 % 255);
+			}
+			i++;
 		}
-		i++;
+		if (ft_tablen(argv) > 2)
+		{
+			ms_error("exit", NULL, 1);
+			exit (1 % 255);
+		}
+		exit(ft_atoi(argv[1]) % 255);
 	}
-	if (ft_tablen(argv) > 2)
-	{
-		ms_error("exit", NULL, 1);
-		exit (1 % 255);
-	}
-	exit(ft_atoi(argv[1]) % 255);
+	exit(0);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	else if (WIFSIGNALED(status))
