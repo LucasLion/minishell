@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/30 13:52:23 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/30 14:00:57 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,20 @@ int	exit_shell(int status, char **argv)
 		{
 			if (argv[1][i] <= '0' || argv[1][i] >= '9')
 			{
-				ms_error("exit", argv[i], 2);
+				ms_error("exit", argv[i], -4);
 				exit (2 % 255);
 			}
 			i++;
 		}
 		if (ft_tablen(argv) > 2)
 		{
-			ms_error("exit", NULL, 1);
+			ms_error("exit", NULL, -5);
 			exit (1 % 255);
 		}
+		ms_error("exit", NULL, 1);
 		exit(ft_atoi(argv[1]) % 255);
 	}
-	exit(0);
+	exit(status);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	else if (WIFSIGNALED(status))
@@ -77,11 +78,11 @@ int	ms_error(char *cmd, char *input, int error)
 		printf("Minishell: %s: ambiguous redirect \n", cmd);
 	else if (error == 127)
 		printf("Minishell: %s: command not found \n", cmd);
-	else if (error == 1 && ft_strncmp(cmd, "exit", 4) == 0)
+	else if (error == -5 && ft_strncmp(cmd, "exit", 4) == 0)
 		printf("Minishell: %s: too many arguments\n", cmd);
-	else if (error == 1)
+	else if (error == -5)
 		printf("Minishell: %s: not a valid identifier\n", cmd);
-	else if (error == 2)
+	else if (error == -4)
 		printf("Minishell: %s: argument numérique nécessaire\n", cmd);
 	else
 		write_error(cmd, input, error);
