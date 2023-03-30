@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/30 10:05:30 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/30 10:43:07 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ int	ms_error(char *cmd, char *input, int error)
 
 	if (error == 0)
 		return (error);
+	else if (error == -3)
+		printf("Minishell: syntax error near unexpected token `newline'\n");
 	else if (error == -2)
 		printf("Minishell: %s: ambiguous redirect \n", cmd);
 	else if (error == 127)

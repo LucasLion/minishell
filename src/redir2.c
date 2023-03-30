@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:23:30 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/30 10:10:54 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/30 10:44:50 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int init_fd(t_core *minishell, t_pipe *pipe_info)
 {
     t_command *list = minishell->list_of_command;
-    if (list && list->input == NULL)
+    if (list == NULL || list->input == NULL)
         pipe_info->fd_input = STDIN_FILENO ;
     else
     {
@@ -26,7 +26,7 @@ int init_fd(t_core *minishell, t_pipe *pipe_info)
             return (1);
         }    
     }
-    if (list && list->output == NULL)
+    if (list == NULL || list->output == NULL)
         pipe_info->fd_output = STDOUT_FILENO;
     else
     {

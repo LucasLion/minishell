@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:23:30 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/30 10:10:03 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/30 10:45:02 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,9 @@ int handle_del(char *str)
     {
         if (str[i] == ' ')
         {
-            fd = -1;
             errno = -2;
             minishell->last_status = 1;
-            return (fd);
+            return (-1);
         }  
         i++;  
     }

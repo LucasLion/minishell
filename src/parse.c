@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 15:03:31 by event             #+#    #+#             */
-/*   Updated: 2023/03/28 15:35:27 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/30 10:46:53 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,29 @@ void handle_chevrons(char **tab, int index, t_command *new)
     }
 }
 
-void find_command_until_pipe(char **tab, int *i,t_command *new)
+int find_command_until_pipe(char **tab, int *i, t_command *new, t_core *minishell)
 {
+    int ret;
+    
+    ret = 0;
     if (tab[*i][0] == '<' || tab[*i][0] == '>')
     {
+        if (tab[*i][1] == '\0')
+        {
+            errno = -3;
+            minishell->last_status = 258;
+            return (1);
+        }
         handle_chevrons(tab, *i, new);
         (*i)++;
     }
     else
         fill_list_string(tab[*i], &(new->command));
+    return (ret);
 }
 
 
-int fill_list_command(char **tab, int *i, t_command **list, int *count)
+int fill_list_command(char **tab, int *i, t_core *minishell, int *count)
 {
     t_command   *new;
 
@@ -54,7 +64,8 @@ int fill_list_command(char **tab, int *i, t_command **list, int *count)
     init_struct_command(new);
     while(tab[*i] && (tab[*i][0] != '|' || tab[*i][1] != '\0'))
         {
-            find_command_until_pipe(tab, i, new);
+            if (find_command_until_pipe(tab, i, new, minishell))   
+                return (0);
             (*i)++;
         }
         if (tab[*i] && (tab[*i][0] == '|' && tab[*i][1] == '\0'))
@@ -64,7 +75,7 @@ int fill_list_command(char **tab, int *i, t_command **list, int *count)
         }
     new->order = *count;
     new->next = NULL;
-    if (!lstadd_back_list_command(list, new))
+    if (!lstadd_back_list_command(&(minishell->list_of_command), new))
         return (0);
     return (1);
 }
@@ -83,9 +94,10 @@ int parse_input(t_core *minishell)
     while(tab[i])
     {
         count++;
-        if (!fill_list_command(tab, &i, &(minishell->list_of_command), &count))
+        if (!fill_list_command(tab, &i, minishell, &count))
         {
             clean_list_command(&(minishell->list_of_command));
+            ms_error(NULL, NULL, errno);
             return (0) ;
         }
     }

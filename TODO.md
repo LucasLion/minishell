@@ -28,7 +28,7 @@
 	- [OK] echo $USER$USE pb de taille - antoine
 	-      chevron vers la droite il faut une erreur (command not found) - antoine
 	-      il faut un heredoc pour echo | - antoine
-	-      ambigous redirect : export out="file1 file2" echo hello > $out - antoine
+	- [OK] ambigous redirect : export out="file1 file2" echo hello > $out - antoine
 
 	- [OK] double quotes donne un path - on verra
 	- [OK] export toto=10 -> segfault quand creation->unset->export - lucas
