@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:22:46 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/30 14:40:06 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/30 15:19:10 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,10 @@ int managing_pipe(t_core *minishell, t_pipe *pipe_info, int **fd)
             printf("error de fork\n");
         else if(pid[pipe_info->i] == 0)
             child_process(pipe_info, fd, minishell->envp);
+        free(pipe_info->cmd);
+        free_tab2(pipe_info->tab_arg);
         if (pipe_info->i < pipe_info->nbr_of_commands)
-            temp = temp->next; 
+            temp = temp->next;
         pipe_info->i++;  
     }
     close_fd_everyhing(fd,pipe_info->nbr_of_pipes);

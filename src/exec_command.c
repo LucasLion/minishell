@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/30 13:45:09 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/30 15:39:15 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ char	**get_path_split(char **envp)
 		i++;
 	}
 	split_path = ft_split(path+5, ':');
+	free(path);
 	return (split_path);
 }
 
@@ -42,15 +43,19 @@ char	*get_path(char **envp, char *cmd)
 	split_path = get_path_split(envp);
 	while(split_path[i])
 	{
-		tmp = ft_calloc(ft_strlen(split_path[i]) + 1, sizeof(char));
+		//tmp = ft_calloc(ft_strlen(split_path[i]) + 1, sizeof(char));
 		tmp = ft_strjoin(split_path[i], "/");
 		ret = ft_strjoin(tmp, cmd);
 		free(tmp);
 		if (access(ret, X_OK) == 0)
+		{
+			free_tab2(split_path);
 			return (ret);
+		}
 		free (ret);
 		i++;
 	}
+	free_tab2(split_path);
 	if (access(cmd, X_OK) == 0)
 		return (cmd);
 	return (cmd);

@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:22:46 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/30 10:45:13 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/30 15:27:50 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,11 @@ int execute(t_core *minishell)
     list = minishell->list_of_command;
     init_pipe_info(&pipe_info, list);
     if (pipe_info.nbr_of_commands == 1)
+    {
         execute_one_command(minishell, &pipe_info);
+        free (pipe_info.cmd);
+        free_tab2(pipe_info.tab_arg);
+    }   
     else 
     {
         int **fd;
@@ -61,6 +65,7 @@ int execute(t_core *minishell)
         fd = malloc(sizeof (int *) * pipe_info.nbr_of_pipes);
         fd = create_pipes(pipe_info.nbr_of_pipes, fd);
         managing_pipe(minishell, &pipe_info, fd);
+        free(fd);
     }
     return (0);
 }

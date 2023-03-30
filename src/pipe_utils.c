@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:22:46 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/30 14:51:09 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/30 15:51:53 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void close_fd_everyhing(int **fd, int nbr_of_pipes)
     {
         close (fd[i][0]);
         close (fd[i][1]);
+        free (fd[i]);
         i++;
     }
 }
@@ -86,6 +87,7 @@ void wait_all_pid(int *pid, int nbr_of_command, t_core *minishell)
         cmd = copy_string(temp->command->string, minishell->envp, minishell->last_status);
         wait_proof(minishell, pid[i]);
         ms_error(cmd, NULL, minishell->last_status);
+        free (cmd);
         temp = temp->next;
         i++;
     }
