@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/30 12:37:43 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/30 13:44:49 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,8 +221,8 @@ void	free_tab3(char ***tab);
 /* -------------- PARSE.c -------------- */
 
 void 	handle_chevrons(char **tab, int index, t_command *new);
-void 	find_command_until_pipe(char **tab, int *i,t_command *new);
-int 	fill_list_command(char **tab, int *i, t_command **list, int *count);
+int 	find_command_until_pipe(char **tab, int *i, t_command *new, t_core *minishell);
+int 	fill_list_command(char **tab, int *i, t_core *minishell, int *count);
 int 	parse_input(t_core *minishell);
 
 /* -------------- PIPE_UTILS.c -------------- */
@@ -249,13 +249,14 @@ int 	env(char **envp);
 /* -------------- REDIR.c -------------- */
 
 //TROP LONGUE
-int 	handle_del(t_string *list, t_pipe *pipe_info);
-int 	find_input(t_string *input, t_pipe *pipe_info);
-int 	find_output(t_string *output);
+int 	handle_del(char *str);
+int 	find_input(t_string *input, t_core *minishell);
+int 	find_output(t_string *output, t_core *minishell);
 
 /* -------------- REDIR2.c -------------- */
 
-int		init_fd(t_command *list, t_pipe *pipe_info);
+//int		init_fd(t_command *list, t_pipe *pipe_info);
+int 	init_fd(t_core *minishell, t_pipe *pipe_info);
 void 	redir_execve(t_core *minishell, t_pipe *pipe_info);
 void 	redir_builtin(t_core *minishell, t_pipe *pipe_info);
 
