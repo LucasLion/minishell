@@ -6,7 +6,7 @@
 #    By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/27 19:07:53 by llion             #+#    #+#              #
-#    Updated: 2023/03/28 16:05:48 by llion            ###   ########.fr        #
+#    Updated: 2023/03/30 12:08:51 by llion            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -87,10 +87,7 @@ OBJS 		= ${addprefix objs/,${notdir ${SRCS:.c=.o}}}
 AR			= ar rc
 RM			= rm -f
 LIB			= ranlib
-
-
-#.c.o:
-#			$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
+UNAME 		:= $(shell uname)
 
 all:		$(NAME)
 
@@ -102,15 +99,24 @@ objs/%.o : 	src/%.c
 $(NAME):	$(OBJS)
 			@$(AR) $(NAME) $(OBJS) 
 			@$(LIB) $(NAME)
-			@echo "-----> libft            \033[32mCREATED\033[0m"
-
+ifeq ($(UNAME),Linux)
+	@echo -e "-----> libft            \033[32mCREATED\033[0m"
+endif
+ifeq ($(UNAME),Darwin)
+	@echo "-----> libft            \033[32mCREATED\033[0m"
+endif
 
 clean:		
 			@$(RM) $(OBJS) objs/%.o
 
 fclean:		clean
 			@$(RM) $(NAME)
-			@echo "-----> libft            \033[32mREMOVED\033[0m"
+ifeq ($(UNAME),Linux)
+	@echo -e "-----> libft            \033[32mREMOVED\033[0m"
+endif
+ifeq ($(UNAME),Darwin)
+	@echo "-----> libft            \033[32mREMOVED\033[0m"
+endif
 
 re:			fclean all
 
