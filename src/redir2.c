@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:23:30 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/29 17:24:57 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/30 12:33:04 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,14 @@ int init_fd(t_command *list, t_pipe *pipe_info)
         }  
     }
     return (0);
+}
+
+void    wait_proof(t_core *minishell, int pid)
+{
+    int status;
+    waitpid(pid, &status, 0);
+    if (WIFEXITED(status))
+        minishell->last_status = WEXITSTATUS(status) % 255;
 }
 
 void redir_execve(t_core *minishell, t_pipe *pipe_info)

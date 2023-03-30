@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/29 17:21:07 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/30 12:37:43 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ int 	execute(t_core *minishell);
 
 /* -------------- EXIT.c -------------- */
 
-int		exit_shell(int status);
+int		exit_shell(int status, char **argv);
 void    wait_proof(t_core *minishell, int pid);
 void	write_error(char *cmd, char *input, int error_no);
 int		ms_error(char *cmd, char *input, int error);

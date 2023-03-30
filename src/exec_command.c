@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/29 17:19:46 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/30 12:39:54 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,50 +62,39 @@ char *is_builtin(char *cmd)
 {
 	if (ft_strncmp(cmd, "echo", ft_strlen(cmd) + 1) == 0)
 		return ("echo");
-    else if (ft_strncmp(cmd, "cd", ft_strlen(cmd) + 1) == 0)
+	else if (ft_strncmp(cmd, "cd", ft_strlen(cmd) + 1) == 0)
         return ("cd");
-    else if (ft_strncmp(cmd, "pwd", ft_strlen(cmd) + 1) == 0)
+	else if (ft_strncmp(cmd, "pwd", ft_strlen(cmd) + 1) == 0)
         return ("pwd");
-    else if (ft_strncmp(cmd, "export", ft_strlen(cmd) + 1) == 0)
+	else if (ft_strncmp(cmd, "export", ft_strlen(cmd) + 1) == 0)
         return ("export");
-    else if (ft_strncmp(cmd, "unset", ft_strlen(cmd) + 1) == 0)
+	else if (ft_strncmp(cmd, "unset", ft_strlen(cmd) + 1) == 0)
         return ("unset");
-    else if (ft_strncmp(cmd, "env",	ft_strlen(cmd) + 1) == 0)
+	else if (ft_strncmp(cmd, "env",	ft_strlen(cmd) + 1) == 0)
         return ("env");
-    else if (ft_strncmp(cmd, "exit", ft_strlen(cmd) + 1) == 0)
+	else if (ft_strncmp(cmd, "exit", ft_strlen(cmd) + 1) == 0)
         return ("exit");
-    else
+	else
         return (NULL);
 }
 
 int	exec_builtin(char *builtin, char **argv, char ***envp, int *status)
 {
-    if (ft_strncmp(builtin, "pwd", ft_strlen(builtin)) == 0)
+	if (ft_strncmp(builtin, "pwd", ft_strlen(builtin)) == 0)
         *status = pwd();
-    else if (ft_strncmp(builtin, "export", ft_strlen(builtin)) == 0)
+	else if (ft_strncmp(builtin, "export", ft_strlen(builtin)) == 0)
 		*status = ms_export(argv, envp);
-    else if (ft_strncmp(builtin, "unset", ft_strlen(builtin)) == 0)
+	else if (ft_strncmp(builtin, "unset", ft_strlen(builtin)) == 0)
         *status = unset(argv, envp);
-    else if (ft_strncmp(builtin, "exit", ft_strlen(builtin)) == 0)
-        *status = exit_shell(*status);
-    else if (ft_strncmp(builtin, "env", ft_strlen(builtin)) == 0)
+	else if (ft_strncmp(builtin, "exit", ft_strlen(builtin)) == 0)
+        *status = exit_shell(*status, argv);
+	else if (ft_strncmp(builtin, "env", ft_strlen(builtin)) == 0)
         *status = env(*envp);
-    else if (ft_strncmp(builtin, "echo", ft_strlen(builtin)) == 0)
+	else if (ft_strncmp(builtin, "echo", ft_strlen(builtin)) == 0)
 		*status = echo(argv);
 	else if (ft_strncmp(builtin, "cd", ft_strlen(builtin)) == 0)
 		*status = cd(argv[1], *envp);
 	return (*status % 255);
-}
-
-void	exec_command_v2(char *command, char **argv, char ***envp, int *status)
-{
-	char	*path;
-	
-	
-	path = get_path(*envp, command);
-	if (execve(path, argv, *envp) == -1)
-		exit_shell(127);
-	exit_shell(*status);
 }
 
 void	exec_command(char *command, char **argv, char ***envp)
@@ -113,9 +102,9 @@ void	exec_command(char *command, char **argv, char ***envp)
 	char	*path;
 	
 	path = get_path(*envp, command);
+	signal(SIGQUIT, SIG_DFL);
 	if (execve(path, argv, *envp) == -1)
-		exit_shell(127);
-	exit_shell(errno);
+		exit_shell(127, argv);
+    signal(SIGQUIT, SIG_IGN);
+	exit_shell(errno, argv);
 }
-
-
