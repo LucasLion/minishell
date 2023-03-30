@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 15:03:31 by event             #+#    #+#             */
-/*   Updated: 2023/03/30 10:46:53 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/30 11:00:59 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int find_command_until_pipe(char **tab, int *i, t_command *new, t_core *minishel
     ret = 0;
     if (tab[*i][0] == '<' || tab[*i][0] == '>')
     {
-        if (tab[*i][1] == '\0')
+        if (tab[*i + 1] == NULL)
         {
             errno = -3;
             minishell->last_status = 258;

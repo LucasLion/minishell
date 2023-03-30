@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:23:30 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/30 10:45:02 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/30 11:12:00 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,11 @@ int find_input(t_string *input, t_core *minishell)
     temp = input;
     while (temp)
     {
-        new_str = copy_string(input->string, minishell->envp, minishell->last_status);
+        new_str = copy_string(temp->string, minishell->envp, minishell->last_status);
         fd = ambiguous_redirect(new_str, minishell);
         if (fd == -1)
             return (fd);
-        if (temp->append_or_heredoc == 1)
+        else if (temp->append_or_heredoc == 1)
             fd = handle_del(new_str);
         else
             fd = open(new_str, O_RDONLY);
@@ -86,11 +86,10 @@ int find_output(t_string *output, t_core *minishell)
     t_string *temp;
     int fd;
     char *new_str;
-    
     temp = output;
     while (temp)
     {
-        new_str = copy_string(output->string, minishell->envp, minishell->last_status);
+        new_str = copy_string(temp->string, minishell->envp, minishell->last_status);
         fd = ambiguous_redirect(new_str, minishell);
         if (fd == -1)
             return (fd);
