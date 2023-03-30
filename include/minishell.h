@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/30 14:29:06 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/30 17:09:58 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ typedef struct s_core
 	int				pid;
 	char			*input;
 	char			**envp;
+	char			*redir;
 	
 	
 }					t_core;
@@ -256,7 +257,7 @@ int 	find_output(t_string *output, t_core *minishell);
 /* -------------- REDIR2.c -------------- */
 
 //int		init_fd(t_command *list, t_pipe *pipe_info);
-int 	init_fd(t_core *minishell, t_pipe *pipe_info);
+int 	init_fd(t_core *minishell, t_pipe *pipe_info, t_command *list);
 void 	redir_execve(t_core *minishell, t_pipe *pipe_info);
 void 	redir_builtin(t_core *minishell, t_pipe *pipe_info);
 

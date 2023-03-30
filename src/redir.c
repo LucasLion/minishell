@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:23:30 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/30 11:12:00 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/30 17:22:29 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,14 @@ int find_input(t_string *input, t_core *minishell)
             fd = handle_del(new_str);
         else
             fd = open(new_str, O_RDONLY);
+        if (fd == -1)
+        {
+            minishell->redir = ft_strdup(new_str);
+            free(new_str);
+            return (fd);
+        }
         temp = temp->next;
+        free(new_str);
     }
     return (fd);
 }
@@ -86,6 +93,7 @@ int find_output(t_string *output, t_core *minishell)
     t_string *temp;
     int fd;
     char *new_str;
+    
     temp = output;
     while (temp)
     {
@@ -93,11 +101,18 @@ int find_output(t_string *output, t_core *minishell)
         fd = ambiguous_redirect(new_str, minishell);
         if (fd == -1)
             return (fd);
-        if (temp->append_or_heredoc == 1)
+        else if (temp->append_or_heredoc == 1)
             fd = open(new_str, O_WRONLY | O_CREAT | O_APPEND, S_IRWXU);
         else
             fd = open(new_str, O_WRONLY | O_CREAT | O_TRUNC, S_IRWXU);
+        if (fd == -1)
+        {
+            minishell->redir = ft_strdup(new_str);
+            free(new_str);
+            return (fd);
+        }
         temp = temp->next;
+        free(new_str);
     }
     return (fd);
 }
