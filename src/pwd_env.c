@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 14:21:07 by llion             #+#    #+#             */
-/*   Updated: 2023/03/29 13:23:12 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/30 16:08:29 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,15 @@ int	pwd()
 int env(char **envp)
 {
     int		i;
-	char	*val;
+	char	*value;
 
     i = 0;
     while (envp[i])
 	{
-		val = extract_val(envp[i]);
+		value = val(envp[i]);
 		if (envp[i] == NULL)
 			return (ms_error("env", NULL, errno));
-		else if (val == NULL)
+		else if (value == NULL)
 			i++;
 		else
 			printf("%s\n", envp[i++]);
