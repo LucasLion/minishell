@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:22:46 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/31 13:44:49 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/31 16:54:10 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	child_last_pipe(t_pipe *pipe_info, int **fd, char **envp)
 	else
 		dup2(fd[pipe_info->i - 1][0], pipe_info->fd_input);
 	close_fd_everyhing_but_one(fd, pipe_info->nbr_of_pipes, pipe_info->i - 1,
-			0);
+		0);
 	exec_command(pipe_info->cmd, pipe_info->tab_arg, &envp);
 	close(fd[pipe_info->i - 1][0]);
 }
@@ -52,7 +52,7 @@ void	child_middle_pipe(t_pipe *pipe_info, int **fd, char **envp)
 	if (pipe_info->fd_input != 0)
 		dup2(pipe_info->fd_input, STDIN_FILENO);
 	close_fd_everyhing_but_two(fd, pipe_info->nbr_of_pipes, pipe_info->i - 1,
-			pipe_info->i);
+		pipe_info->i);
 	dup2(fd[pipe_info->i - 1][0], pipe_info->fd_input);
 	dup2(fd[pipe_info->i][1], pipe_info->fd_output);
 	exec_command(pipe_info->cmd, pipe_info->tab_arg, &envp);
@@ -80,31 +80,31 @@ int	child_process(t_pipe *pipe_info, int **fd, char **envp)
 	return (0);
 }
 
-int	managing_pipe(t_core *minishell, t_pipe *pipe_info, int **fd)
+int	managing_pipe(t_core *m, t_pipe *pi, int **fd)
 {
-	t_command	*temp;
-	int			pid[pipe_info->nbr_of_commands];
+	t_command	*t;
+	int			*pid;
 
-	temp = minishell->list_of_command;
-	while (pipe_info->i <= pipe_info->nbr_of_pipes)
+	pid = ft_calloc(pi->nbr_of_commands, sizeof(int));
+	t = m->list_of_command;
+	while (pi->i <= pi->nbr_of_pipes)
 	{
-		pipe_info->cmd = copy_string(temp->command->string, minishell->envp,
-				minishell->last_status);
-		pipe_info->tab_arg = list_to_tab(temp, minishell->envp,
-				minishell->last_status);
-		init_fd(minishell, pipe_info, temp);
-		pid[pipe_info->i] = fork();
-		if (pid[pipe_info->i] < 0)
+		pi->cmd = copy_string(t->command->string, m->envp,
+				m->last_status);
+		pi->tab_arg = list_to_tab(t, m->envp, m->last_status);
+		init_fd(m, pi, t);
+		pid[pi->i] = fork();
+		if (pid[pi->i] < 0)
 			printf("error de fork\n");
-		else if (pid[pipe_info->i] == 0)
-			child_process(pipe_info, fd, minishell->envp);
-		free(pipe_info->cmd);
-		free_tab2(pipe_info->tab_arg);
-		if (pipe_info->i < pipe_info->nbr_of_commands)
-			temp = temp->next;
-		pipe_info->i++;
+		else if (pid[pi->i] == 0)
+			child_process(pi, fd, m->envp);
+		free(pi->cmd);
+		free_tab2(pi->tab_arg);
+		if (pi->i < pi->nbr_of_commands)
+			t = t->next;
+		pi->i++;
 	}
-	close_fd_everyhing(fd, pipe_info->nbr_of_pipes);
-	wait_all_pid(pid, pipe_info->nbr_of_commands, minishell);
+	close_fd_everyhing(fd, pi->nbr_of_pipes);
+	wait_all_pid(pid, pi->nbr_of_commands, m);
 	return (0);
 }

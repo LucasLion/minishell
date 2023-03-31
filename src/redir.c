@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:23:30 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/31 13:45:31 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/31 16:26:08 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	ambiguous_redirect(char *str, t_core *minishell)
 	return (fd);
 }
 
-int	find_input(t_string *input, t_core *minishell)
+int	find_input(t_string *input, t_core *m)
 {
 	t_string	*temp;
 	char		*new_str;
@@ -67,9 +67,8 @@ int	find_input(t_string *input, t_core *minishell)
 	temp = input;
 	while (temp)
 	{
-		new_str = copy_string(temp->string, minishell->envp,
-				minishell->last_status);
-		fd = ambiguous_redirect(new_str, minishell);
+		new_str = copy_string(temp->string, m->envp, m->last_status);
+		fd = ambiguous_redirect(new_str, m);
 		if (fd == -1)
 			return (fd);
 		else if (temp->append_or_heredoc == 1)
@@ -78,7 +77,7 @@ int	find_input(t_string *input, t_core *minishell)
 			fd = open(new_str, O_RDONLY);
 		if (fd == -1)
 		{
-			minishell->redir = ft_strdup(new_str);
+			m->redir = ft_strdup(new_str);
 			free(new_str);
 			return (fd);
 		}
@@ -88,7 +87,7 @@ int	find_input(t_string *input, t_core *minishell)
 	return (fd);
 }
 
-int	find_output(t_string *output, t_core *minishell)
+int	find_output(t_string *output, t_core *m)
 {
 	t_string	*temp;
 	int			fd;
@@ -97,9 +96,8 @@ int	find_output(t_string *output, t_core *minishell)
 	temp = output;
 	while (temp)
 	{
-		new_str = copy_string(temp->string, minishell->envp,
-				minishell->last_status);
-		fd = ambiguous_redirect(new_str, minishell);
+		new_str = copy_string(temp->string, m->envp, m->last_status);
+		fd = ambiguous_redirect(new_str, m);
 		if (fd == -1)
 			return (fd);
 		else if (temp->append_or_heredoc == 1)
@@ -108,7 +106,7 @@ int	find_output(t_string *output, t_core *minishell)
 			fd = open(new_str, O_WRONLY | O_CREAT | O_TRUNC, S_IRWXU);
 		if (fd == -1)
 		{
-			minishell->redir = ft_strdup(new_str);
+			m->redir = ft_strdup(new_str);
 			free(new_str);
 			return (fd);
 		}

@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 15:50:37 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/31 13:42:29 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/31 16:41:03 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void	print_input_after_formating(char *line_input)
 	printf("%s\n", line_formated);
 	split_and_print(line_formated);
 }
+
 int	only_space_left(t_char *node)
 {
 	t_char	*temp;

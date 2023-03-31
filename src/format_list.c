@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 15:50:37 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/31 13:42:38 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/31 16:45:48 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,8 @@ int	format_list(t_char *list)
 		if (flag == 0 && (temp->character == '|' || temp->character == '>'
 				|| temp->character == '<'))
 		{
-			if (!add_space_before(temp) || !format_pipe(temp) ||
-				!format_chevron_inf(temp) || !format_chevron_sup(temp))
+			if (!add_space_before(temp) || !format_pipe(temp)
+				|| !format_chevron_inf(temp) || !format_chevron_sup(temp))
 				return (0);
 			if (format_chevron_inf(temp) == 2)
 				temp = temp->next;

@@ -6,44 +6,43 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:22:46 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/31 13:51:22 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/31 16:40:18 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	init_pipe_info(t_pipe *pipe_info, t_command *list)
+void	init_pipe_info(t_pipe *p, t_command *list)
 {
-	pipe_info->nbr_of_pipes = 0;
-	pipe_info->nbr_of_commands = length_list_command(list,
-			&(pipe_info->nbr_of_pipes));
-	pipe_info->i = 0;
-	pipe_info->cmd = "";
-	pipe_info->tab_arg = NULL;
-	pipe_info->fd_input = 0;
-	pipe_info->fd_output = 1;
+	p->nbr_of_pipes = 0;
+	p->nbr_of_commands = length_list_command(list,
+			&(p->nbr_of_pipes));
+	p->i = 0;
+	p->cmd = "";
+	p->tab_arg = NULL;
+	p->fd_input = 0;
+	p->fd_output = 1;
 }
 
-void	execute_one_command(t_core *minishell, t_pipe *pipe_info)
+void	execute_one_command(t_core *m, t_pipe *pipe_info)
 {
-	if (minishell->list_of_command->command
-		&& minishell->list_of_command->command->string)
-		pipe_info->cmd = copy_string(minishell->list_of_command->command->string,
-				minishell->envp, minishell->last_status);
-	if (minishell->list_of_command->command)
-		pipe_info->tab_arg = list_to_tab(minishell->list_of_command,
-				minishell->envp, minishell->last_status);
-	if (init_fd(minishell, pipe_info, minishell->list_of_command) != 0)
+	if (m->list_of_command->command
+		&& m->list_of_command->command->string)
+		pipe_info->cmd = copy_string(m->list_of_command->command->string,
+				m->envp, m->last_status);
+	if (m->list_of_command->command)
+		pipe_info->tab_arg = list_to_tab(m->list_of_command,
+				m->envp, m->last_status);
+	if (init_fd(m, pipe_info, m->list_of_command) != 0)
 		return ;
 	if (pipe_info->cmd)
 	{
 		if (is_builtin(pipe_info->cmd) == NULL)
-			redir_execve(minishell, pipe_info);
+			redir_execve(m, pipe_info);
 		else if (ft_strncmp(pipe_info->cmd, "echo", 5) == 0)
-			redir_builtin(minishell, pipe_info);
+			redir_builtin(m, pipe_info);
 		else
-			exec_builtin(pipe_info->cmd, pipe_info->tab_arg, &(minishell->envp),
-				&minishell->last_status);
+			exec_builtin(pipe_info->cmd, pipe_info->tab_arg, m);
 	}
 }
 

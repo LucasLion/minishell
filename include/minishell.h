@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/31 14:00:20 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/31 16:36:30 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ typedef struct s_core
 {
 	t_command 		*list_of_command;
 	int				last_status;
-	int				pid;
 	char			*input;
 	char			**envp;
 	char			*redir;
@@ -126,7 +125,7 @@ int		echo(char **argv);
 char	**get_path_split(char **envp);
 char	*get_path(char **envp, char *cmd);
 char 	*is_builtin(char *cmd);
-int		exec_builtin(char *builtin, char **argv, char ***envp, int *status);
+int		exec_builtin(char *builtin, char **argv, t_core *minishell);
 void	exec_command(char *command, char **argv, char ***envp);
 
 /* -------------- EXECUTE.c -------------- */
@@ -137,7 +136,7 @@ int 	execute(t_core *minishell);
 
 /* -------------- EXIT.c -------------- */
 
-int		exit_shell(int status, char **argv);
+int		exit_shell(int status, char **argv, t_core *minishell);
 void    wait_proof(t_core *minishell, int pid);
 void	write_error(char *cmd, char *input, int error_no);
 int		ms_error(char *cmd, char *input, int error);
@@ -145,10 +144,10 @@ int		ms_error(char *cmd, char *input, int error);
 /* -------------- EXPORT.c -------------- */
 
 int  	parse_arg(char *arg, int *status);
+int  	parse_arg2(char *arg, int *status);
 char 	**sort_tab(char **tab, int size);
 char  	*add_double_quotes(char *str);
 void  	display_export(char **envp);
-char 	*var(char *arg);
 
 /* -------------- EXPORT2.c -------------- */
 
@@ -160,11 +159,11 @@ int   	ms_export(char **argv, char ***envp, int *status);
 
 /* -------------- EXPORT3.c -------------- */
 
-void	loop(int *i, int env_size, char **nenvp, char **envp);
 void	cat(char *nenvp, char *arg);
 char	**allocate_tab(int size);
 char	*allocate(int size, char **nenvp);
 char	*val(char *arg);
+char 	*var(char *arg);
 
 /* -------------- FORMAT_LINE.c -------------- */
 
@@ -186,6 +185,7 @@ int     format_list(t_char *list);
 void 	init_struct_ltt(t_list_to_tab *cs);
 void 	add_one(int *a, int *b);
 void 	init_core(t_core *minishell);
+void	loop(int *i, int env_size, char **nenvp, char **envp);
 
  /* -------------- LIST_CHAR.c -------------- */
 
@@ -199,8 +199,6 @@ int     insert_two_space(t_char *node);
 void    init_struct_command(t_command *list_of_command);
 int		lstadd_back_list_command(t_command **list, t_command *new);
 int 	length_list_command(t_command *list, int *nb_of_pipes);
-// A enlever
-void print_list_command_from_head(t_command *list);
 
 /* -------------- LIST_STRING.c -------------- */
 
@@ -229,6 +227,7 @@ char 	**list_to_tab(t_command *list, char **envp, int status );
 
 void	free_tab2(char **tab);
 void	free_tab3(char ***tab);
+void 	free_export(char *val_arg, char *var_arg, char	*var_env, char **envp);
 
 /* -------------- PARSE.c -------------- */
 
@@ -295,12 +294,14 @@ void    split_and_print(char *line);
 
 void 	print_tab(char **tab);
 char    **copy_tab(char **tab);
+int		count_var_size(char *var);
 
 /* -------------- UNSET.c -------------- */
 
-int		count_var_size(char *var);
 int 	check_args(char *line, char **envp);
 int		compare_args(char *str, char **args);
+int		compare_args2(char *str, char **args);
+char	**new_argv(char **argv, char **envp);
 int		unset(char **argv, char ***envp);
 
 /* -------------- VERIF_LINE -------------- */

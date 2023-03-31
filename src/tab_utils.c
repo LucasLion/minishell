@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 09:45:36 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/31 13:47:21 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/31 16:11:17 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,14 @@ char	**copy_tab(char **tab)
 	}
 	ret[i] = NULL;
 	return (ret);
+}
+
+int	count_var_size(char *var)
+{
+	int	i;
+
+	i = 0;
+	while (var[i] != '=')
+		i++;
+	return (i);
 }

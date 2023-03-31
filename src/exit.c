@@ -6,15 +6,15 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/31 13:34:00 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/31 16:13:17 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	exit_shell(int status, char **argv)
+int	exit_shell(int status, char **argv, t_core *minishell)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (argv[1])
@@ -23,28 +23,28 @@ int	exit_shell(int status, char **argv)
 		{
 			if (argv[1][i] <= '0' || argv[1][i] >= '9')
 			{
+				ft_freetab(minishell->envp);
 				ms_error("exit", argv[i], -4);
-				exit (255);
+				exit(255);
 			}
 			i++;
 		}
 		if (ft_tablen(argv) > 2)
 			ms_error("exit", NULL, -10);
 		else
+		{
+			ft_freetab(minishell->envp);
 			exit(ft_atoi(argv[1]) % 255);
+		}
 	}
+	ft_freetab(minishell->envp);
 	exit(status % 255);
-	//if (WIFEXITED(status))
-	//	return (WEXITSTATUS(status));
-	//else if (WIFSIGNALED(status))
-	//	return (WTERMSIG(status));
-	//return (EXIT_SUCCESS);
 }
 
 void	write_error(char *cmd, char *input, int error_no)
 {
-	int len;
-	char *err_str;
+	int		len;
+	char	*err_str;
 
 	write(STDERR_FILENO, "Minishell: ", 11);
 	if (cmd != NULL)
@@ -89,4 +89,3 @@ int	ms_error(char *cmd, char *input, int error)
 		write_error(cmd, input, error);
 	return (errno);
 }
-

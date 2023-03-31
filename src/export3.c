@@ -6,20 +6,11 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 16:45:14 by llion             #+#    #+#             */
-/*   Updated: 2023/03/31 13:40:38 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/31 16:40:44 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-void	loop(int *i, int env_size, char **nenvp, char **envp)
-{
-	while (*i < env_size)
-	{
-		nenvp[*i] = ft_strdup((envp)[*i]);
-		(*i)++;
-	}
-}
 
 void	cat(char *nenvp, char *arg)
 {
@@ -82,4 +73,28 @@ char	*val(char *arg)
 	}
 	val[j] = '\0';
 	return (val);
+}
+
+char	*var(char *arg)
+{
+	int		i;
+	int		end;
+	char	*var;
+
+	i = 0;
+	end = 0;
+	while (arg[end] && arg[end] != '=')
+		end++;
+	if (end == 0 && arg[end] == '=')
+		return (NULL);
+	var = ft_calloc(end + 1, sizeof(char));
+	if (var == NULL)
+		return (NULL);
+	while (arg[i] && arg[i] != '=')
+	{
+		var[i] = arg[i];
+		i++;
+	}
+	var[i] = '\0';
+	return (var);
 }
