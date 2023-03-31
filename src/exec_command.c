@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/31 12:58:56 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/31 15:58:13 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,23 +79,23 @@ char	*is_builtin(char *cmd)
 		return (NULL);
 }
 
-int	exec_builtin(char *builtin, char **argv, char ***envp, int *status)
+int	exec_builtin(char *builtin, char **argv, t_core *m)
 {
 	if (ft_strncmp(builtin, "pwd", ft_strlen(builtin)) == 0)
-		*status = pwd();
+		m->last_status = pwd();
 	else if (ft_strncmp(builtin, "export", ft_strlen(builtin)) == 0)
-		*status = ms_export(argv, envp, status);
+		m->last_status = ms_export(argv, &(m->envp), &(m->last_status));
 	else if (ft_strncmp(builtin, "unset", ft_strlen(builtin)) == 0)
-		*status = unset(argv, envp);
+		m->last_status = unset(argv, &m->envp);
 	else if (ft_strncmp(builtin, "exit", ft_strlen(builtin)) == 0)
-		*status = exit_shell(*status, argv);
+		m->last_status = exit_shell(m->last_status, argv, m);
 	else if (ft_strncmp(builtin, "env", ft_strlen(builtin)) == 0)
-		*status = env(*envp);
+		m->last_status = env(m->envp);
 	else if (ft_strncmp(builtin, "echo", ft_strlen(builtin)) == 0)
-		*status = echo(argv);
+		m->last_status = echo(argv);
 	else if (ft_strncmp(builtin, "cd", ft_strlen(builtin)) == 0)
-		*status = cd(argv[1], *envp);
-	return (*status % 255);
+		m->last_status = cd(argv[1], m->envp);
+	return (m->last_status % 255);
 }
 
 void	exec_command(char *command, char **argv, char ***envp)

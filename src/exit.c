@@ -6,13 +6,13 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/31 13:28:20 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/31 15:49:25 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	exit_shell(int status, char **argv)
+int	exit_shell(int status, char **argv, t_core *minishell)
 {
 	int i;
 
@@ -23,6 +23,7 @@ int	exit_shell(int status, char **argv)
 		{
 			if (argv[1][i] <= '0' || argv[1][i] >= '9')
 			{
+				ft_freetab(minishell->envp);
 				ms_error("exit", argv[i], -4);
 				exit (255);
 			}
@@ -31,8 +32,12 @@ int	exit_shell(int status, char **argv)
 		if (ft_tablen(argv) > 2)
 			ms_error("exit", NULL, -10);
 		else
+		{
+			ft_freetab(minishell->envp);
 			exit(ft_atoi(argv[1]) % 255);
+		}
 	}
+	ft_freetab(minishell->envp);
 	exit(status % 255);
 	//if (WIFEXITED(status))
 	//	return (WEXITSTATUS(status));
