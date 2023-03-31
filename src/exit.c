@@ -6,28 +6,42 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/29 17:24:16 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/30 14:00:57 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	exit_shell(int status)
+int	exit_shell(int status, char **argv)
 {
-	exit(status % 255);
+	int i;
+
+	i = 0;
+	if (argv[1])
+	{
+		while (argv[1][i])
+		{
+			if (argv[1][i] <= '0' || argv[1][i] >= '9')
+			{
+				ms_error("exit", argv[i], -4);
+				exit (2 % 255);
+			}
+			i++;
+		}
+		if (ft_tablen(argv) > 2)
+		{
+			ms_error("exit", NULL, -5);
+			exit (1 % 255);
+		}
+		ms_error("exit", NULL, 1);
+		exit(ft_atoi(argv[1]) % 255);
+	}
+	exit(status);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	else if (WIFSIGNALED(status))
 		return (WTERMSIG(status));
 	return (EXIT_SUCCESS);
-}
-
-void    wait_proof(t_core *minishell, int pid)
-{
-    int status;
-    waitpid(pid, &status, 0);
-    if (WIFEXITED(status))
-        minishell->last_status = WEXITSTATUS(status) % 255;
 }
 
 void	write_error(char *cmd, char *input, int error_no)
@@ -56,20 +70,22 @@ void	write_error(char *cmd, char *input, int error_no)
 
 int	ms_error(char *cmd, char *input, int error)
 {
-	char *str_error;
-
 	if (error == 0)
 		return (error);
-	str_error = strerror(error);
-	if (error == 127)
+	else if (error == -3)
+		printf("Minishell: syntax error near unexpected token `newline'\n");
+	else if (error == -2)
+		printf("Minishell: %s: ambiguous redirect \n", cmd);
+	else if (error == 127)
 		printf("Minishell: %s: command not found \n", cmd);
-	else if (error == 1)
-		printf("export: %s: not a valid identifier\n", cmd);
+	else if (error == -5 && ft_strncmp(cmd, "exit", 4) == 0)
+		printf("Minishell: %s: too many arguments\n", cmd);
+	else if (error == -5)
+		printf("Minishell: %s: not a valid identifier\n", cmd);
+	else if (error == -4)
+		printf("Minishell: %s: argument numérique nécessaire\n", cmd);
 	else
-	{
-		printf("error: %d\n", error);
 		write_error(cmd, input, error);
-	}
 	return (errno);
 }
 

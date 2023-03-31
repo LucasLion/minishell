@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 16:12:49 by llion             #+#    #+#             */
-/*   Updated: 2023/03/29 15:31:34 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/30 15:59:51 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int  parse_arg(char *arg)
    int   i;
 
    i = 0;
-   if ((arg[0] >= 'a' && arg[0] <= 'z') || (arg[0] <= 'A' && arg[0] >= 'A') 
+   if ((arg[0] >= 'a' && arg[0] <= 'z') || (arg[0] >= 'A' && arg[0] <= 'Z') 
          || arg[0] == '_')
    {
       while (arg[i] && arg[i] != '=')
@@ -28,6 +28,7 @@ int  parse_arg(char *arg)
          return (1);
    }
    else
+	  printf("coucou\n");
       return (ms_error(arg, NULL, 1));
 }
 
@@ -105,7 +106,7 @@ void  display_export(char **envp)
    }
 }
 
-char *extract_var(char *arg)
+char *var(char *arg)
 {
    int   i;
    int   end;

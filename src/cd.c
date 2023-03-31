@@ -6,7 +6,7 @@
 /*   By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 18:33:35 by llion             #+#    #+#             */
-/*   Updated: 2023/03/28 14:15:53 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/30 16:07:39 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ char *get_env_variable(char **envp, char *variable)
 	i = 0;
 	while (envp[i])
 	{
-		if (ft_strncmp(extract_var(envp[i]), variable, ft_strlen(variable)) == 0)
+		if (ft_strncmp(var(envp[i]), variable, ft_strlen(variable)) == 0)
 		{
-			user = extract_val(envp[i]);
+			user = val(envp[i]);
 			return (user);
 		}
 		i++;

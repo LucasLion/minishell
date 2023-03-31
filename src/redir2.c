@@ -6,32 +6,32 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:23:30 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/29 17:24:57 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/30 17:20:22 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int init_fd(t_command *list, t_pipe *pipe_info)
+int init_fd(t_core *minishell, t_pipe *pipe_info, t_command *list)
 {
-    if (list && list->input == NULL)
-    {
+    if (list == NULL || list->input == NULL)
         pipe_info->fd_input = STDIN_FILENO ;
-    }
     else
     {
-        pipe_info->fd_input = find_input(list->input, pipe_info);
+        pipe_info->fd_input = find_input(list->input, minishell);
         if (pipe_info->fd_input == -1)
         {
-            ms_error(list->input->string, NULL, errno);
+            ms_error(minishell->redir, NULL, errno);
+            free(minishell->redir);
+            minishell->redir = NULL;
             return (1);
         }    
     }
-    if (list && list->output == NULL)
+    if (list == NULL || list->output == NULL)
         pipe_info->fd_output = STDOUT_FILENO;
     else
     {
-        pipe_info->fd_output = find_output(list->output);
+        pipe_info->fd_output = find_output(list->output, minishell);
          if (pipe_info->fd_output == -1)
         {
             ms_error(list->output->string, NULL, errno);
@@ -39,6 +39,14 @@ int init_fd(t_command *list, t_pipe *pipe_info)
         }  
     }
     return (0);
+}
+
+void    wait_proof(t_core *minishell, int pid)
+{
+    int status;
+    waitpid(pid, &status, 0);
+    if (WIFEXITED(status))
+        minishell->last_status = WEXITSTATUS(status) % 255;
 }
 
 void redir_execve(t_core *minishell, t_pipe *pipe_info)

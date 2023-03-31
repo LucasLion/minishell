@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/29 17:21:07 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/31 09:06:27 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ typedef struct s_core
 	int				pid;
 	char			*input;
 	char			**envp;
+	char			*redir;
 	
 	
 }					t_core;
@@ -125,17 +126,17 @@ char	**get_path_split(char **envp);
 char	*get_path(char **envp, char *cmd);
 char 	*is_builtin(char *cmd);
 int		exec_builtin(char *builtin, char **argv, char ***envp, int *status);
-void	exec_command_v2(char *command, char **argv, char ***envp, int *status);
 void	exec_command(char *command, char **argv, char ***envp);
 
 /* -------------- EXECUTE.c -------------- */
 
+void 	init_pipe_info(t_pipe *pipe_info, t_command *list);
 void 	execute_one_command(t_core *minishell, t_pipe *pipe_info);
 int 	execute(t_core *minishell);
 
 /* -------------- EXIT.c -------------- */
 
-int		exit_shell(int status);
+int		exit_shell(int status, char **argv);
 void    wait_proof(t_core *minishell, int pid);
 void	write_error(char *cmd, char *input, int error_no);
 int		ms_error(char *cmd, char *input, int error);
@@ -146,18 +147,23 @@ int  	parse_arg(char *arg);
 char 	**sort_tab(char **tab, int size);
 char  	*add_double_quotes(char *str);
 void  	display_export(char **envp);
-char 	*extract_var(char *arg);
+char 	*var(char *arg);
 
 /* -------------- EXPORT2.c -------------- */
 
-char 	*extract_val(char *arg);
 int   	check_if_variable(char *arg, char **envp);
-// TROP LONGUE
 char  	**add_new_variable(char *arg, char **envp);
-// TROP LONGUE
 char  	**edit_variable(char *arg, char **envp);
-// TROP LONGUE
+int		modifiy_env(char *arg, char ***envp);
 int   	ms_export(char **argv, char ***envp);
+
+/* -------------- EXPORT3.c -------------- */
+
+void	loop(int i, int env_size, char **nenvp, char **envp);
+void	cat(char *nenvp, char *arg);
+char	**allocate_tab(int size);
+char	*allocate(int size, char **nenvp);
+char	*val(char *arg);
 
 /* -------------- FORMAT_LINE.c -------------- */
 
@@ -221,8 +227,8 @@ void	free_tab3(char ***tab);
 /* -------------- PARSE.c -------------- */
 
 void 	handle_chevrons(char **tab, int index, t_command *new);
-void 	find_command_until_pipe(char **tab, int *i,t_command *new);
-int 	fill_list_command(char **tab, int *i, t_command **list, int *count);
+int 	find_command_until_pipe(char **tab, int *i, t_command *new, t_core *minishell);
+int 	fill_list_command(char **tab, int *i, t_core *minishell, int *count);
 int 	parse_input(t_core *minishell);
 
 /* -------------- PIPE_UTILS.c -------------- */
@@ -231,7 +237,7 @@ int 	**create_pipes(int nb_of_pipes, int **fd);
 void 	close_fd_everyhing(int **fd, int nbr_of_pipes);
 void 	close_fd_everyhing_but_one(int **fd, int nbr_of_pipes, int a, int b);
 void 	close_fd_everyhing_but_two(int **fd, int nbr_of_pipes, int read, int write);
-void 	wait_all_pid(int *pid, int nbr_of_command);
+void 	wait_all_pid(int *pid, int nbr_of_command, t_core *minishell);
 
 /* -------------- PIPE.c -------------- */
 
@@ -249,13 +255,14 @@ int 	env(char **envp);
 /* -------------- REDIR.c -------------- */
 
 //TROP LONGUE
-int 	handle_del(t_string *list, t_pipe *pipe_info);
-int 	find_input(t_string *input, t_pipe *pipe_info);
-int 	find_output(t_string *output);
+int 	handle_del(char *str);
+int 	find_input(t_string *input, t_core *minishell);
+int 	find_output(t_string *output, t_core *minishell);
 
 /* -------------- REDIR2.c -------------- */
 
-int		init_fd(t_command *list, t_pipe *pipe_info);
+//int		init_fd(t_command *list, t_pipe *pipe_info);
+int 	init_fd(t_core *minishell, t_pipe *pipe_info, t_command *list);
 void 	redir_execve(t_core *minishell, t_pipe *pipe_info);
 void 	redir_builtin(t_core *minishell, t_pipe *pipe_info);
 

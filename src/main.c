@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 14:55:57 by llion             #+#    #+#             */
-/*   Updated: 2023/03/29 17:24:22 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/30 17:10:28 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void init_core(t_core *minishell)
 {
 	minishell->list_of_command = NULL;
+	minishell->redir = NULL;
 	minishell->input = readline("Minishell> ");
 	add_history(minishell->input);
 }
@@ -29,8 +30,8 @@ int main(int argc, char **argv, char **env)
         return (0);
 	rl_catch_signals = 0;
 	minishell.envp = copy_tab(env);
-	minishell.last_status = 0;
 	minishell.pid = 0;
+	minishell.last_status = 0;
 	while (1)
 	{
 		signals();
@@ -41,10 +42,7 @@ int main(int argc, char **argv, char **env)
 			exit(EXIT_SUCCESS);
 		}
         if ((parse_input(&minishell)))
-		{
-			//print_list_command_from_head(minishell.list_of_command);
 			execute(&minishell);
-		}
         clean_list_command(&(minishell.list_of_command));
 	}	
 }
