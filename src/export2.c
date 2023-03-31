@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 16:12:49 by llion             #+#    #+#             */
-/*   Updated: 2023/03/31 17:10:42 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/31 17:30:35 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ char	**edit_variable(char *arg, char **envp)
 	char	*var_arg;
 	char	*var_env;
 
-	printf("arg: %s\n", arg);
 	i = 0;
 	val_arg = val(arg);
 	var_arg = var(arg);
@@ -84,7 +83,7 @@ char	**edit_variable(char *arg, char **envp)
 	{
 		nenvp[i] = ft_strdup(envp[i]);
 		free(var_env);
-		var_env = var(envp[i++]);
+		var_env = var(envp[++i]);
 	}
 	nenvp[i] = allocate(ft_strlen(var_arg) + ft_strlen(val_arg) + 2, nenvp);
 	cat(nenvp[i++], arg);
