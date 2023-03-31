@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 16:12:49 by llion             #+#    #+#             */
-/*   Updated: 2023/03/31 11:14:09 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/31 13:42:35 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ char **sort_tab(char **tab, int size)
     char **sorted_tab;
 
 	i = 0;
+    
+   for (int i = 0; tab[i]; i++)
+      printf("%d: %s\n", i, tab[i]);
     sorted_tab = copy_tab(tab);
     while (i < size - 1)
 	{
@@ -105,6 +108,8 @@ void  display_export(char **envp)
 
    i = 0;
    sorted = sort_tab(envp, ft_tablen(envp));
+   for (int i = 0; envp[i]; i++)
+      printf("%d: %s\n", i, envp[i]);
    while (sorted[i])
    {
       if (sorted[i][1] == '=' && sorted[i][0] == '_')

@@ -6,7 +6,7 @@
 /*   By: llion <llion@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+ #+#+   +#+          */
 /*   Created: 2023/03/10 18:39:28 by llion             #+#    #+#             */
-/*   Updated: 2023/03/31 12:54:34 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/31 14:10:45 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,20 @@ int	compare_args(char *str, char **args)
 	return (1);
 }
 
+int	is_unsetable(char **args, char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		if (compare_args((envp)[i], args) == 0)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int	unset(char **argv, char ***envp)
 {
 	int		i;
@@ -72,22 +86,26 @@ int	unset(char **argv, char ***envp)
 
 	i = 0;
 	j = 0;
-	// +1 car argv contient la commande
 	new_len = ft_tablen(*envp) - ft_tablen(argv) + 1;
 	new_envp = ft_calloc(new_len + 1, sizeof(char *));
+	printf("arg: %s\n", argv[1]);
 	if (new_envp == NULL)
 		return (ms_error("unset", NULL, errno));
 	while(i < new_len + 1 && new_len > 0) 
 	{
-		if (compare_args((*envp)[i], argv))
+		if (is_unsetable(argv, (*envp)[i])
 		{
-			new_envp[j] = ft_strdup((*envp)[i]);	
-			j++;
+			if (compare_args((*envp)[i], argv) == 1)
+			{
+				new_envp[j] = ft_strdup((*envp)[i]);
+				j++;
+			}
+			i++;
 		}
-		i++;
 	}
 	*envp = new_envp;
-	//ft_freetab(new_envp);
+	ft_freetab(new_envp);
+	}
 	return (0);
 }
 
