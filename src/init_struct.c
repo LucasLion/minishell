@@ -6,13 +6,13 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 10:45:20 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/31 12:15:46 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/31 16:20:34 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void init_struct_ltt(t_list_to_tab *cs)
+void	init_struct_ltt(t_list_to_tab *cs)
 {
 	cs->i = 0;
 	cs->j = 0;
@@ -21,7 +21,7 @@ void init_struct_ltt(t_list_to_tab *cs)
 	cs->ret = NULL;
 }
 
-void add_one(int *a, int *b)
+void	add_one(int *a, int *b)
 {
 	if (a != NULL)
 		(*a)++;
@@ -29,10 +29,19 @@ void add_one(int *a, int *b)
 		(*b)++;
 }
 
-void init_core(t_core *minishell)
+void	init_core(t_core *minishell)
 {
 	minishell->list_of_command = NULL;
 	minishell->redir = NULL;
 	minishell->input = readline("Minishell> ");
 	add_history(minishell->input);
+}
+
+void	loop(int *i, int env_size, char **nenvp, char **envp)
+{
+	while (*i < env_size)
+	{
+		nenvp[*i] = ft_strdup((envp)[*i]);
+		(*i)++;
+	}
 }

@@ -6,13 +6,13 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 09:45:36 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/31 12:54:38 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/31 16:46:13 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void copy_env_var_2(char *env, t_list_to_tab *cs)
+void	copy_env_var_2(char *env, t_list_to_tab *cs)
 {
 	cs->count++;
 	while (env[cs->count])
@@ -23,8 +23,8 @@ void copy_env_var_2(char *env, t_list_to_tab *cs)
 	}
 }
 
-
-void	copy_env_var(char *string_list, char **envp, int status, t_list_to_tab *cs)
+void	copy_env_var(char *string_list, char **envp, int status,
+		t_list_to_tab *cs)
 {
 	int	debut;
 	int	b;
@@ -62,15 +62,15 @@ int	count_char(char *string_list, char **envp, int status)
 		{
 			if (string_list[cc.i + 1] == '\0' || string_list[cc.i + 1] == ' '
 				|| string_list[cc.i + 1] == '$')
-					add_one(&(cc.count), &(cc.i));
+				add_one(&(cc.count), &(cc.i));
 			else
 				cc.count += count_size_env(string_list, &cc.i, envp, status);
 		}
 		else if (string_list[cc.i] == '"' && (cc.flag1 == 1 || (cc.flag1 == 0
-				&& cc.flag == 1)))
+					&& cc.flag == 1)))
 			cc.i++;
 		else if (string_list[cc.i] == '\'' && (cc.flag1 == 2 || (cc.flag1 == 0
-				&& cc.flag == 2)))
+					&& cc.flag == 2)))
 			cc.i++;
 		else
 			add_one(&(cc.count), &(cc.i));
@@ -78,7 +78,6 @@ int	count_char(char *string_list, char **envp, int status)
 	}
 	return (cc.count);
 }
-
 
 char	*copy_string(char *string_list, char **envp, int status)
 {
@@ -90,14 +89,14 @@ char	*copy_string(char *string_list, char **envp, int status)
 	{
 		cs.flag1 = put_flag(string_list[cs.i], cs.flag);
 		if (string_list[cs.i] == '$' && cs.flag1 != 2 && string_list[cs.i
-			+ 1] != '\0' && string_list[cs.i + 1] != ' ' && string_list[cs.i
-			+ 1] != '$')
+				+ 1] != '\0' && string_list[cs.i + 1] != ' ' && string_list[cs.i
+				+ 1] != '$')
 			copy_env_var(string_list, envp, status, &cs);
 		else if (string_list[cs.i] == '"' && (cs.flag1 == 1 || (cs.flag1 == 0
-				&& cs.flag == 1)))
+					&& cs.flag == 1)))
 			cs.i++;
 		else if (string_list[cs.i] == '\'' && (cs.flag1 == 2 || (cs.flag1 == 0
-				&& cs.flag == 2)))
+					&& cs.flag == 2)))
 			cs.i++;
 		else
 			cs.ret[cs.j++] = string_list[cs.i++];

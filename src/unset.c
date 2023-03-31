@@ -3,26 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llion <llion@student.42mulhouse.fr>        +#+  +:+       +#+        */
-/*                                                +#+#+#+ #+#+   +#+          */
+/*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 18:39:28 by llion             #+#    #+#             */
-/*   Updated: 2023/03/31 16:03:27 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/31 16:26:46 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	count_var_size(char *var)
-{
-	int	i;
-
-	i = 0;
-	while (var[i] != '=')
-		i++;
-	return (i);
-}
-
-int check_args(char *line, char **envp)
+int	check_args(char *line, char **envp)
 {
 	int		i;
 	int		j;
@@ -39,7 +29,8 @@ int check_args(char *line, char **envp)
 		while (envp[j])
 		{
 			var_size = count_var_size(envp[j]);
-			if (ft_strncmp(envp[j], vars[i], var_size) == 0 && ((int)ft_strlen(vars[i]) == var_size))
+			if (ft_strncmp(envp[j], vars[i], var_size) == 0
+				&& ((int)ft_strlen(vars[i]) == var_size))
 				count++;
 			j++;
 		}
@@ -51,8 +42,8 @@ int check_args(char *line, char **envp)
 
 int	compare_args(char *str, char **envp)
 {
-	int	i;
-	char *var_arg;
+	int		i;
+	char	*var_arg;
 
 	i = 0;
 	while (envp[i])
@@ -83,7 +74,6 @@ int	compare_args2(char *str, char **args)
 	return (1);
 }
 
-
 char	**new_argv(char **argv, char **envp)
 {
 	int		i;
@@ -94,21 +84,18 @@ char	**new_argv(char **argv, char **envp)
 	i = 1;
 	j = 0;
 	count = 0;
-	while(argv[i])
+	while (argv[i])
 	{
 		if (!compare_args(argv[i], envp))
 			count++;
 		i++;
 	}
-	nargv = ft_calloc(count + 1, sizeof(char *));	
+	nargv = ft_calloc(count + 1, sizeof(char *));
 	i = 1;
 	while (argv[i])
 	{
 		if (!compare_args(argv[i], envp))
-		{
-			nargv[j] = ft_strdup(argv[i]);
-			j++;
-		}
+			nargv[j++] = ft_strdup(argv[i]);
 		i++;
 	}
 	return (nargv);
@@ -132,10 +119,7 @@ int	unset(char **argv, char ***envp)
 	while (i < new_len + 1 && new_len > 0)
 	{
 		if (compare_args2((*envp)[i], nargv))
-		{
-			new_envp[j] = ft_strdup((*envp)[i]);
-			j++;
-		}
+			new_envp[j++] = ft_strdup((*envp)[i]);
 		i++;
 	}
 	ft_freetab(*envp);

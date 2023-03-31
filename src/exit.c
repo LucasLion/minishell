@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/31 15:49:25 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/31 16:13:17 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	exit_shell(int status, char **argv, t_core *minishell)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (argv[1])
@@ -25,7 +25,7 @@ int	exit_shell(int status, char **argv, t_core *minishell)
 			{
 				ft_freetab(minishell->envp);
 				ms_error("exit", argv[i], -4);
-				exit (255);
+				exit(255);
 			}
 			i++;
 		}
@@ -39,17 +39,12 @@ int	exit_shell(int status, char **argv, t_core *minishell)
 	}
 	ft_freetab(minishell->envp);
 	exit(status % 255);
-	//if (WIFEXITED(status))
-	//	return (WEXITSTATUS(status));
-	//else if (WIFSIGNALED(status))
-	//	return (WTERMSIG(status));
-	//return (EXIT_SUCCESS);
 }
 
 void	write_error(char *cmd, char *input, int error_no)
 {
-	int len;
-	char *err_str;
+	int		len;
+	char	*err_str;
 
 	write(STDERR_FILENO, "Minishell: ", 11);
 	if (cmd != NULL)
@@ -94,4 +89,3 @@ int	ms_error(char *cmd, char *input, int error)
 		write_error(cmd, input, error);
 	return (errno);
 }
-
