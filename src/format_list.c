@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 15:50:37 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/30 17:40:28 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/31 13:42:38 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,6 @@ int	add_space_before(t_char *node)
 	{
 		if (!insert_space_node(node->previous, node))
 			return (0);
-	}
-	return (1);
-}
-
-int	only_space_left(t_char *node)
-{
-	t_char	*temp;
-
-	temp = node;
-	if (temp == NULL)
-		return (1);
-	while (temp)
-	{
-		if (temp->character != ' ' && temp->character != '\t')
-			return (0);
-		temp = temp->next;
 	}
 	return (1);
 }

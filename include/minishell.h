@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/31 12:58:49 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/31 14:00:20 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,7 @@ int     length_list(t_char *list);
 char    *list_to_string(t_char *list);
 char    *format_line(char *line);
 void    print_input_after_formating(char *line_input);
+int		only_space_left(t_char *node);
 
 /* -------------- FORMAT_LIST.c -------------- */
 int     add_space_before (t_char *node);
@@ -259,14 +260,14 @@ int 	env(char **envp);
 
 /* -------------- REDIR.c -------------- */
 
-//TROP LONGUE
+
 int 	handle_del(char *str);
+int 	ambiguous_redirect(char *str, t_core *minishell);
 int 	find_input(t_string *input, t_core *minishell);
 int 	find_output(t_string *output, t_core *minishell);
 
 /* -------------- REDIR2.c -------------- */
 
-//int		init_fd(t_command *list, t_pipe *pipe_info);
 int 	init_fd(t_core *minishell, t_pipe *pipe_info, t_command *list);
 void 	redir_execve(t_core *minishell, t_pipe *pipe_info);
 void 	redir_builtin(t_core *minishell, t_pipe *pipe_info);
@@ -293,7 +294,6 @@ void    split_and_print(char *line);
 /* -------------- TAB_UTILS.c -------------- */
 
 void 	print_tab(char **tab);
-int   	tab_len(char **tab);
 char    **copy_tab(char **tab);
 
 /* -------------- UNSET.c -------------- */

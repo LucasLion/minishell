@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+        */
+/*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 18:33:35 by llion             #+#    #+#             */
-/*   Updated: 2023/03/30 16:07:39 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/31 13:39:39 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char *get_env_variable(char **envp, char *variable)
+char	*get_env_variable(char **envp, char *variable)
 {
 	int		i;
 	char	*user;
@@ -36,7 +36,8 @@ char	*create_absolute_path(char *input, char **envp)
 	char	*parsed;
 
 	tilde = get_env_variable(envp, "HOME");
-	parsed = ft_calloc(ft_strlen(tilde) + ft_strlen(input) - 2 + 1, sizeof(char));
+	parsed = ft_calloc(ft_strlen(tilde) + ft_strlen(input) - 2 + 1,
+			sizeof(char));
 	if (parsed == NULL)
 	{
 		free(tilde);
@@ -69,7 +70,7 @@ int	cd(char *input, char **envp)
 		id = chdir(abs_path);
 		free(abs_path);
 	}
-	else 
+	else
 		id = chdir(input);
 	if (id != 0)
 		return (ms_error("cd", input, errno));

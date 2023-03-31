@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split_ms_2.c                                       :+:      :+:    :+:   */
+/*   split_ms2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 08:04:32 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/28 15:33:05 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/31 13:46:50 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
 
 int	free_tab_ms_split(char **tab, int i)
 {
@@ -29,19 +28,20 @@ int	free_tab_ms_split(char **tab, int i)
 
 int	fill_tab_split_ms(char **tab, char const *s)
 {
-	int		i;
-	int		pos;
-	int		pos_word;
-	int		len;
-	
+	int	i;
+	int	pos;
+	int	pos_word;
+	int	len;
+	int	count_word;
+
 	i = 0;
 	pos = 0;
-	int count_word = count_word_ms(s);
+	count_word = count_word_ms(s);
 	while (i < count_word)
 	{
 		pos_word = pos;
 		len = len_word(s, &pos);
-		tab[i] = malloc (sizeof(char) * (len + 1));
+		tab[i] = malloc(sizeof(char) * (len + 1));
 		if (tab[i] == NULL)
 			return (free_tab_ms_split(tab, i));
 		put_word(s, &pos_word, tab[i]);
@@ -54,37 +54,37 @@ int	fill_tab_split_ms(char **tab, char const *s)
 char	**ft_split_ms(char const *s)
 {
 	char	**tab;
-	int i;
-	int b;
+	int		i;
+	int		b;
 
 	i = 0;
 	b = 0;
 	while (s && s[i])
 	{
-		if (s[i] != ' ' && s[i] != '\t' )
+		if (s[i] != ' ' && s[i] != '\t')
 			b = 1;
-		i++; 
+		i++;
 	}
-	if (s == NULL || b == 0) 
+	if (s == NULL || b == 0)
 		return (NULL);
-	tab = malloc(sizeof( int*) * (count_word_ms(s) + 1));
+	tab = malloc(sizeof(int *) * (count_word_ms(s) + 1));
 	if (tab == NULL)
 		return (NULL);
 	if (fill_tab_split_ms(tab, s) == 0)
 		return (NULL);
 	else
 	{
-		free ((void *)s);
+		free((void *)s);
 		return (tab);
 	}
 }
 
-
-void split_and_print(char *line)
+void	split_and_print(char *line)
 {
-	char **tab;
-	int i = 0;
-	
+	char	**tab;
+	int		i;
+
+	i = 0;
 	tab = ft_split_ms(line);
 	while (tab[i])
 	{

@@ -6,13 +6,13 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 09:45:36 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/31 12:54:38 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/31 13:43:46 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void copy_env_var_2(char *env, t_list_to_tab *cs)
+void	copy_env_var_2(char *env, t_list_to_tab *cs)
 {
 	cs->count++;
 	while (env[cs->count])
@@ -23,8 +23,8 @@ void copy_env_var_2(char *env, t_list_to_tab *cs)
 	}
 }
 
-
-void	copy_env_var(char *string_list, char **envp, int status, t_list_to_tab *cs)
+void	copy_env_var(char *string_list, char **envp, int status,
+		t_list_to_tab *cs)
 {
 	int	debut;
 	int	b;
@@ -62,7 +62,7 @@ int	count_char(char *string_list, char **envp, int status)
 		{
 			if (string_list[cc.i + 1] == '\0' || string_list[cc.i + 1] == ' '
 				|| string_list[cc.i + 1] == '$')
-					add_one(&(cc.count), &(cc.i));
+				add_one(&(cc.count), &(cc.i));
 			else
 				cc.count += count_size_env(string_list, &cc.i, envp, status);
 		}
@@ -78,7 +78,6 @@ int	count_char(char *string_list, char **envp, int status)
 	}
 	return (cc.count);
 }
-
 
 char	*copy_string(char *string_list, char **envp, int status)
 {

@@ -6,16 +6,15 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 14:21:07 by llion             #+#    #+#             */
-/*   Updated: 2023/03/30 16:08:29 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/31 13:45:00 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-
-int	pwd()
+int	pwd(void)
 {
-	char buffer[1024];
+	char	buffer[1024];
 
 	if (getcwd(buffer, sizeof(buffer)) == NULL)
 		return (ms_error(NULL, NULL, errno));
@@ -23,13 +22,13 @@ int	pwd()
 	return (0);
 }
 
-int env(char **envp)
+int	env(char **envp)
 {
-    int		i;
+	int		i;
 	char	*value;
 
-    i = 0;
-    while (envp[i])
+	i = 0;
+	while (envp[i])
 	{
 		value = val(envp[i]);
 		if (envp[i] == NULL)

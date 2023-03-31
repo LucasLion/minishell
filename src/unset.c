@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llion <llion@student.42mulhouse.fr>        +#+  +:+       +#+        */
-/*                                                +#+#+#+ #+#+   +#+          */
+/*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 18:39:28 by llion             #+#    #+#             */
-/*   Updated: 2023/03/31 12:54:34 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/31 14:03:04 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	count_var_size(char *var)
 	return (i);
 }
 
-int check_args(char *line, char **envp)
+int	check_args(char *line, char **envp)
 {
 	int		i;
 	int		j;
@@ -39,7 +39,8 @@ int check_args(char *line, char **envp)
 		while (envp[j])
 		{
 			var_size = count_var_size(envp[j]);
-			if (ft_strncmp(envp[j], vars[i], var_size) == 0 && ((int)ft_strlen(vars[i]) == var_size))
+			if (ft_strncmp(envp[j], vars[i], var_size) == 0
+				&& ((int)ft_strlen(vars[i]) == var_size))
 				count++;
 			j++;
 		}
@@ -77,11 +78,11 @@ int	unset(char **argv, char ***envp)
 	new_envp = ft_calloc(new_len + 1, sizeof(char *));
 	if (new_envp == NULL)
 		return (ms_error("unset", NULL, errno));
-	while(i < new_len + 1 && new_len > 0) 
+	while (i < new_len + 1 && new_len > 0)
 	{
 		if (compare_args((*envp)[i], argv))
 		{
-			new_envp[j] = ft_strdup((*envp)[i]);	
+			new_envp[j] = ft_strdup((*envp)[i]);
 			j++;
 		}
 		i++;
@@ -90,4 +91,3 @@ int	unset(char **argv, char ***envp)
 	//ft_freetab(new_envp);
 	return (0);
 }
-

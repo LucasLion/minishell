@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/31 10:41:16 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/31 13:34:00 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	write_error(char *cmd, char *input, int error_no)
 	int len;
 	char *err_str;
 
-	printf("coucou\n error: %d\n", error_no);
 	write(STDERR_FILENO, "Minishell: ", 11);
 	if (cmd != NULL)
 	{
