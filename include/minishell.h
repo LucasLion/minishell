@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/31 09:06:27 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/31 12:00:25 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,16 @@
 # include <fcntl.h>
 
 
-typedef struct s_copy_string
+typedef struct s_list_to_tab
 {
  	char   *ret;
     int 	i;
     int 	j;
 	int		flag;
 	int		flag1;
+	int 	count;
 	
-}					t_copy_string;
+}					t_list_to_tab;
 
 
 typedef struct s_pipe
@@ -173,12 +174,17 @@ char    *format_line(char *line);
 void    print_input_after_formating(char *line_input);
 
 /* -------------- FORMAT_LIST.c -------------- */
-
 int     add_space_before (t_char *node);
 int     format_pipe(t_char *node);
 int     format_chevron_inf(t_char *node);
 int     format_chevron_sup(t_char *node);
 int     format_list(t_char *list);
+
+/* -------------- INIT_STRUCT.c -------------- */
+
+void 	init_struct_ltt(t_list_to_tab *cs);
+void 	add_one(int *a, int *b);
+void 	init_core(t_core *minishell);
 
  /* -------------- LIST_CHAR.c -------------- */
 
@@ -212,9 +218,8 @@ void 	last_error(char *ret, int *j, int status);
 
 /* -------------- LIST_TO_TAB2.c -------------- */
 
-// TROP LONGUE
-void 	copy_env_var(char *string_list, char **envp, int status, t_copy_string *cs);
-// TROP LONGUE
+void 	copy_env_var_2(char *env, t_list_to_tab *cs);
+void	copy_env_var(char *string_list, char **envp, int status, t_list_to_tab *cs);
 int 	count_char(char *string_list, char **envp, int status);
 char 	*copy_string(char *string_list, char **envp, int status);
 char 	**list_to_tab(t_command *list, char **envp, int status );

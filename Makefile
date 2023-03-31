@@ -6,7 +6,7 @@
 #    By: amouly <amouly@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 15:27:43 by llion             #+#    #+#              #
-#    Updated: 2023/03/30 16:46:47 by llion            ###   ########.fr        #
+#    Updated: 2023/03/31 10:52:28 by amouly           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SOURCES = 	cd.c			\
 			export3.c		\
 			format_line.c	\
 			format_list.c	\
+			init_struct.c	\
 			list_char.c		\
 			list_command.c	\
 			list_string.c	\

@@ -6,16 +6,26 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 09:45:36 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/31 08:59:00 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/31 12:54:38 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	copy_env_var(char *string_list, char **envp, int status,
-		t_copy_string *cs)
+void copy_env_var_2(char *env, t_list_to_tab *cs)
 {
-	int	count;
+	cs->count++;
+	while (env[cs->count])
+	{
+		cs->ret[cs->j] = env[cs->count];
+		(cs->j)++;
+		cs->count++;
+	}
+}
+
+
+void	copy_env_var(char *string_list, char **envp, int status, t_list_to_tab *cs)
+{
 	int	debut;
 	int	b;
 
@@ -28,21 +38,13 @@ void	copy_env_var(char *string_list, char **envp, int status,
 	else
 	{
 		debut = (cs->i);
-		count = size_var(string_list, &(cs->i));
+		cs->count = size_var(string_list, &(cs->i));
 		b = 0;
 		while (envp[b])
 		{
-			if (!ft_strncmp(envp[b], &string_list[debut], (size_t)count)
-				&& envp[b][count] == '=')
-			{
-				count++;
-				while (envp[b][count])
-				{
-					cs->ret[cs->j] = envp[b][count];
-					(cs->j)++;
-					count++;
-				}
-			}
+			if (!ft_strncmp(envp[b], &string_list[debut], (size_t)cs->count)
+				&& envp[b][cs->count] == '=')
+				copy_env_var_2(envp[b], cs);
 			b++;
 		}
 	}
@@ -50,51 +52,39 @@ void	copy_env_var(char *string_list, char **envp, int status,
 
 int	count_char(char *string_list, char **envp, int status)
 {
-	int	flag;
-	int	flag1;
-	int	count;
-	int	i;
+	t_list_to_tab	cc;
 
-	i = 0;
-	flag = 0;
-	count = 0;
-	while (string_list[i])
+	init_struct_ltt(&cc);
+	while (string_list[cc.i])
 	{
-		flag1 = put_flag(string_list[i], flag);
-		if (string_list[i] == '$' && flag1 != 2)
+		cc.flag1 = put_flag(string_list[cc.i], cc.flag);
+		if (string_list[cc.i] == '$' && cc.flag1 != 2)
 		{
-			if (string_list[i + 1] == '\0' || string_list[i + 1] == ' '
-				|| string_list[i + 1] == '$')
-			{
-				count++;
-				i++;
-			}
+			if (string_list[cc.i + 1] == '\0' || string_list[cc.i + 1] == ' '
+				|| string_list[cc.i + 1] == '$')
+					add_one(&(cc.count), &(cc.i));
 			else
-				count += count_size_env(string_list, &i, envp, status);
+				cc.count += count_size_env(string_list, &cc.i, envp, status);
 		}
-		else if (string_list[i] == '"' && (flag1 == 1 || (flag1 == 0
-				&& flag == 1)))
-			i++;
-		else if (string_list[i] == '\'' && (flag1 == 2 || (flag1 == 0
-				&& flag == 2)))
-			i++;
+		else if (string_list[cc.i] == '"' && (cc.flag1 == 1 || (cc.flag1 == 0
+				&& cc.flag == 1)))
+			cc.i++;
+		else if (string_list[cc.i] == '\'' && (cc.flag1 == 2 || (cc.flag1 == 0
+				&& cc.flag == 2)))
+			cc.i++;
 		else
-		{
-			count++;
-			i++;
-		}
-		flag = flag1;
+			add_one(&(cc.count), &(cc.i));
+		cc.flag = cc.flag1;
 	}
-	return (count);
+	return (cc.count);
 }
+
 
 char	*copy_string(char *string_list, char **envp, int status)
 {
-	t_copy_string	cs;
+	t_list_to_tab	cs;
 
-	cs.i = 0;
-	cs.j = 0;
-	cs.flag = 0;
+	init_struct_ltt(&cs);
 	cs.ret = ft_calloc(count_char(string_list, envp, status) + 1, sizeof(char));
 	while (string_list && string_list[cs.i])
 	{
@@ -110,11 +100,7 @@ char	*copy_string(char *string_list, char **envp, int status)
 				&& cs.flag == 2)))
 			cs.i++;
 		else
-		{
-			cs.ret[cs.j] = string_list[cs.i];
-			cs.i++;
-			cs.j++;
-		}
+			cs.ret[cs.j++] = string_list[cs.i++];
 		cs.flag = cs.flag1;
 	}
 	return (cs.ret);

@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 09:45:36 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/30 17:42:08 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/31 12:37:49 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	size_var(char *string_list, int *i)
 
 	count = 0;
 	while (string_list[*i] && string_list[*i] != ' ' && string_list[*i] != '$'
-		&& string_list[*i] != '\'' && string_list[*i] != '"')
+		&& string_list[*i] != '\'' && string_list[*i] != '"' && string_list[*i] != '+' )
 	{
 		count++;
 		(*i)++;
