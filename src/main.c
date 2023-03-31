@@ -6,19 +6,11 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 14:55:57 by llion             #+#    #+#             */
-/*   Updated: 2023/03/31 11:49:12 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/31 12:59:01 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-void init_core(t_core *minishell)
-{
-	minishell->list_of_command = NULL;
-	minishell->redir = NULL;
-	minishell->input = readline("Minishell> ");
-	add_history(minishell->input);
-}
 
 
 int main(int argc, char **argv, char **env) 
@@ -46,6 +38,7 @@ int main(int argc, char **argv, char **env)
         if ((parse_input(&minishell)))
 			execute(&minishell);
         clean_list_command(&(minishell.list_of_command));
+		//system ("leaks minishell");
 	}	
 	ft_freetab(minishell.envp);
 }
