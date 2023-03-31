@@ -6,7 +6,7 @@
 /*   By: llion <llion@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+ #+#+   +#+          */
 /*   Created: 2023/03/10 18:39:28 by llion             #+#    #+#             */
-/*   Updated: 2023/03/31 12:54:34 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/31 16:03:27 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,27 @@ int check_args(char *line, char **envp)
 	return (count);
 }
 
-int	compare_args(char *str, char **args)
+int	compare_args(char *str, char **envp)
+{
+	int	i;
+	char *var_arg;
+
+	i = 0;
+	while (envp[i])
+	{
+		var_arg = var(envp[i]);
+		if (ft_strncmp(var_arg, str, ft_strlen(str) + 1) == 0)
+		{
+			free(var_arg);
+			return (0);
+		}
+		i++;
+		free(var_arg);
+	}
+	return (1);
+}
+
+int	compare_args2(char *str, char **args)
 {
 	int	i;
 
@@ -63,31 +83,63 @@ int	compare_args(char *str, char **args)
 	return (1);
 }
 
+
+char	**new_argv(char **argv, char **envp)
+{
+	int		i;
+	int		j;
+	int		count;
+	char	**nargv;
+
+	i = 1;
+	j = 0;
+	count = 0;
+	while(argv[i])
+	{
+		if (!compare_args(argv[i], envp))
+			count++;
+		i++;
+	}
+	nargv = ft_calloc(count + 1, sizeof(char *));	
+	i = 1;
+	while (argv[i])
+	{
+		if (!compare_args(argv[i], envp))
+		{
+			nargv[j] = ft_strdup(argv[i]);
+			j++;
+		}
+		i++;
+	}
+	return (nargv);
+}
+
 int	unset(char **argv, char ***envp)
 {
 	int		i;
 	int		j;
 	char	**new_envp;
+	char	**nargv;
 	int		new_len;
 
-	i = 0;
+	i = 1;
 	j = 0;
-	// +1 car argv contient la commande
 	new_len = ft_tablen(*envp) - ft_tablen(argv) + 1;
 	new_envp = ft_calloc(new_len + 1, sizeof(char *));
+	nargv = new_argv(argv, *envp);
 	if (new_envp == NULL)
 		return (ms_error("unset", NULL, errno));
-	while(i < new_len + 1 && new_len > 0) 
+	while (i < new_len + 1 && new_len > 0)
 	{
-		if (compare_args((*envp)[i], argv))
+		if (compare_args2((*envp)[i], nargv))
 		{
-			new_envp[j] = ft_strdup((*envp)[i]);	
+			new_envp[j] = ft_strdup((*envp)[i]);
 			j++;
 		}
 		i++;
 	}
+	ft_freetab(*envp);
 	*envp = new_envp;
-	//ft_freetab(new_envp);
+	ft_freetab(nargv);
 	return (0);
 }
-

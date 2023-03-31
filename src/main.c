@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 14:55:57 by llion             #+#    #+#             */
-/*   Updated: 2023/03/31 12:59:01 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/31 15:47:41 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int main(int argc, char **argv, char **env)
         if ((parse_input(&minishell)))
 			execute(&minishell);
         clean_list_command(&(minishell.list_of_command));
-		//system ("leaks minishell");
 	}	
 	ft_freetab(minishell.envp);
 }

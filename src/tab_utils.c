@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 09:45:36 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/29 13:30:22 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/31 15:46:29 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,14 @@ char    **copy_tab(char **tab)
 
     i = 0;
     len = ft_tablen(tab);
-    // HANDLE ERROR
     ret = malloc(sizeof(char *) * (len + 1));
     if (ret == NULL)
         return (NULL);
     while (tab[i])
     {
         ret[i] = ft_strdup(tab[i]);
-    // HANDLE ERROR
         if (ret[i] == NULL)
-            return(NULL); // free les strings d'avant      
+            return(NULL);
         i++;
     }
     ret[i] = NULL;
