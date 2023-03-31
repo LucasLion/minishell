@@ -6,13 +6,13 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/28 17:11:12 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/31 13:47:37 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int		quotes_verif(char *str)
+int	quotes_verif(char *str)
 {
 	int	i;
 	int	flag1;
@@ -39,13 +39,13 @@ int		quotes_verif(char *str)
 		return (0);
 }
 
-int verif_line(char *line)
+int	verif_line(char *line)
 {
-    if (quotes_verif(line))
-    {
-        printf("Error. Close quote please\n");
-        return (1);
-    }
-    else
-        return (0);
+	if (quotes_verif(line))
+	{
+		printf("Error. Close quote please\n");
+		return (1);
+	}
+	else
+		return (0);
 }

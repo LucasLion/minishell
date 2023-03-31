@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 14:59:28 by llion             #+#    #+#             */
-/*   Updated: 2023/03/29 16:09:41 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/31 13:39:56 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ int	new_strlen(char *str)
 	return (j - count);
 }
 
-char *parse(char *str)
+char	*parse(char *str)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	char	*ret;
-	
+
 	i = 0;
 	j = 0;
 	ret = ft_calloc(new_strlen(str) + 1, sizeof(char));
@@ -71,7 +71,7 @@ int	print_tab_echo(char **tab, int i)
 		if (tab[i] == NULL)
 			return (ms_error("echo", NULL, -1));
 		parsed_word = parse(tab[i]);
-		printf("%s " , parsed_word);
+		printf("%s ", parsed_word);
 		free(parsed_word);
 		i++;
 	}

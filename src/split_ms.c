@@ -6,31 +6,31 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 08:04:32 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/28 17:10:55 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/31 13:46:33 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int put_flag(char c, int flag)
+int	put_flag(char c, int flag)
 {
 	if (flag == 0 && c == '"')
-		return(1);
+		return (1);
 	else if (flag == 0 && c == '\'')
-		return(2);
+		return (2);
 	else if (flag == 1 && c == '"')
-		return(0);
+		return (0);
 	else if (flag == 2 && c == '\'')
-		return(0);
-	else 
-		return flag;
+		return (0);
+	else
+		return (flag);
 }
 
 int	count_word_ms(char const *str)
 {
 	int	i;
 	int	count;
-	int flag;
+	int	flag;
 
 	flag = 0;
 	count = 0;
@@ -42,7 +42,7 @@ int	count_word_ms(char const *str)
 		flag = put_flag(str[i], flag);
 		while (str[i] != '\0' && str[i] != ' ' && flag == 0)
 			flag = put_flag(str[++i], flag);
-		if ((str[i] == '\0' || str[i] == ' ' )&& flag == 0)
+		if ((str[i] == '\0' || str[i] == ' ') && flag == 0)
 			count++;
 		while (str[i] != '\0' && str[i] == ' ' && flag == 0)
 			flag = put_flag(str[++i], flag);
@@ -52,19 +52,16 @@ int	count_word_ms(char const *str)
 	return (count);
 }
 
-
 int	len_word(char const *str, int *pos)
 {
-	int count;
-	int flag;
+	int	count;
+	int	flag;
 
-	count  = 0;
+	count = 0;
 	flag = 0;
 	while ((str[*pos] == '\0' || str[*pos] == ' '))
 		(*pos)++;
-		
 	flag = put_flag(str[*pos], flag);
-	
 	while ((str[*pos] != '\0' && str[*pos] != ' ') || flag == 1 || flag == 2)
 	{
 		count++;
@@ -76,19 +73,17 @@ int	len_word(char const *str, int *pos)
 
 void	put_word(char const *str, int *pos, char *line_tab)
 {
-	int i;
-	int flag;
+	int	i;
+	int	flag;
 
 	i = 0;
 	flag = 0;
 	while ((str[*pos] == '\0' || str[*pos] == ' '))
 		(*pos)++;
-
 	flag = put_flag(str[*pos], flag);
-	
 	while ((str[*pos] != '\0' && str[*pos] != ' ') || flag == 1 || flag == 2)
 	{
-		line_tab[i] = str[*pos]; 
+		line_tab[i] = str[*pos];
 		(*pos)++;
 		i++;
 		flag = put_flag(str[*pos], flag);
