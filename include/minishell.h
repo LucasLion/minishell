@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/31 09:06:27 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/31 11:49:18 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ int		ms_error(char *cmd, char *input, int error);
 
 /* -------------- EXPORT.c -------------- */
 
-int  	parse_arg(char *arg);
+int  	parse_arg(char *arg, int *status);
 char 	**sort_tab(char **tab, int size);
 char  	*add_double_quotes(char *str);
 void  	display_export(char **envp);
@@ -155,11 +155,11 @@ int   	check_if_variable(char *arg, char **envp);
 char  	**add_new_variable(char *arg, char **envp);
 char  	**edit_variable(char *arg, char **envp);
 int		modifiy_env(char *arg, char ***envp);
-int   	ms_export(char **argv, char ***envp);
+int   	ms_export(char **argv, char ***envp, int *status);
 
 /* -------------- EXPORT3.c -------------- */
 
-void	loop(int i, int env_size, char **nenvp, char **envp);
+void	loop(int *i, int env_size, char **nenvp, char **envp);
 void	cat(char *nenvp, char *arg);
 char	**allocate_tab(int size);
 char	*allocate(int size, char **nenvp);

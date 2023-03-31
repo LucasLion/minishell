@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 16:12:49 by llion             #+#    #+#             */
-/*   Updated: 2023/03/30 16:44:33 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/31 12:31:28 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,27 +37,28 @@ int   check_if_variable(char *arg, char **envp)
 char  **add_new_variable(char *arg, char **envp)
 {
    int   i;
-   int   env_size;
-   int   line_size;
+   char  *var_arg;
+   char *val_arg;
    char  **nenvp;
 
    i = 0;
-   env_size = ft_tablen(envp);
-   nenvp = allocate_tab(env_size);
-   loop(i, env_size, nenvp, envp);
-   if (val(arg) == 0)
+   nenvp = allocate_tab(ft_tablen(envp));
+   val_arg = val(arg);
+   var_arg = var(arg);
+   loop(&i, ft_tablen(envp), nenvp, envp);
+   if (val_arg == 0)
    {
-      line_size = (int)ft_strlen(var(arg)) + 1;
-      nenvp[i] = ft_calloc(line_size + 1, sizeof(char)); 
-      ft_strlcat(nenvp[i], var(arg), ft_strlen(var(arg)) + 1); 
+      nenvp[i] = ft_calloc(ft_strlen(var_arg) + 2, sizeof(char)); 
+      ft_strlcat(nenvp[i], var_arg, ft_strlen(var_arg) + 1); 
    }
    else
    {
-      line_size = (int)ft_strlen(var(arg)) + (int)ft_strlen(val(arg)) + 2;
-      nenvp[i] = allocate(line_size, nenvp);
+      nenvp[i] = allocate((int)ft_strlen(var_arg) + (int)ft_strlen(val_arg) + 2, nenvp);
 	  cat(nenvp[i], arg);
    }
    free_tab2(envp);
+   free(val_arg);
+   free(var_arg);
    return (nenvp);
 }
 
@@ -65,36 +66,41 @@ char  **edit_variable(char *arg, char **envp)
 {
    int   i;
    char  **nenvp;
+   char  *val_arg;
+   char  *var_arg;
+   char  *var_env;
 
    i = 0;
-   if (val(arg) != NULL)
+   val_arg = val(arg);
+   var_arg = var(arg);
+   if (val_arg == NULL)
+      return (envp);
+   nenvp = allocate_tab(ft_tablen(envp));
+   var_env = var(envp[i]);
+   while (i < ft_tablen(envp) && ft_strncmp(var_env, var_arg, ft_strlen(var_arg)) != 0)
    {
-	  nenvp = allocate_tab(ft_tablen(envp));
-      while (i < ft_tablen(envp) && ft_strncmp(var(envp[i]), var(arg), ft_strlen(var(arg))) != 0)
-      {
-         nenvp[i] = ft_strdup(envp[i]);
-         i++;
-      }
-      nenvp[i] = allocate(ft_strlen(var(arg)) + ft_strlen(val(arg)) + 2, nenvp);
-	  cat(nenvp[i++], arg);
-	  while (i < ft_tablen(envp))
-	  {
-		 nenvp[i] = ft_strdup((envp)[i]);
-		 i++;
-	  }
-      nenvp[i] = 0;
-      free_tab2(envp);
-      return (nenvp);
+      nenvp[i] = ft_strdup(envp[i]);
+      free(var_env);
+      var_env = var(envp[i]);
+      i++;
    }
-   return (envp);
+   nenvp[i] = allocate(ft_strlen(var_arg) + ft_strlen(val_arg) + 2, nenvp);
+   cat(nenvp[i++], arg);
+   loop(&i, ft_tablen(envp), nenvp, envp);
+   nenvp[i] = 0;
+   free(val_arg);
+   free(var_arg);
+   free(var_env);
+   free_tab2(envp);
+   return (nenvp);
 }
 
 int  modifiy_env(char *arg, char ***envp)
 {
-   int	 flag;
+   int	 is_new;
 
-   flag = check_if_variable(arg, *envp);
-   if (flag == 0)
+   is_new = check_if_variable(arg, *envp);
+   if (is_new == 0)
 	  *envp = add_new_variable(arg, *envp);
    else
    {
@@ -105,7 +111,7 @@ int  modifiy_env(char *arg, char ***envp)
    return (0);
 }
 
-int   ms_export(char **argv, char ***envp)
+int   ms_export(char **argv, char ***envp, int *status)
 {
    int   i;
 
@@ -116,7 +122,7 @@ int   ms_export(char **argv, char ***envp)
    {
       while (argv[i])
       {
-        if (!parse_arg(argv[i]))
+        if (!parse_arg(argv[i], status))
         {
             i++;
             continue ;
@@ -126,5 +132,5 @@ int   ms_export(char **argv, char ***envp)
          i++;
       }
    }
-   return (0);
+   return (*status);
 }

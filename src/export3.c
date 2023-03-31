@@ -6,26 +6,33 @@
 /*   By: llion <llion@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 16:45:14 by llion             #+#    #+#             */
-/*   Updated: 2023/03/30 16:46:25 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/31 11:27:03 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void  loop(int i, int env_size, char **nenvp, char **envp)
+void  loop(int *i, int env_size, char **nenvp, char **envp)
 {
-   while (i < env_size)
+   while (*i < env_size)
    {
-      nenvp[i] = ft_strdup((envp)[i]);
-      i++;
+      nenvp[*i] = ft_strdup((envp)[*i]);
+      (*i)++;
    }
 }
 
 void  cat(char *nenvp, char *arg)
 {
-   ft_strlcat(nenvp, var(arg), ft_strlen(var(arg)) + 1); 
-   ft_strlcat(nenvp, "=", ft_strlen(var(arg)) + 2); 
-   ft_strlcat(nenvp, val(arg), ft_strlen(var(arg)) + ft_strlen(val(arg)) + 2); 
+   char *var_arg;
+   char *val_arg;
+
+   var_arg = var(arg);
+   val_arg = val(arg);
+   ft_strlcat(nenvp, var_arg, ft_strlen(var_arg) + 1); 
+   ft_strlcat(nenvp, "=", ft_strlen(var_arg) + 2); 
+   ft_strlcat(nenvp, val_arg, ft_strlen(var_arg) + ft_strlen(val_arg) + 2); 
+   free(var_arg);
+   free(val_arg);
 }
 
 char **allocate_tab(int size)

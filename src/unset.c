@@ -6,7 +6,7 @@
 /*   By: llion <llion@student.42mulhouse.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+ #+#+   +#+          */
 /*   Created: 2023/03/10 18:39:28 by llion             #+#    #+#             */
-/*   Updated: 2023/03/29 14:24:55 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/31 12:54:34 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ int	unset(char **argv, char ***envp)
 		i++;
 	}
 	*envp = new_envp;
+	//ft_freetab(new_envp);
 	return (0);
 }
 
