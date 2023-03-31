@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/30 16:48:50 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/31 09:06:27 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ typedef struct s_core
 	int				pid;
 	char			*input;
 	char			**envp;
+	char			*redir;
 	
 	
 }					t_core;
@@ -125,11 +126,11 @@ char	**get_path_split(char **envp);
 char	*get_path(char **envp, char *cmd);
 char 	*is_builtin(char *cmd);
 int		exec_builtin(char *builtin, char **argv, char ***envp, int *status);
-void	exec_command_v2(char *command, char **argv, char ***envp, int *status);
 void	exec_command(char *command, char **argv, char ***envp);
 
 /* -------------- EXECUTE.c -------------- */
 
+void 	init_pipe_info(t_pipe *pipe_info, t_command *list);
 void 	execute_one_command(t_core *minishell, t_pipe *pipe_info);
 int 	execute(t_core *minishell);
 
@@ -236,7 +237,7 @@ int 	**create_pipes(int nb_of_pipes, int **fd);
 void 	close_fd_everyhing(int **fd, int nbr_of_pipes);
 void 	close_fd_everyhing_but_one(int **fd, int nbr_of_pipes, int a, int b);
 void 	close_fd_everyhing_but_two(int **fd, int nbr_of_pipes, int read, int write);
-void 	wait_all_pid(int *pid, int nbr_of_command);
+void 	wait_all_pid(int *pid, int nbr_of_command, t_core *minishell);
 
 /* -------------- PIPE.c -------------- */
 
@@ -261,7 +262,7 @@ int 	find_output(t_string *output, t_core *minishell);
 /* -------------- REDIR2.c -------------- */
 
 //int		init_fd(t_command *list, t_pipe *pipe_info);
-int 	init_fd(t_core *minishell, t_pipe *pipe_info);
+int 	init_fd(t_core *minishell, t_pipe *pipe_info, t_command *list);
 void 	redir_execve(t_core *minishell, t_pipe *pipe_info);
 void 	redir_builtin(t_core *minishell, t_pipe *pipe_info);
 

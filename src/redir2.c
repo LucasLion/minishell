@@ -6,15 +6,14 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:23:30 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/30 13:45:40 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/30 17:20:22 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int init_fd(t_core *minishell, t_pipe *pipe_info)
+int init_fd(t_core *minishell, t_pipe *pipe_info, t_command *list)
 {
-    t_command *list = minishell->list_of_command;
     if (list == NULL || list->input == NULL)
         pipe_info->fd_input = STDIN_FILENO ;
     else
@@ -22,7 +21,9 @@ int init_fd(t_core *minishell, t_pipe *pipe_info)
         pipe_info->fd_input = find_input(list->input, minishell);
         if (pipe_info->fd_input == -1)
         {
-            ms_error(list->input->string, NULL, errno);
+            ms_error(minishell->redir, NULL, errno);
+            free(minishell->redir);
+            minishell->redir = NULL;
             return (1);
         }    
     }

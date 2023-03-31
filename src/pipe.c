@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:22:46 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/30 13:29:43 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/30 16:50:31 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,19 +83,21 @@ int managing_pipe(t_core *minishell, t_pipe *pipe_info, int **fd)
     {
         pipe_info->cmd = copy_string(temp->command->string, minishell->envp, minishell->last_status);
         pipe_info->tab_arg = list_to_tab(temp, minishell->envp, minishell->last_status);
-        init_fd(minishell, pipe_info);
+        init_fd(minishell, pipe_info, temp);
         pid[pipe_info->i] = fork();
         // HANDLE ERROR
         if (pid[pipe_info->i] < 0)
-            printf("error\n");
+            printf("error de fork\n");
         else if(pid[pipe_info->i] == 0)
             child_process(pipe_info, fd, minishell->envp);
+        free(pipe_info->cmd);
+        free_tab2(pipe_info->tab_arg);
         if (pipe_info->i < pipe_info->nbr_of_commands)
-            temp = temp->next; 
+            temp = temp->next;
         pipe_info->i++;  
     }
     close_fd_everyhing(fd,pipe_info->nbr_of_pipes);
-    wait_all_pid(pid,pipe_info->nbr_of_commands);
+    wait_all_pid(pid,pipe_info->nbr_of_commands, minishell);
     return (0);
 }
 
