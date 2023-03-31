@@ -6,30 +6,43 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 16:12:49 by llion             #+#    #+#             */
-/*   Updated: 2023/03/30 15:59:51 by llion            ###   ########.fr       */
+/*   Updated: 2023/03/31 11:14:09 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int  parse_arg(char *arg)
+int  parse_arg(char *a, int *status)
 {
    int   i;
 
    i = 0;
-   if ((arg[0] >= 'a' && arg[0] <= 'z') || (arg[0] >= 'A' && arg[0] <= 'Z') 
-         || arg[0] == '_')
+   if ((a[0] >= 'a' && a[0] <= 'z') || (a[0] >= 'A' && a[0] <= 'Z') 
+         || a[0] == '_')
    {
-      while (arg[i] && arg[i] != '=')
-         i++;
-      if (arg[i] == '=' && i == 0)
-         return (ms_error(arg, NULL, 1));
+      while (a[i] && a[i] != '=')
+      {
+         if (a[i] != ' ')
+            i++;
+         else
+         {
+            *status = 1;
+            return (ms_error(a, NULL, -5));
+         }
+      }
+      if (a[i] == '=' && i == 0)
+      {
+         *status = 1;
+         return (ms_error(a, NULL, -5));
+      }
       else
          return (1);
    }
    else
-	  printf("coucou\n");
-      return (ms_error(arg, NULL, 1));
+   {
+      *status = 1;
+      return (ms_error(a, NULL, -5));
+   }
 }
 
 char **sort_tab(char **tab, int size)
