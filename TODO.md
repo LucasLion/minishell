@@ -6,7 +6,7 @@
 #    By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/24 16:04:33 by llion             #+#    #+#              #
-#    Updated: 2023/03/30 13:02:21 by llion            ###   ########.fr        #
+#    Updated: 2023/03/31 10:01:16 by llion            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@
 	- [OK] pb echo "toto""$USER" ou echo "toto"+"$USER" ou echo '"toto"' "$USER"'' - antoine
 	- [OK] echo $USER$USE pb de taille - antoine
 	- [OK] chevron vers la droite il faut une erreur (command not found) - antoine
-	-      il faut un heredoc pour echo | - antoine
+	- [OK] il faut un heredoc pour echo | - antoine
 	- [OK] ambigous redirect : export out="file1 file2" echo hello > $out - antoine
 
 	- [OK] double quotes donne un path - on verra
@@ -42,3 +42,5 @@
 	- [OK] \ doit quitter en mode bloque - lucas
 	- [OK] il faut mettre un parametre a exit - lucas
 	- [OK] exit sdkfjsdlf sdf doit renvoyer une erreur - lucas
+	-	   export dans les guillemets accepte des espaces 
+	- [OK] revoir les sorties et le exit

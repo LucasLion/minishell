@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/31 09:52:31 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/31 12:58:56 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	exec_builtin(char *builtin, char **argv, char ***envp, int *status)
 	if (ft_strncmp(builtin, "pwd", ft_strlen(builtin)) == 0)
 		*status = pwd();
 	else if (ft_strncmp(builtin, "export", ft_strlen(builtin)) == 0)
-		*status = ms_export(argv, envp);
+		*status = ms_export(argv, envp, status);
 	else if (ft_strncmp(builtin, "unset", ft_strlen(builtin)) == 0)
 		*status = unset(argv, envp);
 	else if (ft_strncmp(builtin, "exit", ft_strlen(builtin)) == 0)
@@ -105,7 +105,7 @@ void	exec_command(char *command, char **argv, char ***envp)
 	path = get_path(*envp, command);
 	signal(SIGQUIT, SIG_DFL);
 	if (execve(path, argv, *envp) == -1)
-		exit_shell(127, argv);
+		exit(127);
 	signal(SIGQUIT, SIG_IGN);
-	exit_shell(errno, argv);
+	exit(0);
 }
