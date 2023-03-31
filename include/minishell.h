@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/03/30 17:28:35 by amouly           ###   ########.fr       */
+/*   Updated: 2023/03/31 09:06:27 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,18 +147,23 @@ int  	parse_arg(char *arg);
 char 	**sort_tab(char **tab, int size);
 char  	*add_double_quotes(char *str);
 void  	display_export(char **envp);
-char 	*extract_var(char *arg);
+char 	*var(char *arg);
 
 /* -------------- EXPORT2.c -------------- */
 
-char 	*extract_val(char *arg);
 int   	check_if_variable(char *arg, char **envp);
-// TROP LONGUE
 char  	**add_new_variable(char *arg, char **envp);
-// TROP LONGUE
 char  	**edit_variable(char *arg, char **envp);
-// TROP LONGUE
+int		modifiy_env(char *arg, char ***envp);
 int   	ms_export(char **argv, char ***envp);
+
+/* -------------- EXPORT3.c -------------- */
+
+void	loop(int i, int env_size, char **nenvp, char **envp);
+void	cat(char *nenvp, char *arg);
+char	**allocate_tab(int size);
+char	*allocate(int size, char **nenvp);
+char	*val(char *arg);
 
 /* -------------- FORMAT_LINE.c -------------- */
 
