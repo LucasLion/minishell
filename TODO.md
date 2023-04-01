@@ -17,7 +17,8 @@
 
 [  ]	ERROR_LOG: exit 60 > donne le message que ce n est pas numerique et ne resort pas le bon error code ($?) 
 
-[  ]	cat > lors du ctrl+C, il affiche 2 fois le prompt et le retour d erreur est 0 au lieu de 130 
+[ok]	cat > lors du ctrl+C, il affiche 2 fois le prompt ==> ^+C s'affiche desormais a voir si on peut le changer
+[  ]       et le retour d erreur est 0 au lieu de 130  ==> a faire
 
 [ok]	ls <invalide> > resort Minishell: ls: Operation not permitted  
 
@@ -26,6 +27,6 @@
 
 [OK]	unset 
 [  ]    cd sans argument plus de segfault mais il faut revenir a la home (meme chose pour cd suivi de ligne avec des espaces ou tabulations)
-[  ]    cd ~ fre not allocated    
+[  ]    cd ~ : not allocated    
 
 [OK]	Tant que le PATH est unset > plus aucune commande ne fonctionne sauf builtin (PS: ceux qui fonctionne)

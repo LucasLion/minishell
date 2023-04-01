@@ -6,7 +6,7 @@
 #    By: amouly <amouly@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 15:27:43 by llion             #+#    #+#              #
-#    Updated: 2023/03/31 10:52:28 by amouly           ###   ########.fr        #
+#    Updated: 2023/04/01 17:23:10 by amouly           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,37 +17,38 @@ READLINE = -lreadline -L ~/.brew/opt/readline/lib
 LIBFT = ./libft/libft.a
 HEADERS = -I include -I libft -I ~/.brew/opt/readline/include
 
-SOURCES = 	cd.c			\
-			clean_list.c	\
-			echo.c			\
-			exec_command.c	\
-			execute.c		\
-			exit.c			\
-			export.c		\
-			export2.c		\
-			export3.c		\
-			format_line.c	\
-			format_list.c	\
-			init_struct.c	\
-			list_char.c		\
-			list_command.c	\
-			list_string.c	\
-			list_to_tab.c	\
-			list_to_tab2.c	\
-			main.c			\
-			memory_utils.c	\
-			parse.c			\
-			pipe_utils.c	\
-			pipe.c			\
-			pwd_env.c		\
-			redir.c			\
-			redir2.c		\
-			signals.c		\
-			split_ms.c 		\
-			split_ms2.c		\
-			tab_utils.c		\
-			unset.c			\
-			verif_line.c	\
+SOURCES = 	cd.c         	\
+            clean_list.c    \
+            echo.c          \
+            exec_command.c  \
+            execute.c       \
+            exit.c          \
+            export.c        \
+            export2.c       \
+            export3.c       \
+            format_line.c   \
+            format_list.c   \
+            init_struct.c   \
+            list_char.c     \
+            list_command.c  \
+            list_string.c   \
+            list_to_tab.c   \
+            list_to_tab2.c  \
+            main.c          \
+            memory_utils.c  \
+            parse.c         \
+            pipe_utils.c    \
+            pipe.c          \
+            pwd_env.c       \
+            redir.c         \
+            redir2.c        \
+            signals.c       \
+            split_ms.c      \
+            split_ms2.c     \
+            tab_utils.c     \
+            unset.c         \
+            verif_line.c    \
+
 			
 			
 
