@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 18:33:35 by llion             #+#    #+#             */
-/*   Updated: 2023/03/31 16:40:27 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/01 12:02:55 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*get_env_variable(char **envp, char *variable)
 	char	*user;
 
 	i = 0;
-	while (envp[i])
+	while (envp && envp[i])
 	{
 		if (ft_strncmp(var(envp[i]), variable, ft_strlen(variable)) == 0)
 		{
@@ -62,17 +62,20 @@ int	cd(char *input, char **envp)
 	int		id;
 	char	*abs_path;
 
-	if (input[0] == '~' || input[0] == '-')
+	if (input && input[0])
 	{
-		abs_path = create_absolute_path(input, envp);
-		if (abs_path == NULL)
-			return (errno);
-		id = chdir(abs_path);
-		free(abs_path);
+		if (input[0] == '~' || input[0] == '-')
+		{
+			abs_path = create_absolute_path(input, envp);
+			if (abs_path == NULL)
+				return (errno);
+			id = chdir(abs_path);
+			free(abs_path);
+		}
+		else
+			id = chdir(input);
+		if (id != 0)
+			return (ms_error("cd", input, errno));
 	}
-	else
-		id = chdir(input);
-	if (id != 0)
-		return (ms_error("cd", input, errno));
 	return (0);
 }

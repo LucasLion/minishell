@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 18:39:28 by llion             #+#    #+#             */
-/*   Updated: 2023/03/31 16:26:46 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/01 12:12:21 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,19 +111,23 @@ int	unset(char **argv, char ***envp)
 
 	i = 1;
 	j = 0;
-	new_len = ft_tablen(*envp) - ft_tablen(argv) + 1;
-	new_envp = ft_calloc(new_len + 1, sizeof(char *));
-	nargv = new_argv(argv, *envp);
-	if (new_envp == NULL)
-		return (ms_error("unset", NULL, errno));
-	while (i < new_len + 1 && new_len > 0)
+	if (argv[1])
 	{
-		if (compare_args2((*envp)[i], nargv))
-			new_envp[j++] = ft_strdup((*envp)[i]);
-		i++;
+		new_len = ft_tablen(*envp) - ft_tablen(argv) + 1;
+		new_envp = ft_calloc(new_len + 1, sizeof(char *));
+		nargv = new_argv(argv, *envp);
+		if (new_envp == NULL)
+			return (ms_error("unset", NULL, errno));
+		while (i < new_len + 1 && new_len > 0)
+		{
+			if (compare_args2((*envp)[i], nargv))
+				new_envp[j++] = ft_strdup((*envp)[i]);
+			i++;
+		}
+		ft_freetab(*envp);
+		*envp = new_envp;
+		ft_freetab(nargv);
 	}
-	ft_freetab(*envp);
-	*envp = new_envp;
-	ft_freetab(nargv);
 	return (0);
 }
+

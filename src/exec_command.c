@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/31 15:58:13 by llion            ###   ########.fr       */
+/*   Updated: 2023/04/01 12:24:28 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ char	*get_path(char **envp, char *cmd)
 	int		i;
 
 	i = 0;
+	if (access(cmd, X_OK) == 0)
+		return (cmd);
 	split_path = get_path_split(envp);
 	while (split_path[i])
 	{
@@ -54,8 +56,6 @@ char	*get_path(char **envp, char *cmd)
 		i++;
 	}
 	free_tab2(split_path);
-	if (access(cmd, X_OK) == 0)
-		return (cmd);
 	return (cmd);
 }
 
@@ -85,7 +85,7 @@ int	exec_builtin(char *builtin, char **argv, t_core *m)
 		m->last_status = pwd();
 	else if (ft_strncmp(builtin, "export", ft_strlen(builtin)) == 0)
 		m->last_status = ms_export(argv, &(m->envp), &(m->last_status));
-	else if (ft_strncmp(builtin, "unset", ft_strlen(builtin)) == 0)
+	else if (ft_strncmp(builtin, "unset", ft_strlen(builtin)) == 0 && argv)
 		m->last_status = unset(argv, &m->envp);
 	else if (ft_strncmp(builtin, "exit", ft_strlen(builtin)) == 0)
 		m->last_status = exit_shell(m->last_status, argv, m);
