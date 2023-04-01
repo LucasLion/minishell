@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/04/01 12:24:28 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/01 15:22:27 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ char	**get_path_split(char **envp)
 			path = ft_strdup(envp[i]);
 		i++;
 	}
+	if (path == NULL)
+		return (NULL);
 	split_path = ft_split(path + 5, ':');
 	free(path);
 	return (split_path);
@@ -39,10 +41,8 @@ char	*get_path(char **envp, char *cmd)
 	int		i;
 
 	i = 0;
-	if (access(cmd, X_OK) == 0)
-		return (cmd);
 	split_path = get_path_split(envp);
-	while (split_path[i])
+	while (split_path && split_path[i])
 	{
 		tmp = ft_strjoin(split_path[i], "/");
 		ret = ft_strjoin(tmp, cmd);
@@ -55,6 +55,8 @@ char	*get_path(char **envp, char *cmd)
 		free(ret);
 		i++;
 	}
+	if (split_path == NULL)
+		return (NULL);
 	free_tab2(split_path);
 	return (cmd);
 }
@@ -97,15 +99,41 @@ int	exec_builtin(char *builtin, char **argv, t_core *m)
 		m->last_status = cd(argv[1], m->envp);
 	return (m->last_status % 255);
 }
+int	is_absolute(char *cmd)
+{
+	if (cmd && cmd[0] == '/')
+	{
+		if (access(cmd, X_OK) == 0)
+			return (1);
+		return (0);
+	}
+	return (0);
+}
 
-void	exec_command(char *command, char **argv, char ***envp)
+int	exec_command(char *cmd, char **argv, char ***envp)
 {
 	char	*path;
 
-	path = get_path(*envp, command);
 	signal(SIGQUIT, SIG_DFL);
-	if (execve(path, argv, *envp) == -1)
-		exit(127);
+	path = get_path(*envp, cmd);
+	if ((cmd && cmd[0] == '/') || path == NULL)
+	{
+		if (access(cmd, X_OK) == 0)
+			execve(cmd, argv, *envp);
+		else
+		{
+			ms_error(cmd, NULL, 2);
+			exit(127);
+		}
+	}
+	else
+	{
+		if (execve(path, argv, *envp) == -1)
+		{
+			ms_error(path, NULL, 127);
+			exit(127);
+		}
+	}
 	signal(SIGQUIT, SIG_IGN);
 	exit(0);
 }
