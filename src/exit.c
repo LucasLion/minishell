@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/03/31 16:13:17 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/01 15:40:43 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,15 @@ void	write_error(char *cmd, char *input, int error_no)
 	len = ft_strlen(err_str);
 	write(STDERR_FILENO, err_str, len);
 	write(STDERR_FILENO, "\n", 2);
+}
+
+void	wait_proof(t_core *minishell, int pid)
+{
+	int	status;
+
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		minishell->last_status = WEXITSTATUS(status) % 255;
 }
 
 int	ms_error(char *cmd, char *input, int error)

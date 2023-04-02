@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 18:33:35 by llion             #+#    #+#             */
-/*   Updated: 2023/04/01 12:02:55 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/01 13:14:35 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,20 @@ char	*create_absolute_path(char *input, char **envp)
 	return (parsed);
 }
 
+int only_space_until_end(char *str, int i)
+{
+	if(str[i] == '\0')
+		return (1);
+	while (str[i])
+	{
+		if (str[i] != ' ' && str[i] != '\t')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+
 int	cd(char *input, char **envp)
 {
 	int		id;
@@ -68,14 +82,17 @@ int	cd(char *input, char **envp)
 		{
 			abs_path = create_absolute_path(input, envp);
 			if (abs_path == NULL)
-				return (errno);
+				return (1);
 			id = chdir(abs_path);
 			free(abs_path);
 		}
 		else
 			id = chdir(input);
 		if (id != 0)
-			return (ms_error("cd", input, errno));
+		{
+			ms_error("cd", input, errno);
+			return (1);
+		}
 	}
 	return (0);
 }
