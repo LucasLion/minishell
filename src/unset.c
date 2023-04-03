@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 18:39:28 by llion             #+#    #+#             */
-/*   Updated: 2023/04/01 12:12:21 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/03 14:53:46 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,11 @@ char	**new_argv(char **argv, char **envp)
 	{
 		if (!compare_args(argv[i], envp))
 			count++;
+		else if (invalid_id(argv[i]))
+		{
+			ms_error("unset", argv[i], -5);
+			status = 1;
+		}
 		i++;
 	}
 	nargv = ft_calloc(count + 1, sizeof(char *));
@@ -109,7 +114,7 @@ int	unset(char **argv, char ***envp)
 	char	**nargv;
 	int		new_len;
 
-	i = 1;
+	i = 0;
 	j = 0;
 	if (argv[1])
 	{
@@ -118,12 +123,9 @@ int	unset(char **argv, char ***envp)
 		nargv = new_argv(argv, *envp);
 		if (new_envp == NULL)
 			return (ms_error("unset", NULL, errno));
-		while (i < new_len + 1 && new_len > 0)
-		{
+		while (++i < new_len + 1 && new_len > 0)
 			if (compare_args2((*envp)[i], nargv))
 				new_envp[j++] = ft_strdup((*envp)[i]);
-			i++;
-		}
 		ft_freetab(*envp);
 		*envp = new_envp;
 		ft_freetab(nargv);

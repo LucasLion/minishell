@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/04/03 11:58:11 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/03 14:49:29 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -317,6 +317,10 @@ int						compare_args(char *str, char **args);
 int						compare_args2(char *str, char **args);
 char					**new_argv(char **argv, char **envp);
 int						unset(char **argv, char ***envp);
+
+/* -------------- UNSET.c -------------- */
+
+int						invalid_id(char *str);
 
 /* -------------- VERIF_LINE -------------- */
 
