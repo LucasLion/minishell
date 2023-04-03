@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 18:33:35 by llion             #+#    #+#             */
-/*   Updated: 2023/04/03 11:46:51 by llion            ###   ########.fr       */
+/*   Updated: 2023/04/03 12:18:34 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,20 +57,7 @@ char	*create_absolute_path(char *input, char **envp)
 	return (parsed);
 }
 
-int only_space_until_end(char *str, int i)
-{
-	if(str[i] == '\0')
-		return (1);
-	while (str[i])
-	{
-		if (str[i] != ' ' && str[i] != '\t')
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-int	get_cd_path()
+int	get_cd_path(void)
 {
 	int		id;
 	char	*username;
@@ -94,8 +81,6 @@ int	cd(char *input, char **envp)
 		if (input[0] == '~' && input[1])
 		{
 			abs_path = create_absolute_path(input, envp);
-			if (abs_path == NULL)
-				return (1);
 			id = chdir(abs_path);
 			free(abs_path);
 		}
@@ -110,6 +95,6 @@ int	cd(char *input, char **envp)
 		}
 	}
 	else
-		get_cd_path();
+		id = get_cd_path();
 	return (0);
 }

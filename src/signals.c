@@ -6,30 +6,27 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 14:24:52 by llion             #+#    #+#             */
-/*   Updated: 2023/04/03 11:58:20 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/03 16:03:02 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-
 void	sigint(int sig)
 {
-    (void) sig;
-    write(1, "\n", 1);
-    if (errno == EINTR)
-    {
-        rl_replace_line("", 0);
-        rl_on_new_line();
-        rl_redisplay();
-    }
-    else
-    {
-        status = 130;
-        kill(getpid(), SIGQUIT);
-    }
+	(void)sig;
+	write(1, "\n", 1);
+	if (globals.catch == 1)
+	{
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
+	if (globals.catch == 0)
+	{
+		globals.status = 130;
+	}
 }
-
 
 void	signals(void)
 {

@@ -6,7 +6,11 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/04/03 14:49:29 by amouly           ###   ########.fr       */
+=======
+/*   Updated: 2023/04/03 15:57:34 by amouly           ###   ########.fr       */
+>>>>>>> a73d56e1134771c368cc08b1891e0a647b7844f2
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +31,13 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-int status;
+typedef struct	s_glob
+{
+	int status;
+	int	catch;
+}				g_glob;
+
+g_glob	globals;
 
 typedef struct s_list_to_tab
 {
@@ -132,10 +142,12 @@ void					init_pipe_info(t_pipe *pipe_info, t_command *list);
 void					execute_one_command(t_core *minishell,
 							t_pipe *pipe_info);
 int						execute(t_core *minishell);
+int						is_absolute(char *cmd);
 
 /* -------------- EXIT.c -------------- */
 
-int						exit_shell(int status, char **argv, t_core *minishell);
+void 					free_and_exit(int flag, int i, char **argv, t_core *minishell);
+int						exit_shell(char **argv, t_core *minishell);
 void					wait_proof(t_core *minishell, int pid);
 void					write_error(char *cmd, char *input, int error_no);
 int						ms_error(char *cmd, char *input, int error);
@@ -318,7 +330,7 @@ int						compare_args2(char *str, char **args);
 char					**new_argv(char **argv, char **envp);
 int						unset(char **argv, char ***envp);
 
-/* -------------- UNSET.c -------------- */
+/* -------------- UNSET2.c -------------- */
 
 int						invalid_id(char *str);
 

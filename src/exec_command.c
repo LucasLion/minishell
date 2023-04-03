@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/04/01 17:22:26 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/03 12:29:56 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	exec_builtin(char *builtin, char **argv, t_core *m)
 	else if (ft_strncmp(builtin, "unset", ft_strlen(builtin)) == 0 && argv)
 		m->last_status = unset(argv, &m->envp);
 	else if (ft_strncmp(builtin, "exit", ft_strlen(builtin)) == 0)
-		m->last_status = exit_shell(m->last_status, argv, m);
+		m->last_status = exit_shell(argv, m);
 	else if (ft_strncmp(builtin, "env", ft_strlen(builtin)) == 0)
 		m->last_status = env(m->envp);
 	else if (ft_strncmp(builtin, "echo", ft_strlen(builtin)) == 0)
@@ -98,16 +98,6 @@ int	exec_builtin(char *builtin, char **argv, t_core *m)
 	else if (ft_strncmp(builtin, "cd", ft_strlen(builtin)) == 0)
 		m->last_status = cd(argv[1], m->envp);
 	return (m->last_status % 255);
-}
-int	is_absolute(char *cmd)
-{
-	if (cmd && cmd[0] == '/')
-	{
-		if (access(cmd, X_OK) == 0)
-			return (1);
-		return (0);
-	}
-	return (0);
 }
 
 int	exec_command(char *cmd, char **argv, char ***envp)

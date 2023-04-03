@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:22:46 by amouly            #+#    #+#             */
-/*   Updated: 2023/04/01 17:23:23 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/03 15:31:41 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	execute_one_command(t_core *m, t_pipe *pipe_info)
 	if (m->list_of_command->command)
 		pipe_info->tab_arg = list_to_tab(m->list_of_command,
 				m->envp, m->last_status);
+	// printf("commande = %s\n", pipe_info->cmd);
 	if (init_fd(m, pipe_info, m->list_of_command) != 0)
 		return ;
 	if (pipe_info->cmd)
@@ -67,6 +68,17 @@ int	execute(t_core *minishell)
 		fd = create_pipes(pipe_info.nbr_of_pipes, fd);
 		managing_pipe(minishell, &pipe_info, fd);
 		free(fd);
+	}
+	return (0);
+}
+
+int	is_absolute(char *cmd)
+{
+	if (cmd && cmd[0] == '/')
+	{
+		if (access(cmd, X_OK) == 0)
+			return (1);
+		return (0);
 	}
 	return (0);
 }
