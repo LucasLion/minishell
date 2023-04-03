@@ -6,13 +6,11 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 14:55:57 by llion             #+#    #+#             */
-/*   Updated: 2023/04/03 15:58:10 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/03 16:58:54 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-
 
 void	ctrl_d(t_core *minishell)
 {
@@ -36,12 +34,9 @@ int	main(int argc, char **argv, char **env)
 	signals();
 	while (1)
 	{
-		if (globals.status != 0)
-		{
-			minishell.last_status = globals.status;
-			globals.status = 0;
-		}
-		globals.catch = 1;
+		if (g_global.status != 0)
+			init_golbal(&minishell);
+		g_global.catch = 1;
 		init_core(&minishell);
 		if (minishell.input == 0)
 			ctrl_d(&minishell);

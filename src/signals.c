@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 14:24:52 by llion             #+#    #+#             */
-/*   Updated: 2023/04/03 16:03:02 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/03 16:51:42 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@ void	sigint(int sig)
 {
 	(void)sig;
 	write(1, "\n", 1);
-	if (globals.catch == 1)
+	if (g_global.catch == 1)
 	{
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
 	}
-	if (globals.catch == 0)
+	if (g_global.catch == 0)
 	{
-		globals.status = 130;
+		g_global.status = 130;
 	}
 }
 
