@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/04/03 17:30:12 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/03 18:52:31 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	quotes_verif(char *str)
 
 int	verif_line(t_core *minishell)
 {
-	char *ret;
+	//char *ret;
 	char *line;
 	line = minishell->input;
 	if (quotes_verif(line))
@@ -51,8 +51,9 @@ int	verif_line(t_core *minishell)
 	}
 	else
 	{
-		ret = copy_string(line, minishell->envp, minishell->last_status);
-		minishell->input =ret;
+		minishell->input = copy_string(line, minishell->envp, minishell->last_status);
+		//printf("ret = %s\n", ret);
+		//minishell->input =ret;
 		printf("la string dans verif line -- %s\n", minishell->input);
 	}
 		return (0);

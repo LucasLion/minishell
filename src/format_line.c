@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 15:50:37 by amouly            #+#    #+#             */
-/*   Updated: 2023/04/03 17:38:17 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/03 18:54:42 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,16 @@ char	*format_line(t_core *minishell)
 {
 	t_char	*list;
 	char	*line_formated;
-	//char 	*line;
+//	char 	*line;
 	
 	
+	//line = minishell->input;
 	if (verif_line(minishell))
 		return (NULL);
 //	line = minishell->input;
 	printf("la string (ms) dans format line -- %s\n", minishell->input);
-	//printf("la string (input) dans format-- %s\n", line);
+	//printf("longueur de ms->input = %zu\n", ft_strlen(minishell->input));
+//	printf("la string (input) dans format-- %s\n", line);
 	list = NULL;
 	if (!fill_list(minishell->input, &list))
 	{
