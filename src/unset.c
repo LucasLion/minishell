@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 18:39:28 by llion             #+#    #+#             */
-/*   Updated: 2023/04/03 16:11:14 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/03 16:52:02 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ char	**new_argv(char **argv, char **envp)
 		else if (invalid_id(argv[i]))
 		{
 			ms_error("unset", argv[i], -5);
-			globals.status = 1;
+			g_global.status = 1;
 		}
 	}
 	nargv = ft_calloc(count + 1, sizeof(char *));

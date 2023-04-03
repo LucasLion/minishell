@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/04/03 16:41:01 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/03 17:00:31 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@
 
 typedef struct s_glob
 {
-	int					g_status;
-	int					g_catch;
+	int					status;
+	int					catch;
 }						t_glob;
 
-t_glob					g_globals;
+t_glob					g_global;
 
 typedef struct s_list_to_tab
 {
@@ -194,6 +194,7 @@ void					init_struct_ltt(t_list_to_tab *cs);
 void					add_one(int *a, int *b);
 void					init_core(t_core *minishell);
 void					loop(int *i, int env_size, char **nenvp, char **envp);
+void					init_golbal(t_core *minishell);
 
 /* -------------- LIST_CHAR.c -------------- */
 

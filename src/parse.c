@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 15:03:31 by event             #+#    #+#             */
-/*   Updated: 2023/04/03 16:37:14 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/03 16:51:09 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	no_last_command(t_command *list)
 	if (temp->command == NULL)
 	{
 		printf("ERROR : Pas de commande apres le dernier pipe\n");
-		g_globals.g_status = 1;
+		g_global.status = 1;
 		return (1);
 	}
 	else
