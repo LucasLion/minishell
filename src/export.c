@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 16:12:49 by llion             #+#    #+#             */
-/*   Updated: 2023/04/03 16:30:44 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/03 19:29:25 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	parse_arg(char *a, int *status)
 	else
 	{
 		*status = 1;
-		return (ms_error(a, NULL, -5));
+		return (ms_error("export", a, -5));
 	}
 }
 
