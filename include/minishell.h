@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/04/03 17:00:31 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/03 17:03:16 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,8 +142,6 @@ int						is_absolute(char *cmd);
 
 /* -------------- EXIT.c -------------- */
 
-void					free_and_exit(int flag, int i, char **argv,
-							t_core *minishell);
 int						exit_shell(char **argv, t_core *minishell);
 void					wait_proof(t_core *minishell, int pid);
 void					write_error(char *cmd, char *input, int error_no);
