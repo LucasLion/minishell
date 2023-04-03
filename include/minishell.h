@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/04/03 14:09:12 by llion            ###   ########.fr       */
+/*   Updated: 2023/04/03 16:10:23 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,13 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-int status;
+typedef struct	s_glob
+{
+	int status;
+	int	catch;
+}				g_glob;
+
+g_glob	globals;
 
 typedef struct s_list_to_tab
 {
@@ -132,9 +138,11 @@ void					init_pipe_info(t_pipe *pipe_info, t_command *list);
 void					execute_one_command(t_core *minishell,
 							t_pipe *pipe_info);
 int						execute(t_core *minishell);
+int						is_absolute(char *cmd);
 
 /* -------------- EXIT.c -------------- */
 
+void 					frexit(int flag, int i, char **argv, t_core *minishell);
 int						exit_shell(char **argv, t_core *minishell);
 void					wait_proof(t_core *minishell, int pid);
 void					write_error(char *cmd, char *input, int error_no);
@@ -317,6 +325,10 @@ int						compare_args(char *str, char **args);
 int						compare_args2(char *str, char **args);
 char					**new_argv(char **argv, char **envp);
 int						unset(char **argv, char ***envp);
+
+/* -------------- UNSET2.c -------------- */
+
+int						invalid_id(char *str);
 
 /* -------------- VERIF_LINE -------------- */
 

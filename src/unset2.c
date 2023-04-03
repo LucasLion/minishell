@@ -1,35 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   unset2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/27 14:24:52 by llion             #+#    #+#             */
-/*   Updated: 2023/04/03 16:03:02 by amouly           ###   ########.fr       */
+/*   Created: 2023/03/10 18:39:28 by llion             #+#    #+#             */
+/*   Updated: 2023/04/03 15:07:57 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	sigint(int sig)
+int	invalid_id(char *str)
 {
-	(void)sig;
-	write(1, "\n", 1);
-	if (globals.catch == 1)
-	{
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-	}
-	if (globals.catch == 0)
-	{
-		globals.status = 130;
-	}
-}
+	int	i;
 
-void	signals(void)
-{
-	signal(SIGINT, sigint);
-	signal(SIGQUIT, SIG_IGN);
+	i = 0;
+	if (str[0] >= '0' && str[0] <= '9')
+		return (1);
+	while (str[i])
+	{
+		if ((str[i] >= 'A' && str[i] <= 'Z')
+			|| (str[i] >= 'a' && str[i] <= 'z')
+			|| (str[i] >= '0' && str[i] <= '9')
+			|| (str[i] == '_'))
+			i++;
+		else
+			return (1);
+	}
+	return (0);
 }

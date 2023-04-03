@@ -6,7 +6,7 @@
 #    By: amouly <amouly@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 15:27:43 by llion             #+#    #+#              #
-#    Updated: 2023/04/01 17:23:10 by amouly           ###   ########.fr        #
+#    Updated: 2023/04/03 15:00:26 by amouly           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,7 @@ SOURCES = 	cd.c         	\
             split_ms2.c     \
             tab_utils.c     \
             unset.c         \
+            unset2.c        \
             verif_line.c    \
 
 			

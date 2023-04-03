@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 18:39:28 by llion             #+#    #+#             */
-/*   Updated: 2023/04/03 14:18:45 by llion            ###   ########.fr       */
+/*   Updated: 2023/04/03 16:09:44 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,23 +81,24 @@ char	**new_argv(char **argv, char **envp)
 	int		count;
 	char	**nargv;
 
-	i = 1;
+	i = 0;
 	j = 0;
 	count = 0;
-	while (argv[i])
+	while (argv[++i])
 	{
 		if (!compare_args(argv[i], envp))
 			count++;
-		i++;
+		else if (invalid_id(argv[i]))
+		{
+			ms_error("unset", argv[i], -5);
+			globals.status = 1;
+		}
 	}
 	nargv = ft_calloc(count + 1, sizeof(char *));
-	i = 1;
-	while (argv[i])
-	{
+	i = 0;
+	while (argv[++i])
 		if (!compare_args(argv[i], envp))
 			nargv[j++] = ft_strdup(argv[i]);
-		i++;
-	}
 	return (nargv);
 }
 
@@ -109,22 +110,21 @@ int	unset(char **argv, char ***envp)
 	char	**nargv;
 	int		new_len;
 
-	i = 1;
+	i = 0;
 	j = 0;
-	new_len = ft_tablen(*envp) - ft_tablen(argv) + 1;
-	new_envp = ft_calloc(new_len + 1, sizeof(char *));
-	nargv = new_argv(argv, *envp);
-	if (new_envp == NULL)
-		return (ms_error("unset", NULL, errno));
-	while (i < new_len + 1 && new_len > 0)
+	if (argv[1])
 	{
-		if (compare_args2((*envp)[i], nargv))
-			new_envp[j++] = ft_strdup((*envp)[i]);
-		i++;
+		new_len = ft_tablen(*envp) - ft_tablen(argv) + 1;
+		new_envp = ft_calloc(new_len + 1, sizeof(char *));
+		nargv = new_argv(argv, *envp);
+		if (new_envp == NULL)
+			return (ms_error("unset", NULL, errno));
+		while (++i < new_len + 1 && new_len > 0)
+			if (compare_args2((*envp)[i], nargv))
+				new_envp[j++] = ft_strdup((*envp)[i]);
+		ft_freetab(*envp);
+		*envp = new_envp;
+		ft_freetab(nargv);
 	}
-	ft_freetab(*envp);
-	*envp = new_envp;
-	ft_freetab(nargv);
 	return (0);
 }
-
