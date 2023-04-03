@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 15:03:31 by event             #+#    #+#             */
-/*   Updated: 2023/03/31 13:44:07 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/03 16:51:09 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,23 @@ int	fill_list_command(char **tab, int *i, t_core *minishell, int *count)
 	return (1);
 }
 
+int	no_last_command(t_command *list)
+{
+	t_command	*temp;
+
+	temp = list;
+	while (temp->next != NULL)
+		temp = temp->next;
+	if (temp->command == NULL)
+	{
+		printf("ERROR : Pas de commande apres le dernier pipe\n");
+		g_global.status = 1;
+		return (1);
+	}
+	else
+		return (0);
+}
+
 int	parse_input(t_core *minishell)
 {
 	char	**tab;
@@ -102,5 +119,7 @@ int	parse_input(t_core *minishell)
 		}
 	}
 	free_tab2(tab);
+	if (no_last_command(minishell->list_of_command))
+		return (0);
 	return (1);
 }
