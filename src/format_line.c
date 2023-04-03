@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 15:50:37 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/31 16:41:03 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/03 19:09:00 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,15 +75,6 @@ char	*format_line(char *line)
 	line_formated = list_to_string(list);
 	clean_list_char(&list);
 	return (line_formated);
-}
-
-void	print_input_after_formating(char *line_input)
-{
-	char	*line_formated;
-
-	line_formated = format_line(line_input);
-	printf("%s\n", line_formated);
-	split_and_print(line_formated);
 }
 
 int	only_space_left(t_char *node)
