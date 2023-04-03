@@ -6,7 +6,7 @@
 /*   By: llion <llion@student.42mulhouse.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 10:36:26 by llion             #+#    #+#             */
-/*   Updated: 2023/03/03 14:45:59 by llion            ###   ########.fr       */
+/*   Updated: 2023/04/03 11:57:42 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static void	ft_error(void)
 {
-	write(2, "Error\n", 6);
-	exit(0);
+	write(2, "numeric argument required\n", 27);
+	exit(255);
 }
 
 static int	verif_int(long int number, int sign)

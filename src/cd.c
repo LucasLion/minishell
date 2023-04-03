@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 18:33:35 by llion             #+#    #+#             */
-/*   Updated: 2023/04/01 13:14:35 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/03 11:46:51 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,19 @@ int only_space_until_end(char *str, int i)
 	return (1);
 }
 
+int	get_cd_path()
+{
+	int		id;
+	char	*username;
+	char	*path;
+
+	username = getenv("USER");
+	path = ft_strjoin("/Users/", username);
+	id = chdir(path);
+	if (id != 0)
+		ms_error("cd", NULL, errno);
+	return (id);
+}
 
 int	cd(char *input, char **envp)
 {
@@ -78,7 +91,7 @@ int	cd(char *input, char **envp)
 
 	if (input && input[0])
 	{
-		if (input[0] == '~' || input[0] == '-')
+		if (input[0] == '~' && input[1])
 		{
 			abs_path = create_absolute_path(input, envp);
 			if (abs_path == NULL)
@@ -86,6 +99,8 @@ int	cd(char *input, char **envp)
 			id = chdir(abs_path);
 			free(abs_path);
 		}
+		else if (input[0] == '~' && input[1] == '\0')
+			id = get_cd_path();
 		else
 			id = chdir(input);
 		if (id != 0)
@@ -94,5 +109,7 @@ int	cd(char *input, char **envp)
 			return (1);
 		}
 	}
+	else
+		get_cd_path();
 	return (0);
 }
