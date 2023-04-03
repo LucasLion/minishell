@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 14:55:57 by llion             #+#    #+#             */
-/*   Updated: 2023/04/01 17:22:09 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/03 11:37:41 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,17 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	if (argc != 1)
 		return (0);
-	rl_catch_signals = 1;
 	minishell.envp = copy_tab(env);
 	minishell.last_status = 0;
 	while (1)
 	{
-		signals();
+		if (status != 0)
+		{
+			minishell.last_status = status;
+			status = 0;
+		}
 		init_core(&minishell);
+		signals();
 		if (minishell.input == 0)
 		{
 			printf("Exiting minishell...\n");
