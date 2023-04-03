@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:23:30 by amouly            #+#    #+#             */
-/*   Updated: 2023/04/03 15:07:04 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/03 19:57:42 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	redir_execve(t_core *minishell, t_pipe *pipe_info)
 					pipe_info->tab_arg, &(minishell->envp));
 	}
 	wait_proof(minishell, pid);
+	ms_error(pipe_info->cmd, NULL, 127);
 	return ;
 }
 

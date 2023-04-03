@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/04/03 18:12:24 by llion            ###   ########.fr       */
+/*   Updated: 2023/04/03 19:58:47 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,10 +119,7 @@ int	exec_command(char *cmd, char **argv, char ***envp)
 	else
 	{
 		if (execve(path, argv, *envp) == -1)
-		{
-			ms_error(path, NULL, 127);
 			exit(127);
-		}
 	}
 	signal(SIGQUIT, SIG_IGN);
 	exit(0);
