@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/04/03 17:03:16 by llion            ###   ########.fr       */
+/*   Updated: 2023/04/03 18:12:25 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ int						exec_command(char *command, char **argv, char ***envp);
 /* -------------- EXECUTE.c -------------- */
 
 void					init_pipe_info(t_pipe *pipe_info, t_command *list);
-void					execute_one_command(t_core *minishell,
+int						execute_one_command(t_core *minishell,
 							t_pipe *pipe_info);
 int						execute(t_core *minishell);
 int						is_absolute(char *cmd);

@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 14:21:07 by llion             #+#    #+#             */
-/*   Updated: 2023/03/31 13:45:00 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/03 17:28:17 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,15 @@ int	env(char **envp)
 	{
 		value = val(envp[i]);
 		if (envp[i] == NULL)
+		{
+			free(value);
 			return (ms_error("env", NULL, errno));
+		}
 		else if (value == NULL)
 			i++;
 		else
 			printf("%s\n", envp[i++]);
+		free(value);
 	}
 	return (0);
 }
