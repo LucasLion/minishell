@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 09:45:36 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/31 16:46:13 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/03 19:37:48 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,33 @@ char	*copy_string(char *string_list, char **envp, int status)
 				+ 1] != '\0' && string_list[cs.i + 1] != ' ' && string_list[cs.i
 				+ 1] != '$')
 			copy_env_var(string_list, envp, status, &cs);
-		else if (string_list[cs.i] == '"' && (cs.flag1 == 1 || (cs.flag1 == 0
+		//else if (string_list[cs.i] == '"' && (cs.flag1 == 1 || (cs.flag1 == 0
+		//			&& cs.flag == 1)))
+		//	cs.i++;
+		//else if (string_list[cs.i] == '\'' && (cs.flag1 == 2 || (cs.flag1 == 0
+		//			&& cs.flag == 2)))
+		//	cs.i++;
+		else
+			cs.ret[cs.j++] = string_list[cs.i++];
+		cs.flag = cs.flag1;
+	}
+	return (cs.ret);
+}
+
+char	*copy_string_2(char *string_list, char **envp, int status)
+{
+	t_list_to_tab	cs;
+
+	init_struct_ltt(&cs);
+	cs.ret = ft_calloc(count_char(string_list, envp, status) + 1, sizeof(char));
+	while (string_list && string_list[cs.i])
+	{
+		cs.flag1 = put_flag(string_list[cs.i], cs.flag);
+		//if (string_list[cs.i] == '$' && cs.flag1 != 2 && string_list[cs.i
+		//		+ 1] != '\0' && string_list[cs.i + 1] != ' ' && string_list[cs.i
+		//		+ 1] != '$')
+		//	copy_env_var(string_list, envp, status, &cs);
+		if (string_list[cs.i] == '"' && (cs.flag1 == 1 || (cs.flag1 == 0
 					&& cs.flag == 1)))
 			cs.i++;
 		else if (string_list[cs.i] == '\'' && (cs.flag1 == 2 || (cs.flag1 == 0
@@ -120,7 +146,7 @@ char	**list_to_tab(t_command *list, char **envp, int status)
 		return (NULL);
 	while (i < len)
 	{
-		ret[i] = copy_string(tmp->string, envp, status);
+		ret[i] = copy_string_2(tmp->string, envp, status);
 		i++;
 		tmp = tmp->next;
 	}
