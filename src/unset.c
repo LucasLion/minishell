@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 18:39:28 by llion             #+#    #+#             */
-/*   Updated: 2023/04/01 12:12:21 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/03 12:49:23 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,9 +124,10 @@ int	unset(char **argv, char ***envp)
 				new_envp[j++] = ft_strdup((*envp)[i]);
 			i++;
 		}
-		ft_freetab(*envp);
-		*envp = new_envp;
+		
 		ft_freetab(nargv);
+		ft_freetab(*envp);
+		*envp = new_envp;	
 	}
 	return (0);
 }

@@ -6,13 +6,33 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/04/03 11:57:22 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/03 12:32:00 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	exit_shell(int status, char **argv, t_core *minishell)
+void	frexit(int flag, int i, char **argv, t_core *minishell)
+{
+	ft_freetab(minishell->envp);
+	if (flag == 1)
+	{
+		ms_error("exit", argv[i], -4);
+		exit(255);
+	}
+	if (flag == 2)
+	{
+		printf ("exit\n");
+		exit(ft_atoi(argv[i]) % 256);
+	}
+	if (flag == 3)
+	{
+		printf ("exit\n");
+		exit(i);
+	}
+}
+
+int	exit_shell(char **argv, t_core *minishell)
 {
 	int	i;
 
@@ -22,11 +42,7 @@ int	exit_shell(int status, char **argv, t_core *minishell)
 		while (argv[1][i])
 		{
 			if (argv[1][i] < '0' || argv[1][i] > '9')
-			{
-				ft_freetab(minishell->envp);
-				ms_error("exit", argv[i], -4);
-				exit(255);
-			}
+				frexit(1, i, argv, minishell);
 			i++;
 		}
 		if (ft_tablen(argv) > 2)
@@ -35,13 +51,10 @@ int	exit_shell(int status, char **argv, t_core *minishell)
 			return (1);
 		}
 		else
-		{
-			ft_freetab(minishell->envp);
-			exit(ft_atoi(argv[1]) % 256);
-		}
+			frexit(2, 1, argv, minishell);
 	}
-	ft_freetab(minishell->envp);
-	exit(0);
+	frexit(3, 0, argv, minishell);
+	return (0);
 }
 
 void	write_error(char *cmd, char *input, int error_no)

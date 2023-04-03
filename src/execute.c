@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:22:46 by amouly            #+#    #+#             */
-/*   Updated: 2023/04/01 17:23:23 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/03 12:20:37 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,17 @@ int	execute(t_core *minishell)
 		fd = create_pipes(pipe_info.nbr_of_pipes, fd);
 		managing_pipe(minishell, &pipe_info, fd);
 		free(fd);
+	}
+	return (0);
+}
+
+int	is_absolute(char *cmd)
+{
+	if (cmd && cmd[0] == '/')
+	{
+		if (access(cmd, X_OK) == 0)
+			return (1);
+		return (0);
 	}
 	return (0);
 }

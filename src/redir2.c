@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:23:30 by amouly            #+#    #+#             */
-/*   Updated: 2023/04/01 17:22:14 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/03 12:52:24 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,10 @@ void	redir_execve(t_core *minishell, t_pipe *pipe_info)
 		}
 		if (pipe_info->cmd)
 			minishell->last_status = exec_command(pipe_info->cmd, 
-			pipe_info->tab_arg,	&(minishell->envp));
+					pipe_info->tab_arg, &(minishell->envp));
 	}
 	wait_proof(minishell, pid);
 	return ;
-	//ms_error(pipe_info->cmd, NULL, minishell->last_status);
 }
 
 void	redir_builtin(t_core *minishell, t_pipe *pipe_info)
