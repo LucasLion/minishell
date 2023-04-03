@@ -6,11 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/04/03 14:49:29 by amouly           ###   ########.fr       */
-=======
-/*   Updated: 2023/04/03 15:57:34 by amouly           ###   ########.fr       */
->>>>>>> a73d56e1134771c368cc08b1891e0a647b7844f2
+/*   Updated: 2023/04/03 16:41:01 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +27,13 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-typedef struct	s_glob
+typedef struct s_glob
 {
-	int status;
-	int	catch;
-}				g_glob;
+	int					g_status;
+	int					g_catch;
+}						t_glob;
 
-g_glob	globals;
+t_glob					g_globals;
 
 typedef struct s_list_to_tab
 {
@@ -146,7 +142,8 @@ int						is_absolute(char *cmd);
 
 /* -------------- EXIT.c -------------- */
 
-void 					free_and_exit(int flag, int i, char **argv, t_core *minishell);
+void					free_and_exit(int flag, int i, char **argv,
+							t_core *minishell);
 int						exit_shell(char **argv, t_core *minishell);
 void					wait_proof(t_core *minishell, int pid);
 void					write_error(char *cmd, char *input, int error_no);
@@ -253,6 +250,7 @@ int						find_command_until_pipe(char **tab, int *i,
 							t_command *new, t_core *minishell);
 int						fill_list_command(char **tab, int *i, t_core *minishell,
 							int *count);
+int						no_last_command(t_command *list);
 int						parse_input(t_core *minishell);
 
 /* -------------- PIPE_UTILS.c -------------- */
