@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:22:46 by amouly            #+#    #+#             */
-/*   Updated: 2023/04/03 16:14:23 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/03 18:10:57 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ void	init_pipe_info(t_pipe *p, t_command *list)
 	p->nbr_of_commands = length_list_command(list,
 			&(p->nbr_of_pipes));
 	p->i = 0;
-	p->cmd = "";
+	p->cmd = 0;
 	p->tab_arg = NULL;
 	p->fd_input = 0;
 	p->fd_output = 1;
 }
 
-void	execute_one_command(t_core *m, t_pipe *pipe_info)
+int	execute_one_command(t_core *m, t_pipe *pipe_info)
 {
 	if (m->list_of_command->command
 		&& m->list_of_command->command->string)
@@ -34,7 +34,7 @@ void	execute_one_command(t_core *m, t_pipe *pipe_info)
 		pipe_info->tab_arg = list_to_tab(m->list_of_command,
 				m->envp, m->last_status);
 	if (init_fd(m, pipe_info, m->list_of_command) != 0)
-		return ;
+		return (0);
 	if (pipe_info->cmd)
 	{
 		if (is_builtin(pipe_info->cmd) == NULL)
@@ -43,7 +43,9 @@ void	execute_one_command(t_core *m, t_pipe *pipe_info)
 			redir_builtin(m, pipe_info);
 		else
 			exec_builtin(pipe_info->cmd, pipe_info->tab_arg, m);
+		return (1);
 	}
+	return (0);
 }
 
 int	execute(t_core *minishell)
@@ -57,9 +59,11 @@ int	execute(t_core *minishell)
 	init_pipe_info(&pipe_info, list);
 	if (pipe_info.nbr_of_commands == 1)
 	{
-		execute_one_command(minishell, &pipe_info);
-		free(pipe_info.cmd);
-		free_tab2(pipe_info.tab_arg);
+		if (execute_one_command(minishell, &pipe_info))
+		{
+			free(pipe_info.cmd);
+			free_tab2(pipe_info.tab_arg);
+		}
 	}
 	else
 	{
