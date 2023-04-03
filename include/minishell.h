@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/04/03 17:00:31 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/03 17:49:00 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,8 +177,10 @@ char					*var(char *arg);
 
 int						length_list(t_char *list);
 char					*list_to_string(t_char *list);
-char					*format_line(char *line);
-void					print_input_after_formating(char *line_input);
+//char					*format_line(char *line);
+char					*format_line(t_core *minishell);
+//void					print_input_after_formating(char *line_input);
+void					print_input_after_formating(t_core *minishell);
 int						only_space_left(t_char *node);
 
 /* -------------- FORMAT_LIST.c -------------- */
@@ -336,6 +338,7 @@ int						invalid_id(char *str);
 /* -------------- VERIF_LINE -------------- */
 
 int						quotes_verif(char *str);
-int						verif_line(char *line);
+//int					erif_line(char *line);
+int						verif_line(t_core *minishell);
 
 #endif

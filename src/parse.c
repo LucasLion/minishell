@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 15:03:31 by event             #+#    #+#             */
-/*   Updated: 2023/04/03 16:51:09 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/03 17:25:00 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	parse_input(t_core *minishell)
 	int		count;
 
 	i = 0;
-	tab = ft_split_ms(format_line(minishell->input));
+	tab = ft_split_ms(format_line(minishell));
 	if (tab == NULL)
 		return (0);
 	count = 0;

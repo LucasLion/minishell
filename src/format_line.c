@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 15:50:37 by amouly            #+#    #+#             */
-/*   Updated: 2023/03/31 16:41:03 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/03 17:38:17 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,20 @@ char	*list_to_string(t_char *list)
 	return (ret);
 }
 
-char	*format_line(char *line)
+char	*format_line(t_core *minishell)
 {
 	t_char	*list;
 	char	*line_formated;
-
-	if (verif_line(line))
+	//char 	*line;
+	
+	
+	if (verif_line(minishell))
 		return (NULL);
+//	line = minishell->input;
+	printf("la string (ms) dans format line -- %s\n", minishell->input);
+	//printf("la string (input) dans format-- %s\n", line);
 	list = NULL;
-	if (!fill_list(line, &list))
+	if (!fill_list(minishell->input, &list))
 	{
 		clean_list_char(&list);
 		return (NULL);
@@ -77,11 +82,13 @@ char	*format_line(char *line)
 	return (line_formated);
 }
 
-void	print_input_after_formating(char *line_input)
+void	print_input_after_formating(t_core *minishell)
 {
 	char	*line_formated;
+	//char	*line_input;
 
-	line_formated = format_line(line_input);
+	//line_input = minishell->input;
+	line_formated = format_line(minishell);
 	printf("%s\n", line_formated);
 	split_and_print(line_formated);
 }
