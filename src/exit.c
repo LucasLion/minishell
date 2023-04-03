@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/04/03 12:32:00 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/03 16:04:33 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ void	frexit(int flag, int i, char **argv, t_core *minishell)
 	}
 	if (flag == 2)
 	{
-		printf ("exit\n");
+		printf("Exiting minishell...\n");
 		exit(ft_atoi(argv[i]) % 256);
 	}
 	if (flag == 3)
 	{
-		printf ("exit\n");
+		printf("Exiting minishell...\n");
 		exit(i);
 	}
 }
@@ -103,9 +103,7 @@ int	ms_error(char *cmd, char *input, int error)
 	else if (error == -5 && ft_strncmp(cmd, "exit", 4) == 0)
 		printf("Minishell: %s: too many arguments\n", cmd);
 	else if (error == -5)
-	{
-		printf("Minishell: %s: not a valid identifier\n", cmd);
-	}
+		printf("Minishell: %s: `%s': not a valid identifier\n", cmd, input);
 	else if (error == -4)
 		printf("Minishell: %s: argument numérique nécessaire\n", cmd);
 	else if (error == -10)

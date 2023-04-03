@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 18:39:28 by llion             #+#    #+#             */
-/*   Updated: 2023/04/03 14:55:03 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/03 16:02:14 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,28 +81,24 @@ char	**new_argv(char **argv, char **envp)
 	int		count;
 	char	**nargv;
 
-	i = 1;
+	i = 0;
 	j = 0;
 	count = 0;
-	while (argv[i])
+	while (argv[++i])
 	{
 		if (!compare_args(argv[i], envp))
 			count++;
 		else if (invalid_id(argv[i]))
 		{
 			ms_error("unset", argv[i], -5);
-			status = 1;
+			globals.status = 1;
 		}
-		i++;
 	}
 	nargv = ft_calloc(count + 1, sizeof(char *));
-	i = 1;
-	while (argv[i])
-	{
+	i = 0;
+	while (argv[++i])
 		if (!compare_args(argv[i], envp))
 			nargv[j++] = ft_strdup(argv[i]);
-		i++;
-	}
 	return (nargv);
 }
 
@@ -132,4 +128,3 @@ int	unset(char **argv, char ***envp)
 	}
 	return (0);
 }
-

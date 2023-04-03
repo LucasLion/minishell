@@ -6,11 +6,13 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 14:55:57 by llion             #+#    #+#             */
-/*   Updated: 2023/04/03 12:44:27 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/03 15:58:10 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+
 
 void	ctrl_d(t_core *minishell)
 {
@@ -30,15 +32,17 @@ int	main(int argc, char **argv, char **env)
 		return (0);
 	minishell.envp = copy_tab(env);
 	minishell.last_status = 0;
+	rl_catch_signals = 0;
+	signals();
 	while (1)
 	{
-		if (status != 0)
+		if (globals.status != 0)
 		{
-			minishell.last_status = status;
-			status = 0;
+			minishell.last_status = globals.status;
+			globals.status = 0;
 		}
+		globals.catch = 1;
 		init_core(&minishell);
-		signals();
 		if (minishell.input == 0)
 			ctrl_d(&minishell);
 		if ((parse_input(&minishell)))

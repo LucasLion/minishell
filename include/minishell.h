@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/04/03 12:24:01 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/03 15:57:34 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,13 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-int status;
+typedef struct	s_glob
+{
+	int status;
+	int	catch;
+}				g_glob;
+
+g_glob	globals;
 
 typedef struct s_list_to_tab
 {
@@ -319,6 +325,10 @@ int						compare_args(char *str, char **args);
 int						compare_args2(char *str, char **args);
 char					**new_argv(char **argv, char **envp);
 int						unset(char **argv, char ***envp);
+
+/* -------------- UNSET2.c -------------- */
+
+int						invalid_id(char *str);
 
 /* -------------- VERIF_LINE -------------- */
 

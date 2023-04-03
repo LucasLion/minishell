@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:23:30 by amouly            #+#    #+#             */
-/*   Updated: 2023/04/03 12:52:24 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/03 15:07:04 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ int	init_fd(t_core *minishell, t_pipe *pipe_info, t_command *list)
 	return (0);
 }
 
-
-
 void	redir_execve(t_core *minishell, t_pipe *pipe_info)
 {
 	int	pid;
@@ -61,7 +59,7 @@ void	redir_execve(t_core *minishell, t_pipe *pipe_info)
 			close(pipe_info->fd_output);
 		}
 		if (pipe_info->cmd)
-			minishell->last_status = exec_command(pipe_info->cmd, 
+			minishell->last_status = exec_command(pipe_info->cmd,
 					pipe_info->tab_arg, &(minishell->envp));
 	}
 	wait_proof(minishell, pid);
