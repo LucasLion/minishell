@@ -6,13 +6,13 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:55:58 by llion             #+#    #+#             */
-/*   Updated: 2023/04/03 11:57:22 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/03 14:09:00 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	exit_shell(int status, char **argv, t_core *minishell)
+int	exit_shell(char **argv, t_core *minishell)
 {
 	int	i;
 
