@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 15:03:31 by event             #+#    #+#             */
-/*   Updated: 2023/04/03 19:58:30 by llion            ###   ########.fr       */
+/*   Updated: 2023/04/04 09:37:38 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,15 +85,19 @@ int	no_last_command(t_command *list)
 	t_command	*temp;
 
 	temp = list;
-	while (temp->next != NULL)
+	if (temp)
 	{
-		if (temp->command == NULL)
-		{
-			printf("ERROR : Pas de commande\n");
-			g_global.status = 1;
-			return (1);
-		}
 		temp = temp->next;
+		while (temp != NULL)
+		{
+			if (temp->command == NULL)
+			{
+				printf("ERROR : Pas de commande\n");
+				g_global.status = 1;
+				return (1);
+			}
+			temp = temp->next;
+		}
 	}
 	return (0);
 }
