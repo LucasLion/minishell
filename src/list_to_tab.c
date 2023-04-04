@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 09:45:36 by amouly            #+#    #+#             */
-/*   Updated: 2023/04/03 12:36:10 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/04 10:55:59 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,13 @@ void	last_error(char *ret, int *j, int status)
 	char	*err_itoa;
 	int		b;
 
-	err_itoa = ft_itoa(status);
+	if (g_global.status == 1)
+	{
+		err_itoa = ft_itoa(g_global.status);
+		g_global.status = 0;
+	}
+	else
+		err_itoa = ft_itoa(status);
 	b = 0;
 	while (err_itoa[b])
 	{

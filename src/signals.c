@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 14:24:52 by llion             #+#    #+#             */
-/*   Updated: 2023/04/03 16:51:42 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/04 13:10:17 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,27 @@
 
 void	sigint(int sig)
 {
-	(void)sig;
-	write(1, "\n", 1);
-	if (g_global.catch == 1)
+	pid_t	pid;
+
+	pid = waitpid(-1, NULL, WNOHANG);
+	if (pid < 0)
 	{
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
+		write(1, "\n", 1);
+		if (g_global.catch == 1)
+		{
+			rl_replace_line("", 0);
+			rl_on_new_line();
+			rl_redisplay();
+			g_global.status = 1;
+		}
+		if (g_global.catch == 0)
+		{
+			g_global.status = 130;
+		}
 	}
-	if (g_global.catch == 0)
+	else if (g_global.catch == 0 && sig == SIGINT)
 	{
+		write(1, "\n", 1);
 		g_global.status = 130;
 	}
 }

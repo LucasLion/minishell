@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 10:45:20 by amouly            #+#    #+#             */
-/*   Updated: 2023/04/03 16:59:23 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/04 13:09:48 by amouly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ void	init_core(t_core *minishell)
 	minishell->redir = NULL;
 	minishell->input = readline("Minishell> ");
 	add_history(minishell->input);
-	g_global.catch = 0;
+	if (minishell->input
+		&& ft_strncmp(minishell->input, "./minishell", 11) != 0)
+		g_global.catch = 0;
 }
 
 void	loop(int *i, int env_size, char **nenvp, char **envp)
