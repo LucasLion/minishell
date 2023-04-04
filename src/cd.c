@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 18:33:35 by llion             #+#    #+#             */
-/*   Updated: 2023/04/03 12:18:34 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/04 14:09:09 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,11 @@ int	get_cd_path(void)
 	path = ft_strjoin("/Users/", username);
 	id = chdir(path);
 	if (id != 0)
+	{
+		free(path);
 		ms_error("cd", NULL, errno);
+	}
+	free(path);
 	return (id);
 }
 

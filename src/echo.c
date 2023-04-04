@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 14:59:28 by llion             #+#    #+#             */
-/*   Updated: 2023/03/31 13:39:56 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/04 13:46:26 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,20 +64,23 @@ int	print_tab_echo(char **tab, int i)
 	char	*parsed_word;
 
 	counter = 0;
-	while (tab[counter])
-		counter++;
-	while (i < counter - 1)
+	if (tab[i])
 	{
-		if (tab[i] == NULL)
-			return (ms_error("echo", NULL, -1));
+		while (tab[counter])
+			counter++;
+		while (i < counter - 1)
+		{
+			if (tab[i] == NULL)
+				return (ms_error("echo", NULL, -1));
+			parsed_word = parse(tab[i]);
+			printf("%s ", parsed_word);
+			free(parsed_word);
+			i++;
+		}
 		parsed_word = parse(tab[i]);
-		printf("%s ", parsed_word);
+		printf("%s", parsed_word);
 		free(parsed_word);
-		i++;
 	}
-	parsed_word = parse(tab[i]);
-	printf("%s", parsed_word);
-	free(parsed_word);
 	return (0);
 }
 
