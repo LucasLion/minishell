@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 09:45:36 by amouly            #+#    #+#             */
-/*   Updated: 2023/04/04 10:55:59 by amouly           ###   ########.fr       */
+/*   Updated: 2023/04/04 14:05:15 by llion            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,20 @@ int	size_var(char *s_list, int *i)
 
 int	count_size_env(char *string_list, int *i, char **envp, int status)
 {
-	int	count;
-	int	debut;
-	int	b;
+	int		count;
+	int		debut;
+	int		b;
+	char	*itoa;
+	int		len;
 
 	(*i)++;
 	if (string_list[*i] == '?')
-		return (ft_strlen(ft_itoa(status)));
+	{
+		itoa = ft_itoa(status);
+		len = ft_strlen(itoa);
+		free(itoa);
+		return (len);
+	}
 	debut = (*i);
 	count = size_var(string_list, i);
 	b = 0;
@@ -63,9 +70,7 @@ int	count_size_env(char *string_list, int *i, char **envp, int status)
 	{
 		if (!ft_strncmp(envp[b], &string_list[debut], (size_t)count)
 			&& envp[b][count] == '=')
-		{
 			return ((int)(ft_strlen(envp[b] + count + 1)));
-		}
 		b++;
 	}
 	return (0);
@@ -90,4 +95,5 @@ void	last_error(char *ret, int *j, int status)
 		(*j)++;
 		b++;
 	}
+	free(err_itoa);
 }
