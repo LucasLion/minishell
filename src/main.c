@@ -6,11 +6,13 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 14:55:57 by llion             #+#    #+#             */
-/*   Updated: 2023/04/03 16:58:54 by amouly           ###   ########.fr       */
+/*   Updated: 2023/09/19 17:54:31 by llion@student    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+t_glob	g_global;
 
 void	ctrl_d(t_core *minishell)
 {

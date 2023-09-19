@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 16:12:49 by llion             #+#    #+#             */
-/*   Updated: 2023/04/03 19:29:25 by llion            ###   ########.fr       */
+/*   Updated: 2023/09/19 17:52:49 by llion@student    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,6 @@ int	parse_arg2(char *a, int *status)
 
 int	parse_arg(char *a, int *status)
 {
-	int	i;
-
-	i = 0;
 	if ((a[0] >= 'a' && a[0] <= 'z') || (a[0] >= 'A' && a[0] <= 'Z')
 		|| a[0] == '_')
 		return (parse_arg2(a, status));

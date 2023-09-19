@@ -6,7 +6,7 @@
 /*   By: amouly <amouly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 10:25:17 by llion             #+#    #+#             */
-/*   Updated: 2023/04/03 18:12:25 by llion            ###   ########.fr       */
+/*   Updated: 2023/09/19 17:53:48 by llion@student    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct s_glob
 	int					catch;
 }						t_glob;
 
-t_glob					g_global;
+extern t_glob					g_global;
 
 typedef struct s_list_to_tab
 {
