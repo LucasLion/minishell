@@ -15,7 +15,7 @@ Features:
 
 Getting Started
 
-    git clone https://github.com/your-username/minishell.git
+    git clone https://github.com/lucaslion/minishell.git
     cd minishell
     make
     ./minishell
